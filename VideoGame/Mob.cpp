@@ -16,7 +16,7 @@ Mob::Mob(Game* game)
 
 
 	mCircle = new CircleComponent(this);
-	mCircle->SetRadius(10.0f);
+	mCircle->SetRadius(8.5f);
 
 	mMove = new MoveComponent(this);
 }

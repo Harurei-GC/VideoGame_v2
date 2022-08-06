@@ -60,86 +60,6 @@ void MakeDangeon::MakeMaps()
 		}
 	}
 
-
-	// 通路を作る
-	
-
-	
-	//// 各変数は、上または左に接続している部屋が端っこである場合（hor==0またはver==0のとき）
-	//// 値が設定されていないため注意
-	//// corriHead:通路の頭
-	//Vector2Int corriHead[HORIZONTAL][VERTICAL] = { 0 };
-	//// corriConnect:areaをまたぐときの通路の接続部
-	//Vector2Int corriConnect[HORIZONTAL][VERTICAL] = {0};
-	//// btwnHeadConnect:corriHeadとcorriConnectの間の距離
-	//Vector2Int btwnHeadConnect[HORIZONTAL][VERTICAL] = { 0 };
-	//// btwnConnectRoom:corriConnectとroomBoxPositionの間の距離
-	//Vector2Int btwnConnectRoom[HORIZONTAL][VERTICAL] = { 0 };
-	//// 数値代入
-	//for (int hor = 0; hor < areaNumX; hor++)
-	//{
-	//	for(int ver = 0; ver < areaNumY; ver++)
-	//	{
-	//		if (hor != 0) { // x方向
-	//			corriHead[hor][ver].x = roomBoxPosition[hor-1][ver ].x + roomBoxes[hor-1][ver].x;
-	//			corriConnect[hor][ver].x = hor * areaCountSize.x + 1;
-	//			btwnHeadConnect[hor][ver].x = corriConnect[hor][ver].x - corriHead[hor][ver].x;
-	//			btwnConnectRoom[hor][ver].x = roomBoxPosition[hor][ver].x - corriHead[hor][ver].x + 1;
-	//		}
-	//		if (ver != 0) { // y方向
-	//			corriHead[hor][ver].y = roomBoxPosition[hor][ver-1].y + roomBoxes[hor][ver-1].y;
-	//			corriConnect[hor][ver].y = ver*areaCountSize.y + 1;
-	//			btwnHeadConnect[hor][ver].y = corriConnect[hor][ver].y-corriHead[hor][ver].y;
-	//			btwnConnectRoom[hor][ver].y = roomBoxPosition[hor][ver].y - corriHead[hor][ver].y + 1;
-	//		}
-	//	}
-	//}
-	//// 通路座標変数
-	//// 通路の座標をランダムに決定
-	//int tmp = -1;
-	//for (int hor = 0; hor < areaNumX; hor++)
-	//{
-	//	for (int ver = 0; ver < areaNumY; ver++)
-	//	{
-	//		// 水平方向の通路作成
-	//		if (hor != 0) {
-	//			// 部屋の左上座標とcorriHead位置の間から通路の接続位置決定
-	//			// HACK:ややこしい
-	//			// 最初に通路のy座標をランダムに決める
-	//			tmp = rand->Sampling(roomBoxPosition[hor-1][ver].y,corriHead[hor-1][ver+1].y - roomBoxPosition[hor-1][ver].y);
-	//			// 通路の前半分を作る
-	//			for (int i = 0; i < btwnHeadConnect[hor][ver].x; i++)
-	//			{
-	//				allCorridor.push_back(Vector2Int{ corriHead[hor][ver].x + i, tmp });
-	//			}
-	//			// もう一度y座標をランダムに生成
-	//			tmp = rand->Sampling(roomBoxPosition[hor][ver].y, corriHead[hor][ver+1].y - roomBoxPosition[hor][ver].y);
-	//			// 通路の後半分を作る
-	//			for (int i = 0; i < btwnConnectRoom[hor][ver].x; i++)
-	//			{
-	//				allCorridor.push_back(Vector2Int{ corriConnect[hor][ver].x + i, tmp });
-	//			}
-	//		}
-	//		// 垂直方向の通路作成
-	//		if (ver != 0)
-	//		{
-	//			tmp = rand->Sampling(roomBoxPosition[hor][ver - 1].x, corriHead[hor+1][ver-1].x - roomBoxPosition[hor][ver - 1].x);
-
-	//			for (int i = 0; i < btwnHeadConnect[hor][ver].y; i++)
-	//			{
-	//				allCorridor.push_back(Vector2Int{ corriHead[hor][ver].y + i,tmp });
-	//			}
-
-	//			tmp = rand->Sampling(roomBoxPosition[hor][ver].x, corriHead[hor + 1][ver].x - roomBoxPosition[hor][ver].x);
-
-	//			for (int i = 0; i < btwnConnectRoom[hor][ver].y; i++)
-	//			{
-	//				allCorridor.push_back(Vector2Int{ corriHead[hor][ver].y + i,tmp });
-	//			}
-	//		}
-	//	}
-	//}
-
 }
 
 bool MakeDangeon::IsInRooms(int x, int y) 
@@ -196,7 +116,7 @@ bool MakeDangeon::IsInCorridor(int x, int y)
 				}
 			}
 				// y方向の通路なのか確認
-			if (x == position.x)
+			if (x == position.x || x == position.x+1)
 			{
 				for (int i = 0; i <= (roomBoxPosition[hor][ver+1].y - roomBoxPosition[hor][ver].y); i++)
 				{
@@ -207,7 +127,7 @@ bool MakeDangeon::IsInCorridor(int x, int y)
 				}
 			}
 				// x方向の通路なのか確認
-			if (y == position.y)
+			if (y == position.y || y == position.y+1)
 			{
 				for (int i = 0; i <= (roomBoxPosition[hor + 1][ver].x - roomBoxPosition[hor][ver].x); i++)
 				{
@@ -225,14 +145,4 @@ bool MakeDangeon::IsInCorridor(int x, int y)
 
 	return false;
 
-
-
-	//for (int i = 1; i < allCorridor.size(); i++)
-	//{
-	//	if (allCorridor.at(i).x == x && allCorridor.at(i).y == y) 
-	//	{
-	//		return true;
-	//	}
-	//}
-	//return false;
 }
