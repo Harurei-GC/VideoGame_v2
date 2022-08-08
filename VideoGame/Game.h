@@ -13,6 +13,13 @@
 #define W_BOXES 32 // 横方向のマス目の数
 #define H_BOXES 24 // 縦方向のマス目の数
 
+#define FONT 2 // 総使用フォント数
+#define FONT_BBBOcelot 0 // フォント番号
+#define FONT_PixelMplus 1
+#define COLOR 2 // 総使用フォントカラー数
+#define BLACK 0
+#define BLUE 1
+
 // ゲームの起動、終了など管理
 class Game 
 {
@@ -64,21 +71,20 @@ private:
 	SDL_Window* mWindow;
 
 	// 文字列レンダラ
-	TTF_Font* mFontTimer;
-	TTF_Font* mFontStr;
+	TTF_Font* mFont[FONT];
 	// フォントカラー
-	SDL_Color mColorTimer;
-	SDL_Surface* mSurfaceTimer;
-	SDL_Texture* mTextureTimer;
+	SDL_Color mColor[COLOR];
+	SDL_Surface* mSurface[3];
+	SDL_Texture* mTexture[3];
 	SDL_Rect txtRectTimer, pasteRectTimer;
 
-	SDL_Color mColorStr;
-	SDL_Surface* mSurfaceStr;
-	SDL_Texture* mTextureStr;
 	SDL_Rect txtRectStr, pasteRectStr;
-
-	SDL_Event mEvent;
-	const char* text;
+	// ファイルポインタ
+	FILE* fp;
+	// 文字列バッファ
+	char buf[1024];
+	//SDL_Event mEvent;
+	//const char* text;
 
 
 	// 2Dレンダラ

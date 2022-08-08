@@ -43,14 +43,20 @@ void Game::GameOver()
 	SDL_RenderClear(mRenderer);
 
 	// GameOver•`‰æ
-	mSurfaceStr = TTF_RenderUTF8_Blended(mFontStr, "GAME OVER", mColorStr);
-	mTextureStr = SDL_CreateTextureFromSurface(mRenderer, mSurfaceStr);
+	mSurface[0] = TTF_RenderUTF8_Blended(mFont[FONT_BBBOcelot], "GAME OVER", mColor[BLACK]);
+	mTexture[0] = SDL_CreateTextureFromSurface(mRenderer, mSurface[0]);
 	int iw, ih;
-	SDL_QueryTexture(mTextureStr, NULL, NULL, &iw, &ih);
+	SDL_QueryTexture(mTexture[0], NULL, NULL, &iw, &ih);
 	txtRectStr = SDL_Rect{ 0,0,iw,ih };
 	pasteRectStr = SDL_Rect{ static_cast<int>(WIDTH / 2 -100),static_cast<int>(HEIGHT / 2),iw,ih };
-	SDL_RenderCopy(mRenderer, mTextureStr, &txtRectStr, &pasteRectStr);
+	SDL_RenderCopy(mRenderer, mTexture[0], &txtRectStr, &pasteRectStr);
 
 	// ‰æ–Ê‚É•`‰æ
 	SDL_RenderPresent(mRenderer);
+
+	for (int i = 0; i < 1; i++)
+	{
+		SDL_FreeSurface(mSurface[i]);
+		SDL_DestroyTexture(mTexture[i]);
+	}
 }

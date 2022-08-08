@@ -210,6 +210,9 @@ xcopy "$(SolutionDir)external\SDL\lib\x64\*.dll" "$(OutDir)" /i /s /y</Command>
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Text.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

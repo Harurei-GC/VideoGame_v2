@@ -19,13 +19,13 @@ Game::Game()
 ,mIsCleared(false)
 ,mIsOver(false)
 ,mUpdatingActors(false)
-,timeLimit(40.0f)
+,timeLimit(25.0f)
 {
 	// 先頭要素代入
 	objPosition = { Vector2(-1.0f, -1.0f) };
 
-	mColorTimer = { 30, 30, 240, 255 };
-	mColorStr = { 0,0,0,255 };
+	mColor[BLACK] = {0,0,0,255};
+	mColor[BLUE] = {30, 30, 240, 255};
 }
 
 
@@ -78,18 +78,34 @@ bool Game::Initialize()
 void Game::LoadData()
 {
 	// Open a font & set the font size
-	mFontTimer = TTF_OpenFont("font/bbbixxxel/04_Brischke/BBBOcelot-Regular.otf", 24);
-	if (!mFontTimer)
+	mFont[FONT_BBBOcelot] = TTF_OpenFont("font/bbbixxxel/04_Brischke/BBBOcelot-Regular.otf", 24);
+	if (!mFont[FONT_BBBOcelot])
+	{
+		std::cout << "Failed to get font for timer" << std::endl;
+	}
+	mFont[FONT_PixelMplus] = TTF_OpenFont("font/PixelMplus-20130602/PixelMplus12-Regular.ttf", 24);
+	if (!mFont[FONT_PixelMplus])
 	{
 		std::cout << "Failed to get font for timer" << std::endl;
 	}
 
-	// Open a font & set the font size
-	mFontStr = TTF_OpenFont("font/bbbixxxel/04_Brischke/BBBOcelot-Regular.otf", 24);
-	if (!mFontStr)
+	// テキストファイル読み込み
+	// なぜかコマンドラインに表示される
+	if (fopen_s(&fp, "Text.txt", "r") != 0)
 	{
-		std::cout << "Failed to get font for strings" << std::endl;
+		std::cout << "Failed to open a text file" << std::endl;
 	}
+	else
+	{
+		int i = 0;
+		while ((buf[i] = fgetc(fp)) != EOF)
+		{
+			putchar(buf[i]);
+			i++;
+		}
+		fclose(fp);
+	}
+
 
 	// Player作成
 	mPlayer = new Player(this);
@@ -259,21 +275,25 @@ void Game::GenerateOutput()
 	}
 
 	// 残り時間表示
-	// WARNING:メモリ使用量が増えている
-	// GameStart(),GameOver(),GameClear()も同様のため修正が必要
-	mSurfaceTimer = TTF_RenderUTF8_Blended(mFontTimer, 
-		std::to_string(static_cast<int>(timeLimit)+1).c_str(), mColorTimer);
-	mTextureTimer = SDL_CreateTextureFromSurface(mRenderer, mSurfaceTimer);
+	mSurface[0] = TTF_RenderUTF8_Blended(mFont[FONT_BBBOcelot],
+		std::to_string(static_cast<int>(timeLimit)+1).c_str(), mColor[BLUE]);
+	mTexture[0] = SDL_CreateTextureFromSurface(mRenderer, mSurface[0]);
 	int iw, ih;
-	SDL_QueryTexture(mTextureTimer, NULL, NULL, &iw, &ih);
+	SDL_QueryTexture(mTexture[0], NULL, NULL, &iw, &ih);
 
 	txtRectTimer = SDL_Rect{ 0,0,iw,ih };
 	pasteRectTimer = SDL_Rect{ static_cast<int>(WIDTH-100),50,iw,ih};
 
-	SDL_RenderCopy(mRenderer, mTextureTimer, &txtRectTimer, &pasteRectTimer);
+	SDL_RenderCopy(mRenderer, mTexture[0], &txtRectTimer, &pasteRectTimer);
 	
 	// 画面に描画
 	SDL_RenderPresent(mRenderer);
+
+	for (int i = 0; i < 1; i++)
+	{
+		SDL_FreeSurface(mSurface[i]);
+		SDL_DestroyTexture(mTexture[i]);
+	}
 
 }
 
@@ -282,11 +302,12 @@ void Game::Shutdown()
 {
 	UnloadData();
 	IMG_Quit();
-	SDL_FreeSurface(mSurfaceTimer);
 	SDL_DestroyRenderer(mRenderer);
 	SDL_DestroyWindow(mWindow);
-	TTF_CloseFont(mFontTimer);
-	TTF_CloseFont(mFontStr);
+	for (int i = 0; i < FONT; i++) // iはmFontの要素数
+	{
+	TTF_CloseFont(mFont[i]);
+	}
 	TTF_Quit();
 	SDL_Quit();
 }
