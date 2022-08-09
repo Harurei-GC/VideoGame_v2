@@ -36,6 +36,8 @@ public:
 
 	void AddObject(class Object* object);
 	void RemoveObject(class Object* object);
+	void AddEnemy(class Enemy* enemy);
+	void RemoveEnemy(class Enemy* enemy);
 	void AddActor(class Actor* actor);
 	void RemoveActor(class Actor* actor);
 	void AddSprite(class SpriteComponent* sprite);
@@ -55,6 +57,11 @@ private:
 	void UpdateGame();
 	// ゲーム描画
 	void GenerateOutput();
+	// テキストレンダラ
+	// 呼び出し前に、txtRectとpasteRectを初期化しておく必要がある
+	void RenderText(int font,int color,const char*text, int rw,int rh );
+	// bufの一部文字列を表示させる
+	void DispTextfile(int font, int color, int rw, int rh);
 
 	void GameStart();
 	void GameClear();
@@ -74,18 +81,16 @@ private:
 	TTF_Font* mFont[FONT];
 	// フォントカラー
 	SDL_Color mColor[COLOR];
-	SDL_Surface* mSurface[3];
-	SDL_Texture* mTexture[3];
-	SDL_Rect txtRectTimer, pasteRectTimer;
+	//SDL_Surface* mSurface[3];
+	//SDL_Texture* mTexture[3];
 
-	SDL_Rect txtRectStr, pasteRectStr;
+	SDL_Rect txtRect, pasteRect;
 	// ファイルポインタ
 	FILE* fp;
 	// 文字列バッファ
 	char buf[1024];
-	//SDL_Event mEvent;
-	//const char* text;
-
+	int bufCount;
+	int iw, ih;
 
 	// 2Dレンダラ
 	SDL_Renderer* mRenderer;
@@ -115,6 +120,7 @@ private:
 	class Mob* mMob;
 	class Goal* mGoal;
 	std::vector<class Object*> mObject;
+	std::vector<class Enemy*> mEnemy;
 
 	// Objectの座標配列
 	std::vector<class Vector2> objPosition;

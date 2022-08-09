@@ -25,8 +25,6 @@ Player::Player(Game* game)
 	mInput->SetRightKey(SDL_SCANCODE_D);
 	mInput->SetLeftKey(SDL_SCANCODE_A);
 	mInput->SetPowerKey(SDL_SCANCODE_SPACE);
-	//‰½‚ÅÁ‚µ‚½‚Á‚¯
-	//mInput->SetMaxSpeed(10.0f);
 	mInput->SetMaxForce(60.0f);
 	mInput->SetPowerSpeed(Vector2(200.0f,200.0f));
 }

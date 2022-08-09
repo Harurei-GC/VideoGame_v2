@@ -10,14 +10,12 @@ Object::Object(Game* game, Vector2 pos)
 	SpriteComponent* sprite = new SpriteComponent(this,90);
 	sprite->SetTexture(game->GetTexture("assets/Box.png"));
 
-
-
-	game->AddObject(this);
+	mGame->AddObject(this);
 }
 
 Object::~Object()
 {
-
+	mGame->RemoveObject(this);
 }
 
 void Object::ActorInput(const uint8_t* keyState)

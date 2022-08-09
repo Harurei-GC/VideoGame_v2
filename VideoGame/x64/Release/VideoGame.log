@@ -1,8 +1,27 @@
-﻿  Game_GameStart.cpp
+﻿  Actor.cpp
+  BoxColliderComponent.cpp
+  CircleComponent.cpp
+  Component.cpp
+  Enemy.cpp
+  Game.cpp
+C:\Users\arare.DESKTOP-NVMPQJV\source\repos\VideoGame\VideoGame\Game.cpp(43,60): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\arare.DESKTOP-NVMPQJV\source\repos\VideoGame\VideoGame\Game.cpp(43,53): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  Game_GameClear.cpp
+  Game_GameOver.cpp
+  Game_GameStart.cpp
+  Goal.cpp
+  InputComponent.cpp
+  Main.cpp
+  MakeDangeon.cpp
+  Mob.cpp
+  MoveComponent.cpp
+  Object.cpp
+  Player.cpp
+  SpriteComponent.cpp
   コード生成しています。
-  1 of 978 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    2 functions had inline decision re-evaluated but remain unchanged
+  335 of 1058 functions (31.7%) were compiled, the rest were copied from previous compilation.
+    71 functions were new in current compilation
+    74 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
   VideoGame.vcxproj -> C:\Users\arare.DESKTOP-NVMPQJV\source\repos\VideoGame\x64\Release\VideoGame.exe
   C:\Users\arare.DESKTOP-NVMPQJV\source\repos\VideoGame\external\SDL2-2.0.22\lib\x64\SDL2.dll

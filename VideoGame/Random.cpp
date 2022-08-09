@@ -1,7 +1,7 @@
 #include <time.h>
 #include "Random.h"
 #include <iostream>
-
+#include <stdlib.h>
 
 Random::Random()
 :count(0)
@@ -12,7 +12,6 @@ Random::Random()
 // HACK:完全なランダムではない、もう少し改良したい
 int Random::Sampling(int a, int z)
 {
-	//t = clock();
-	//count += 1; なぜかバグる
-	return ((int)clock()) % (z - a + 1) + a;
+	int r = rand();
+	return (((int)clock())+r) % (z - a + 1) + a;
 }

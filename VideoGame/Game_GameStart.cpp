@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <stdio.h>
 
 void Game::GameStart()
 {
@@ -48,52 +49,32 @@ void Game::GameStart()
 	SDL_RenderClear(mRenderer);
 
 	// Start描画
-	mSurface[0] = TTF_RenderUTF8_Blended(mFont[FONT_BBBOcelot], "Press ENTER to START!!", mColor[BLACK]);
-	mTexture[0] = SDL_CreateTextureFromSurface(mRenderer, mSurface[0]);
-	int iw, ih;
-	SDL_QueryTexture(mTexture[0], NULL, NULL, &iw, &ih);
-	txtRectStr = SDL_Rect{ 0,0,iw,ih };
-	pasteRectStr = SDL_Rect{ static_cast<int>(WIDTH / 2 -200),static_cast<int>(HEIGHT / 2),iw,ih };
-	SDL_RenderCopy(mRenderer, mTexture[0], &txtRectStr, &pasteRectStr);
+	RenderText(FONT_BBBOcelot, BLACK, "Press ENTER to START!!", static_cast<int>(WIDTH / 2 - 200),static_cast<int>(HEIGHT / 2));
 
-	// bufの一部文字列を表示させる
-	char r[32];
-	int i = 0;
-	while (buf[i] != '\n')
-	{
-		r[i] = buf[i];
-		i++;
-	}
-	mSurface[1] = TTF_RenderUTF8_Blended(mFont[FONT_PixelMplus], r, mColor[BLACK]);
-	mTexture[1] = SDL_CreateTextureFromSurface(mRenderer, mSurface[1]);
-	SDL_QueryTexture(mTexture[1], NULL, NULL, &iw, &ih);
-	txtRectStr = SDL_Rect{ 0,0,iw,ih };
-	pasteRectStr = SDL_Rect{ 100,100,iw,ih };
-	SDL_RenderCopy(mRenderer, mTexture[1], &txtRectStr, &pasteRectStr);
-
-	char q[32];
-	int j = 0;
-	i++;
-	while (buf[i] != '\n')
-	{
-		q[j] = buf[i];
-		j++;
-		i++;
-	}
-	mSurface[2] = TTF_RenderUTF8_Blended(mFont[FONT_PixelMplus], q, mColor[BLACK]);
-	mTexture[2] = SDL_CreateTextureFromSurface(mRenderer, mSurface[2]);
-	SDL_QueryTexture(mTexture[2], NULL, NULL, &iw, &ih);
-	txtRectStr = SDL_Rect{ 0,0,iw,ih };
-	pasteRectStr = SDL_Rect{ 100,100 + ih,iw,ih };
-	SDL_RenderCopy(mRenderer, mTexture[2], &txtRectStr, &pasteRectStr);
-
+	DispTextfile(FONT_PixelMplus, BLACK, 100, 100);
+	DispTextfile(FONT_PixelMplus, BLACK, 100, 100 + ih);
+	DispTextfile(FONT_PixelMplus, BLACK, 100, 100 + ih*2);
+	DispTextfile(FONT_PixelMplus, BLACK, 100, 100 + ih * 3);
 
 	// 画面に描画
 	SDL_RenderPresent(mRenderer);
-	// テキストの数だけメモリ解放
-	for (int i = 0; i < 3; i++)
+	bufCount = 0;
+}
+
+void Game::DispTextfile(int font, int color, int rw, int rh)
+{
+	char r[64] = { 0 };
+	if (bufCount != 0)
 	{
-		SDL_FreeSurface(mSurface[i]);
-		SDL_DestroyTexture(mTexture[i]);
+		bufCount++;
 	}
+	int i = 0;
+	while (buf[bufCount] != '\n')
+	{
+		if (bufCount > sizeof(buf)) { break; }
+		r[i] = buf[bufCount];
+		i++;
+		bufCount++;
+	}
+	RenderText(font, color, r, rw, rh);
 }

@@ -83,6 +83,11 @@ bool MakeDangeon::IsInRooms(int x, int y)
 
 bool MakeDangeon::IsInCorridor(int x, int y)
 {
+	// TODO:ˆê•”‚Ì’Ê˜H‚Ís‚«Ž~‚Ü‚è‚É‚µ‚½‚¢
+	// Å‰‚Ì•”‰®ˆÈŠO‚Åƒ‰ƒ“ƒ_ƒ€‚É
+	int rx = rand->Sampling(1, areaNumX-1);
+	int ry = rand->Sampling(1, areaNumY-1);
+
 	for (int hor = 0; hor < areaNumX; hor++)
 	{
 		for (int ver = 0; ver < areaNumY; ver++)
@@ -94,7 +99,7 @@ bool MakeDangeon::IsInCorridor(int x, int y)
 			// “ü—ÍÀ•W‚ªxy‚Ç‚¿‚ç‚É‚à”í‚Á‚Ä‚¢‚È‚¯‚ê‚Î
 
 			// x•ûŒü‚Ì˜A—’Ê˜H
-			if (y == roomBoxPosition[hor][ver + 1].y)
+			if (y == roomBoxPosition[hor][ver + 1].y || y == roomBoxPosition[hor][ver+1].y+1)
 			{
 				for (int i = 1; i < (roomBoxPosition[hor][ver + 1].x - roomBoxPosition[hor][ver].x); i++)
 				{
@@ -105,7 +110,7 @@ bool MakeDangeon::IsInCorridor(int x, int y)
 				}
 			}
 			// y•ûŒü‚Ì˜A—’Ê˜H
-			if (x == roomBoxPosition[hor + 1][ver].x)
+			if (x == roomBoxPosition[hor + 1][ver].x || x == roomBoxPosition[hor+1][ver].x + 1)
 			{
 				for (int i = 1; i < (roomBoxPosition[hor + 1][ver].y - roomBoxPosition[hor][ver].y); i++)
 				{
@@ -137,9 +142,6 @@ bool MakeDangeon::IsInCorridor(int x, int y)
 					}
 				}
 			}
-
-
-
 		}
 	}
 

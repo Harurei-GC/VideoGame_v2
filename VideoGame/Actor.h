@@ -59,9 +59,10 @@ public:
 
 	class Game* GetGame() { return mGame; }
 
+protected:
+	class Game* mGame;
 
 private:
-	class Game* mGame;
 	State mState;
 	Role mRole;
 	std::vector<class Component*> mComponents;

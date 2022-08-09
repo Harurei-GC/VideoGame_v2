@@ -10,6 +10,7 @@
 #include "SDL_ttf.h"
 #include "MakeDangeon.h"
 #include "Random.h"
+#include "Enemy.h"
 
 Game::Game()
 :mWindow(nullptr)
@@ -19,7 +20,8 @@ Game::Game()
 ,mIsCleared(false)
 ,mIsOver(false)
 ,mUpdatingActors(false)
-,timeLimit(25.0f)
+,timeLimit(35.0f)
+,bufCount(0)
 {
 	// êÊì™óvëfë„ì¸
 	objPosition = { Vector2(-1.0f, -1.0f) };
@@ -27,7 +29,6 @@ Game::Game()
 	mColor[BLACK] = {0,0,0,255};
 	mColor[BLUE] = {30, 30, 240, 255};
 }
-
 
 bool Game::Initialize() 
 {
@@ -114,6 +115,9 @@ void Game::LoadData()
 	// MobçÏê¨
 	mMob = new Mob(this);
 	mMob->SetPosition(Vector2(CHARACHIP_EDGE*3.0f, CHARACHIP_EDGE*3.0f));
+
+	// EnemyçÏê¨
+	new Enemy(this);
 
 	// è·äQï®ObjectçÏê¨
 	dangeon = new MakeDangeon();
@@ -275,26 +279,27 @@ void Game::GenerateOutput()
 	}
 
 	// écÇËéûä‘ï\é¶
-	mSurface[0] = TTF_RenderUTF8_Blended(mFont[FONT_BBBOcelot],
-		std::to_string(static_cast<int>(timeLimit)+1).c_str(), mColor[BLUE]);
-	mTexture[0] = SDL_CreateTextureFromSurface(mRenderer, mSurface[0]);
-	int iw, ih;
-	SDL_QueryTexture(mTexture[0], NULL, NULL, &iw, &ih);
 
-	txtRectTimer = SDL_Rect{ 0,0,iw,ih };
-	pasteRectTimer = SDL_Rect{ static_cast<int>(WIDTH-100),50,iw,ih};
-
-	SDL_RenderCopy(mRenderer, mTexture[0], &txtRectTimer, &pasteRectTimer);
+	RenderText(FONT_BBBOcelot, BLUE
+		, std::to_string(static_cast<int>(timeLimit) + 1).c_str()
+		, static_cast<int>(WIDTH-100),50);
 	
 	// âÊñ Ç…ï`âÊ
 	SDL_RenderPresent(mRenderer);
 
-	for (int i = 0; i < 1; i++)
-	{
-		SDL_FreeSurface(mSurface[i]);
-		SDL_DestroyTexture(mTexture[i]);
-	}
+}
 
+
+void Game::RenderText(int font, int color, const char* text, int rw,int rh)
+{
+	SDL_Surface* surf = TTF_RenderUTF8_Blended(mFont[font], text, mColor[color]);
+	SDL_Texture* txtr = SDL_CreateTextureFromSurface(mRenderer, surf);
+	SDL_QueryTexture(txtr, NULL, NULL, &iw, &ih);
+	txtRect = SDL_Rect{ 0,0,iw,ih };
+	pasteRect = SDL_Rect{ rw,rh,iw,ih };
+	SDL_RenderCopy(mRenderer, txtr, &txtRect, &pasteRect);
+	SDL_FreeSurface(surf);
+	SDL_DestroyTexture(txtr);
 }
 
 
@@ -341,6 +346,22 @@ void Game::RemoveObject(Object* object)
 	if (iter != mObject.end())
 	{
 		mObject.erase(iter);
+	}
+}
+
+
+void Game::AddEnemy(Enemy* enemy)
+{
+	mEnemy.emplace_back(enemy);
+}
+
+
+void Game::RemoveEnemy(Enemy* enemy)
+{
+	auto iter = std::find(mEnemy.begin(), mEnemy.end(), enemy);
+	if (iter != mEnemy.end())
+	{
+		mEnemy.erase(iter);
 	}
 }
 
