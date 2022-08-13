@@ -11,6 +11,7 @@
 #include "MakeDangeon.h"
 #include "Random.h"
 #include "Enemy.h"
+#include "Friend.h"
 
 Game::Game()
 :mWindow(nullptr)
@@ -112,12 +113,16 @@ void Game::LoadData()
 	mPlayer = new Player(this);
 	mPlayer->SetPosition(Vector2(CHARACHIP_EDGE*3.0f, CHARACHIP_EDGE*2.0f));
 
+	// FriendçÏê¨
+	mFriend = new Friend(this);
+	mFriend->SetPosition(Vector2(CHARACHIP_EDGE * 2.0f, CHARACHIP_EDGE * 2.0f));
+
 	// MobçÏê¨
 	mMob = new Mob(this);
 	mMob->SetPosition(Vector2(CHARACHIP_EDGE*3.0f, CHARACHIP_EDGE*3.0f));
 
 	// EnemyçÏê¨
-	new Enemy(this);
+	new Enemy(this, Vector2(CHARACHIP_EDGE*5.0f, CHARACHIP_EDGE*2.0f));
 
 	// è·äQï®ObjectçÏê¨
 	dangeon = new MakeDangeon();

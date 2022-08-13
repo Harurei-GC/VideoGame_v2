@@ -17,6 +17,7 @@ public:
 	{
 		Player,
 		Mob,
+		Enemy,
 		Object,
 		Goal
 	};

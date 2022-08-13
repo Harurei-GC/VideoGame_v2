@@ -13,7 +13,7 @@ public:
 protected:
 	//
 	class Actor* mOwner;
-	//
+	// ’l‚ª¬‚³‚¢•û‚©‚çæ‚ÉXV‚³‚ê‚é
 	int mUpdateOrder;
 	class Game* mGame;
 };

@@ -5,7 +5,7 @@
 class MoveComponent :public Component
 {
 public:
-	MoveComponent(class Actor* owner, int updateOrder = 10);
+	MoveComponent(class Actor* owner, int updateOrder = 50);
 	void Update(float deltaTime) override;
 
 	// “™‘¬“xˆÚ“®@Á‚µ‚Ä‚à‚¢‚¢‚©‚à

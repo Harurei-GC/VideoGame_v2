@@ -8,6 +8,12 @@
 #include "Player.h"
 #include "InputComponent.h"
 #include <iostream>
+#include "Friend.h"
+
+// 現時点では、PlayerとMob間の閉鎖的な条件でしか成り立たない。
+// これを変更して、Player-Enemy、Player-Player間の衝突などを実装する。
+// 
+//
 
 MoveComponent::MoveComponent(class Actor* owner, int updateOrder)
 	:Component(owner, updateOrder)
@@ -27,27 +33,46 @@ void MoveComponent::Update(float deltaTime)
 {
 	Vector2 pos = mOwner->GetPosition();
 
-	// Mobとの衝突判定
 	Player* player = mGame->GetPlayer();
+	Friend* fri = mGame->GetFriend();
 	Mob* mob = mGame->GetMob();
+
+	// 衝突判定
+	// Player,Friend
 	if (mOwner->GetRole() == Actor::Role::Player)
 	{
 		if (!Intersect(*(player->GetCircle()), *(mob->GetCircle())))
 		{
-			AccelMove(deltaTime, pos, mob, player); // NormalMoveかAccelMoveどちらか採用
+			AccelMove(deltaTime, pos, mob, player);
 		}
-	}
+		//if (!Intersect(*(player->GetCircle()), *(fri->GetCircle())))
+		//{
+		//	AccelMove(deltaTime, pos, fri, player);
+		//}
+	}// Mob
 	else if (mOwner->GetRole() == Actor::Role::Mob)
 	{
 		if (!Intersect(*(mob->GetCircle()), *(player->GetCircle())))
 		{
 			AccelMove(deltaTime, pos, player, mob);
 		}
+		//if (!Intersect(*(mob->GetCircle()), *(fri->GetCircle())))
+		//{
+		//	AccelMove(deltaTime, pos, fri, mob);
+		//}
+	}// Enemy
+	else if (mOwner->GetRole() == Actor::Role::Enemy)
+	{
+
 	}
 
 	mOwner->SetPosition(pos);
 }
 
+// 基本的な移動（等加速度的）
+// 物理学にのっとり、力・加速度・速度の3要素で計算
+// 摩擦力を考慮し、さらに上限速度も設定している。
+//
 void MoveComponent::AccelMove(float deltaTime, Vector2& pos, Actor* you, Actor* me)
 { 
 
@@ -76,7 +101,7 @@ void MoveComponent::AccelMove(float deltaTime, Vector2& pos, Actor* you, Actor* 
 	{
 		mHorizontalSpeed = 0;
 	}
-	// 最高速度設定(プレイヤーのみ)
+	// 上限速度設定(プレイヤーのみ)
 	if (me->GetRole() == Actor::Role::Player)
 	{
 		if (mHorizontalSpeed > 350.0f)
@@ -136,7 +161,7 @@ void MoveComponent::AccelMove(float deltaTime, Vector2& pos, Actor* you, Actor* 
 	{
 		mVerticalSpeed = 0;
 	}
-	// 最高速度設定
+	// 上限速度設定
 	if (mVerticalSpeed > 300.0f)
 	{ 
 		mVerticalSpeed = 300.0f; 

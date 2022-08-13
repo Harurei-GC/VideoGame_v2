@@ -23,7 +23,6 @@ Mob::Mob(Game* game)
 
 Mob::~Mob()
 {
-	//Actor::~Actor();
 }
 
 void Mob::UpdateActor(float deltaTime)

@@ -6,6 +6,7 @@
 Object::Object(Game* game, Vector2 pos)
 	:Actor(game)
 {
+	SetRole(Role::Object);
 	SetPosition(pos);
 	SpriteComponent* sprite = new SpriteComponent(this,90);
 	sprite->SetTexture(game->GetTexture("assets/Box.png"));

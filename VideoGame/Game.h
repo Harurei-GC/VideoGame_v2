@@ -48,6 +48,7 @@ public:
 	// Actorオブジェクト取得
 	class Player* GetPlayer() { return mPlayer; }
 	class Mob* GetMob() { return mMob; }
+	class Friend* GetFriend() { return mFriend; }
 	std::vector<class Object*> GetObject() { return mObject; }
 	std::vector<class Vector2> GetObjPosition() const{ return objPosition; }
 private:
@@ -117,6 +118,7 @@ private:
 
 	// Actorオブジェクト
 	class Player* mPlayer;
+	class Friend* mFriend;
 	class Mob* mMob;
 	class Goal* mGoal;
 	std::vector<class Object*> mObject;
