@@ -23,6 +23,17 @@ Actor::~Actor()
 	}
 }
 
+void Actor::Start()
+{
+	if (mState == State::Active)
+	{
+		for (auto component : mComponents)
+		{
+			component->Start();
+		}
+	}
+}
+
 void Actor::ProcessInput(const uint8_t* keyState)
 {
 	if (mState == State::Active)

@@ -9,6 +9,7 @@
 #include "InputComponent.h"
 #include <iostream>
 #include "Friend.h"
+using namespace std;
 
 // 現時点では、PlayerとMob間の閉鎖的な条件でしか成り立たない。
 // これを変更して、Player-Enemy、Player-Player間の衝突などを実装する。
@@ -17,277 +18,301 @@
 
 MoveComponent::MoveComponent(class Actor* owner, int updateOrder)
 	:Component(owner, updateOrder)
-	,mHorizontalSpeed(0.0f)
-	,mHorizontalAcceleration(0.0f)
-	,mHorizontalForce(0.0f)
-	,mVerticalSpeed(0.0f)
-	,mVerticalAcceleration(0.0f)
-	,mVerticalForce(0.0f)
+	,mSpeed(Vector2{0.0f,0.0f})
+	,mAcceleration(Vector2{0.0f,0.0f})
+	,mForce(Vector2{0.0f,0.0f})
 	,mPowerSpeed(Vector2(0.0f, 0.0f))
-	,isPoweredX(false)
-	,isPoweredY(false)
+	,isPowered(false)
+	,replacePos(Vector2{0.0f,0.0f})
+	,player(NULL)
+	,fri(NULL)
+	,mob(NULL)
+	,objPosition(NULL)
+	,mePhy(Physics{0.0f,0.0f})
+	,mRadius(0.0f)
+{
+	mRole = mOwner->GetRole();
+}
+
+void MoveComponent::Start()
 {
 }
 
 void MoveComponent::Update(float deltaTime)
 {
-	Vector2 pos = mOwner->GetPosition();
+	player = mGame->GetPlayer();
+	fri = mGame->GetFriend();
+	mob = mGame->GetMob();
+	objPosition = mGame->GetObjPosition();
 
-	Player* player = mGame->GetPlayer();
-	Friend* fri = mGame->GetFriend();
-	Mob* mob = mGame->GetMob();
+	replacePos = mOwner->GetPosition();
+
+	tPlayer.position = player->GetPosition();
+	tPlayer.speed = player->GetInput()->GetSpeed();
+	tPlayer.acceleration = player->GetInput()->GetAcceleration();
+	tPlayer.force = player->GetInput()->GetForce();
+	tPlayer.role = player->GetRole();
+	tPlayer.powerSpeed = player->GetInput()->GetPowerSpeed();
+	tPlayer.radius = player->GetCircle()->GetRadius();
+
+	tFriend.position = fri->GetPosition();
+	tFriend.speed = fri->GetMove()->GetSpeed();
+	tFriend.acceleration = fri->GetMove()->GetAcceleration();
+	tFriend.force = fri->GetMove()->GetForce();
+	tFriend.role = fri->GetRole();
+	tFriend.powerSpeed = fri->GetMove()->GetPowerSpeed();
+	tFriend.radius = fri->GetCircle()->GetRadius();
+
+	tMob.position = mob->GetPosition();
+	tMob.speed = mob->GetMove()->GetSpeed();
+	tMob.acceleration = mob->GetMove()->GetAcceleration();
+	tMob.force = mob->GetMove()->GetForce();
+	tMob.role = mob->GetRole();
+	tMob.powerSpeed = mob->GetMove()->GetPowerSpeed();
+	tMob.radius = mob->GetCircle()->GetRadius();
 
 	// 衝突判定
 	// Player,Friend
-	if (mOwner->GetRole() == Actor::Role::Player)
+	if (mRole == Actor::Role::Player)
 	{
+		mRadius = player->GetCircle()->GetRadius();
 		if (!Intersect(*(player->GetCircle()), *(mob->GetCircle())))
 		{
-			AccelMove(deltaTime, pos, mob, player);
+			SetTmpActorStatus(tMob);
+			AccelMove(deltaTime, mob, player);
 		}
 		//if (!Intersect(*(player->GetCircle()), *(fri->GetCircle())))
 		//{
 		//	AccelMove(deltaTime, pos, fri, player);
 		//}
 	}// Mob
-	else if (mOwner->GetRole() == Actor::Role::Mob)
+	else if (mRole == Actor::Role::Mob)
 	{
+		mRadius = mob->GetCircle()->GetRadius();
 		if (!Intersect(*(mob->GetCircle()), *(player->GetCircle())))
 		{
-			AccelMove(deltaTime, pos, player, mob);
+			AccelMove(deltaTime, player, mob);
 		}
 		//if (!Intersect(*(mob->GetCircle()), *(fri->GetCircle())))
 		//{
 		//	AccelMove(deltaTime, pos, fri, mob);
 		//}
 	}// Enemy
-	else if (mOwner->GetRole() == Actor::Role::Enemy)
+	else if (mRole == Actor::Role::Enemy)
 	{
-
 	}
-
-	mOwner->SetPosition(pos);
+	mOwner->SetPosition(replacePos);
 }
 
-// 基本的な移動（等加速度的）
-// 物理学にのっとり、力・加速度・速度の3要素で計算
-// 摩擦力を考慮し、さらに上限速度も設定している。
-//
-void MoveComponent::AccelMove(float deltaTime, Vector2& pos, Actor* you, Actor* me)
+void MoveComponent::SetTmpActorStatus(const TmpActorStatus& you)
+{
+	// WARNING: youを取得できなかったとき更新されない
+	tyou.position = you.position;
+	tyou.speed = you.speed;
+	tyou.acceleration = you.acceleration;
+	tyou.force = you.force;
+	tyou.role = you.role;
+	tyou.powerSpeed = you.powerSpeed;
+	tyou.radius = you.radius;
+}
+
+void MoveComponent::AccelMove(float deltaTime, Actor* you, Actor* me)
 { 
+	mePhy = { me->GetMass(), me->GetFriction() };
 
-	Mob* mob = mGame->GetMob();
-	Player* player = mGame->GetPlayer();
-	const std::vector<class Vector2>objPosition = mGame->GetObjPosition();
+	meetMoveConditions(deltaTime,you,me);
+	judgeCircleCollision(deltaTime, you, me, 'x');
+	judgeCircleCollision(deltaTime, you, me, 'y');
 
+	// 画面端に当たると反射して、ある一定の力を超えた場合に画面外に出る
+	if (0.0f > replacePos.x)
+	{ 
+		// 画面外に出ていたとしても速度がSCREEN_OUT_FORCEより小さくなれば端に戻る
+		if (mSpeed.x > -SCREEN_OUT_SPEED)
+		{
+			replacePos.x = 0.0f;
+			mSpeed.x = -mSpeed.x;
+		}
+	}
+	else if (replacePos.x > WIDTH) 
+	{
+		if (mSpeed.x < SCREEN_OUT_SPEED)
+		{
+			replacePos.x = WIDTH; 
+			mSpeed.x = -mSpeed.x;
+		}
+	}
 
-	float negX;
-	if(mHorizontalForce <0.0f){ negX = -1.0f; }
-	else { negX = 1.0f; }
+	if (0.0f > replacePos.y) 
+	{ 
+		if (mSpeed.y > -SCREEN_OUT_SPEED)
+		{
+			replacePos.y = 0.0f;
+			mSpeed.y = -mSpeed.y;
+		}
+	}
+	else if (replacePos.y > HEIGHT) 
+	{
+		if (mSpeed.y < SCREEN_OUT_SPEED)
+		{
+			replacePos.y = HEIGHT; 
+			mSpeed.y = -mSpeed.y;
+		}
+	}
+
+}
+
+void MoveComponent::meetMoveConditions(float deltaTime, Actor* you, Actor* me)
+{
+	Vector2 sign;
+	(mForce.x < 0.0f) ? (sign.x = -1.0f) : (sign.x = 1.0f);
+	if (mForce.x == 0.0f) { sign.x = 0.0f; }
+	(mForce.y < 0.0f) ? (sign.y = -1.0f) : (sign.y = 1.0f);
+	if (mForce.y == 0.0f) { sign.y = 0.0f; }
 	// 加速度・速度計算
-	mHorizontalAcceleration = negX * mHorizontalForce * mHorizontalForce / me->GetMass();
-	mHorizontalSpeed += mHorizontalAcceleration * deltaTime;
+	mAcceleration = Vector2(sign.x * mForce.x * mForce.x / mePhy.mass, sign.y * mForce.y * mForce.y / mePhy.mass);
+	mSpeed += mAcceleration * deltaTime;
+
 	// スピードアップボタン押されているかつ画面端にいなければ加速
-	if (isPoweredX && pos.x > 20.0f && pos.x + 20.0f< WIDTH) 
-	{ mHorizontalSpeed += negX * mPowerSpeed.x; }
+	// 加速量は現在の速度＋定数
+	if (isPowered && (replacePos.x > 20.0f && replacePos.x + 20.0f < WIDTH))
+	{
+		mSpeed.x += sign.x * mPowerSpeed.x;
+	}
+	if (isPowered && (replacePos.y > 20.0f && replacePos.y + 20.0f < WIDTH))
+	{
+		mSpeed.y += sign.y * mPowerSpeed.y;
+	}
+
 	// 加速度が0のときかつスピードが摩擦力以上であれば摩擦力が作動
-	if ((mHorizontalAcceleration == 0 )&& (fabsf(mHorizontalSpeed) > me->GetFriction()))
-	{ 
-		if(mHorizontalSpeed > 0){mHorizontalSpeed -= me->GetFriction(); }
-		else if (mHorizontalSpeed < 0) { mHorizontalSpeed += me->GetFriction(); }
+	if ((mAcceleration.x == 0) && (fabsf(mSpeed.x) > mePhy.friction))
+	{
+		if (mSpeed.x > 0) { mSpeed.x -= mePhy.friction; }
+		else if (mSpeed.x < 0) { mSpeed.x += mePhy.friction; }
 	}
 	// スピードが摩擦力より小さければスピードを0にする
-	else if ((mHorizontalAcceleration == 0) && (fabsf(mHorizontalSpeed) <= me->GetFriction()))
+	else if ((mAcceleration.x == 0) && (fabsf(mSpeed.x) <= mePhy.friction))
 	{
-		mHorizontalSpeed = 0;
+		mSpeed.x = 0;
 	}
-	// 上限速度設定(プレイヤーのみ)
-	if (me->GetRole() == Actor::Role::Player)
-	{
-		if (mHorizontalSpeed > 350.0f)
-		{
-			mHorizontalSpeed = 350.0f;
-			if (isPoweredX) { mHorizontalSpeed += negX * mPowerSpeed.x; }
-		}
-		else if (mHorizontalSpeed < -350.0f)
-		{
-			mHorizontalSpeed = -350.0f;
-			if (isPoweredX) { mHorizontalSpeed += negX * mPowerSpeed.x; }
-		}
-	}
-	pos.x += mHorizontalSpeed * deltaTime;
-	// 衝突判定　HACK:書き方冗長
-	Vector2 diffX = pos - you->GetPosition();
-	float distSqX = diffX.LengthSq();
-	float radiiSqX = mob->GetCircle()->GetRadius() + player->GetCircle()->GetRadius();
-	radiiSqX *= radiiSqX;
-	if (distSqX <= radiiSqX)
-	{
-		pos.x -= mHorizontalSpeed * deltaTime;
-		// 衝突した相手に自分のスピードを与える
-		if (me->GetRole() == Actor::Role::Mob)
-		{
-			float playerSpeed = player->GetInput()->GetHorizontalSpeed();
-			SwapSpeed(mHorizontalSpeed, playerSpeed);
-			player->GetInput()->SetHorizontalSpeed(playerSpeed);
-		}
-		else if (me->GetRole() == Actor::Role::Player)
-		{
-			float mobSpeed = mob->GetMove()->GetHorizontalSpeed();
-			SwapSpeed(mHorizontalSpeed, mobSpeed);
-			mob->GetMove()->SetHorizontalSpeed(mobSpeed);
-		}
-	}
-
-
-
-	float negY;
-	if (mVerticalForce < 0.0f) { negY = -1.0f; }
-	else { negY = 1.0f; }
-	// 加速度・速度計算
-	mVerticalAcceleration = negY * mVerticalForce * mVerticalForce / me->GetMass();
-	mVerticalSpeed += mVerticalAcceleration * deltaTime;
-	// スピードアップボタンが押されているかつ画面端にいなければ加速
-	if (isPoweredY && pos.y > 20.0f && pos.y + 20.0f < WIDTH)
-	{ mVerticalSpeed += negY * mPowerSpeed.y; }
 	// 加速度が０のときかつスピードが摩擦力以上であれば摩擦力が作動
-	if ((mVerticalAcceleration == 0) && (fabsf(mVerticalSpeed) > me->GetFriction()))
+	if ((mAcceleration.y == 0) && (fabsf(mSpeed.y) > mePhy.friction))
 	{
-		if (mVerticalSpeed > 0) { mVerticalSpeed -= me->GetFriction(); }
-		else if (mVerticalSpeed < 0) { mVerticalSpeed += me->GetFriction(); }
+		if (mSpeed.y > 0) { mSpeed.y -= mePhy.friction; }
+		else if (mSpeed.y < 0) { mSpeed.y += mePhy.friction; }
 	}
 	// スピードが摩擦力より小さければスピードを0にする
-	else if ((mVerticalAcceleration == 0) && (fabsf(mVerticalSpeed) <= me->GetFriction()))
+	else if ((mAcceleration.y == 0) && (fabsf(mSpeed.y) <= mePhy.friction))
 	{
-		mVerticalSpeed = 0;
+		mSpeed.y = 0;
 	}
+
+
 	// 上限速度設定
-	if (mVerticalSpeed > 300.0f)
-	{ 
-		mVerticalSpeed = 300.0f; 
-		if(isPoweredY){ mVerticalSpeed += negY * mPowerSpeed.y; }
-	}
-	else if (mVerticalSpeed < -300.0f) {
-		mVerticalSpeed = -300.0f; 
-		if (isPoweredY) { mVerticalSpeed += negY * mPowerSpeed.y; }
-	}
-	pos.y += mVerticalSpeed * deltaTime;
-	// 衝突判定　HACK:書き方冗長
-	Vector2 diffY = pos - you->GetPosition();
-	float distSqY = diffY.LengthSq();
-	float radiiSqY = mGame->GetMob()->GetCircle()->GetRadius() + mGame->GetPlayer()->GetCircle()->GetRadius();
-	radiiSqY *= radiiSqY;
-	if (distSqY <= radiiSqY)
+	if (mRole == Actor::Role::Player)
 	{
-		pos.y -= mVerticalSpeed * deltaTime;
-		//衝突した相手に自分のスピードを与える
-
-		if (me->GetRole() == Actor::Role::Mob)
-		{
-			float playerSpeed = player->GetInput()->GetVerticalSpeed();
-			SwapSpeed(mVerticalSpeed, playerSpeed);
-			player->GetInput()->SetVerticalSpeed(playerSpeed);
-		}
-		else if (me->GetRole() == Actor::Role::Player)
-		{
-			float mobSpeed = mob->GetMove()->GetVerticalSpeed();
-			SwapSpeed(mVerticalSpeed, mobSpeed);
-			mob->GetMove()->SetVerticalSpeed(mobSpeed);
-		}
+	if (mSpeed.x > 350.0f)
+	{
+		mSpeed.x = 350.0f;
+		if (isPowered) { mSpeed.x += sign.x * mPowerSpeed.x; }
+	}
+	else if (mSpeed.x < -350.0f)
+	{
+		mSpeed.x = -350.0f;
+		if (isPowered) { mSpeed.x += sign.x * mPowerSpeed.x; }
+	}
+	if (mSpeed.y > 300.0f)
+	{
+		mSpeed.y = 300.0f;
+		if (isPowered) { mSpeed.y += sign.y * mPowerSpeed.y; }
+	}
+	else if (mSpeed.y < -300.0f)
+	{
+		mSpeed.y = -300.0f;
+		if (isPowered) { mSpeed.y += sign.y * mPowerSpeed.y; }
 	}
 
-	float meRadious = 0.0f;
-	if (me->GetRole() == Actor::Role::Mob)
-	{
-		meRadious = mGame->GetMob()->GetCircle()->GetRadius();
 	}
-	else if (me->GetRole() == Actor::Role::Player)
-	{
-		meRadious = mGame->GetPlayer()->GetCircle()->GetRadius();
-	}
-	// 全てのObjectクラスに対して、Actorが重なっていないか判定
+
+	replacePos.x += mSpeed.x * deltaTime;
+	replacePos.y += mSpeed.y * deltaTime;
+
+	judgeBoxCollisionWithObject(deltaTime);
+}
+
+void MoveComponent::judgeBoxCollisionWithObject(float deltaTime)
+{
+	// WARNING:壁際でplayerとfriendが接触していると、
+	//		playerのSpeedやForceのリセットがfriendにペーストされる可能性あり
 	for (int i = 0; i < objPosition.size(); i++)
 	{
-		if ((objPosition.at(i).x - CHARACHIP_EDGE/2 <= pos.x + meRadious) &&
-			(pos.x - meRadious<= objPosition.at(i).x + CHARACHIP_EDGE /2))
+		if ((objPosition.at(i).x - CHARACHIP_EDGE / 2 <= replacePos.x + mRadius) &&
+			(replacePos.x - mRadius <= objPosition.at(i).x + CHARACHIP_EDGE / 2))
 		{
-			if ((objPosition.at(i).y - CHARACHIP_EDGE/2<= pos.y + meRadious) &&
-			(pos.y - meRadious<= objPosition.at(i).y + CHARACHIP_EDGE / 2))
+			if ((objPosition.at(i).y - CHARACHIP_EDGE / 2 <= replacePos.y + mRadius) &&
+				(replacePos.y - mRadius <= objPosition.at(i).y + CHARACHIP_EDGE / 2))
 			{
-				pos.y -= mVerticalSpeed * deltaTime;
-				pos.x -= mHorizontalSpeed * deltaTime;
+				replacePos -= mSpeed * deltaTime;
 				// 壁に当たったときにすぐに壁から離れられるようにスピードと力をリセット
-				mHorizontalForce = 0.0f;
-				mHorizontalSpeed = 0.0f;
-				mVerticalForce = 0.0f;
-				mVerticalSpeed = 0.0f;
+				mForce = Vector2{ 0.0f,0.0f };
+				mSpeed = Vector2{ 0.0f,0.0f };
 			}
 		}
-
-	
 	}
-
-
-	// 壁に当たると反射して、ある一定の力を超えた場合に画面外に出る
-	// 左端にあたったとき
-	if (0.0f > pos.x)
-	{ 
-		std::cout << "Mob Out:" << mGame->GetMob()->GetMove()->GetHorizontalSpeed() << std::endl;
-		// 画面外に出ていたとしても速度がSCREEN_OUT_FORCEより小さくなれば端に戻る
-		if (mHorizontalSpeed > -SCREEN_OUT_SPEED)
-		{
-			pos.x = 0.0f;
-			mHorizontalSpeed = -mHorizontalSpeed;
-		}
-		else
-		{
-			std::cout << "OUT OF SCREEN" << std::endl;
-		}
-	}
-	// 右端にあたったとき
-	else if (pos.x > WIDTH) 
-	{
-		if (mHorizontalSpeed < SCREEN_OUT_SPEED)
-		{
-			pos.x = WIDTH; 
-			mHorizontalSpeed = -mHorizontalSpeed;
-		}
-		else
-		{
-			std::cout << "OUT OF SCREEN" << std::endl;
-		}
-	}
-
-	if (0.0f > pos.y) 
-	{ 
-		if (mVerticalSpeed > -SCREEN_OUT_SPEED)
-		{
-			pos.y = 0.0f;
-			mVerticalSpeed = -mVerticalSpeed;
-		}
-		else
-		{
-			std::cout << "OUT OF SCREEN" << std::endl;
-		}
-	}
-	else if (pos.y > HEIGHT) 
-	{
-		if (mVerticalSpeed < SCREEN_OUT_SPEED)
-		{
-			pos.y = HEIGHT; 
-			mVerticalSpeed = -mVerticalSpeed;
-		}
-		else
-		{
-			std::cout << "OUT OF SCREEN" << std::endl;
-		}
-	}
-
 }
 
-void MoveComponent::SwapSpeed(float& mobSpeed, float& playerSpeed)
+void MoveComponent::judgeCircleCollision(float deltaTime, Actor* you, Actor* me, char axis)
 {
-	float tmp = mobSpeed;
+	float* position = NULL;
+	float* speed = NULL;
+	float* youSpeed = NULL;
+	switch (axis)
+	{
+	case 'x':
+		position = &replacePos.x;
+		speed = &mSpeed.x;
+		youSpeed = &tyou.speed.x;
+		break;
+	case 'y':
+		position = &replacePos.y;
+		speed = &mSpeed.y;
+		youSpeed = &tyou.speed.y;
+		break;
+	default:
+		return;
+	}
+
+	// 衝突判定
+	Vector2 diff = replacePos - tyou.position;
+	float distSq = diff.LengthSq();
+	float radiiSq = tyou.radius + mRadius;
+	radiiSq *= radiiSq;
+	if (distSq <= radiiSq)
+	{
+		*position -= *speed * deltaTime;
+		// 衝突した相手に自分のスピードを与える
+		SwapSpeed(*speed, *youSpeed);
+		switch (tyou.role)
+		{
+		case Actor::Role::Mob:
+			mob->GetMove()->SetSpeed(tyou.speed);
+			break;
+		case Actor::Role::Player:
+			player->GetInput()->SetSpeed(tyou.speed);
+			break;
+		case Actor::Role::Enemy:
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+
+template <typename T>
+void MoveComponent::SwapSpeed(T& mobSpeed, T& playerSpeed)
+{
+	T tmp = mobSpeed;
 	mobSpeed = playerSpeed;
 	playerSpeed = tmp;
 }
@@ -296,7 +321,7 @@ void MoveComponent::SwapSpeed(float& mobSpeed, float& playerSpeed)
 // 等速度移動ver 消してもいいかも
 void MoveComponent::NormalMove(Vector2& pos, Mob* mob, Player* player)
 {
-	pos.x += mHorizontalSpeed;
+	pos.x += mSpeed.x;
 	// AT:書き方冗長
 	Vector2 diffX = pos - mob->GetPosition();
 	float distSqX = diffX.LengthSq();
@@ -304,10 +329,10 @@ void MoveComponent::NormalMove(Vector2& pos, Mob* mob, Player* player)
 	radiiSqX *= radiiSqX;
 	if (distSqX <= radiiSqX)
 	{
-		pos.x -= mHorizontalSpeed;
+		pos.x -= mSpeed.x;
 	}
 
-	pos.y += mVerticalSpeed;
+	pos.y += mSpeed.y;
 	// AT:書き方冗長
 	Vector2 diffY = pos - mob->GetPosition();
 	float distSqY = diffY.LengthSq();
@@ -315,7 +340,7 @@ void MoveComponent::NormalMove(Vector2& pos, Mob* mob, Player* player)
 	radiiSqY *= radiiSqY;
 	if (distSqY <= radiiSqY)
 	{
-		pos.y -= mVerticalSpeed;
+		pos.y -= mSpeed.y;
 	}
 
 	if (0.0f > pos.x) { pos.x = 0.0f; }

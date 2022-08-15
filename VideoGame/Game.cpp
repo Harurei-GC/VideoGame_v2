@@ -71,6 +71,15 @@ bool Game::Initialize()
 
 
 	LoadData();
+
+	// FIXME:‚¤‚Ü‚­‹@”\‚µ‚È‚¢
+	mUpdatingActors = true;
+	for (auto actor : mActors)
+	{
+		actor->Start();
+	}
+	mUpdatingActors = false;
+
 	mTicksCount = SDL_GetTicks();
 
 	return true;
@@ -109,22 +118,17 @@ void Game::LoadData()
 	}
 
 
-	// Playerì¬
 	mPlayer = new Player(this);
 	mPlayer->SetPosition(Vector2(CHARACHIP_EDGE*3.0f, CHARACHIP_EDGE*2.0f));
 
-	// Friendì¬
 	mFriend = new Friend(this);
 	mFriend->SetPosition(Vector2(CHARACHIP_EDGE * 2.0f, CHARACHIP_EDGE * 2.0f));
 
-	// Mobì¬
 	mMob = new Mob(this);
 	mMob->SetPosition(Vector2(CHARACHIP_EDGE*3.0f, CHARACHIP_EDGE*3.0f));
 
-	// Enemyì¬
 	new Enemy(this, Vector2(CHARACHIP_EDGE*5.0f, CHARACHIP_EDGE*2.0f));
 
-	// áŠQ•¨Objectì¬
 	dangeon = new MakeDangeon();
 
 	// æ‚É‰æ–Ê‚ð–„‚ßs‚­‚µ‚ÄA•”‰®‚Ì•”•ª‚¾‚¯delete‚·‚é
@@ -141,10 +145,11 @@ void Game::LoadData()
 		}
 	}
 
-	// Goalì¬
 	mGoal = new Goal(this);
 	Vector2Int goalPosition = mGoal->RandomPosition(dangeon);
 	mGoal->SetPosition(Vector2(CHARACHIP_EDGE * (float)goalPosition.x, CHARACHIP_EDGE * (float)goalPosition.y));
+
+
 }
 
 

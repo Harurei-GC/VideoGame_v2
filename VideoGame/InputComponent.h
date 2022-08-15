@@ -8,11 +8,6 @@ public:
 	InputComponent(class Actor* owner);
 	void ProcessInput(const uint8_t* keyState) override;
 
-	// 等速度移動
-	//void SetSpeed(const uint8_t* keyState);
-	// 等加速度移動
-	void SetForce(const uint8_t* keyState);
-
 	float GetMaxSpeed() const { return mMaxSpeed; }
 	float GetMaxForce() const { return mMaxForce; }
 	int GetForwardKey() const { return mForwardKey; }
@@ -30,14 +25,14 @@ public:
 	void SetPowerKey(int key) { mPowerKey = key; }
 	
 private:
+	void enableForce(float& force, bool isNegative);
+
 	float mMaxSpeed;
 	float mMaxForce;
-	// 垂直方向へ移動するためのキー
 	int mForwardKey;
 	int mBackKey;
-	// 水平方向へ移動するためのキー
 	int mRightKey;
 	int mLeftKey;
-	// Speedを増やすキー
 	int mPowerKey;
+	Vector2 inputForce;
 };

@@ -25,6 +25,7 @@ public:
 	Actor(class Game* game);
 	virtual ~Actor();
 
+	void Start();
 	// Gameから呼び出されるProcessInput関数（オーバーライド不可）
 	void ProcessInput(const uint8_t* keyState);
 	// Gameから呼び出されるUpdate関数（オーバーライド不可）

@@ -6,7 +6,8 @@ class Component
 public:
 	Component(class Actor* owner, int updateOrder = 100);
 	virtual ~Component();
-	// このコンポーネントに対する処理入力（オーバーライド）
+	// FIXME: Startがクラッシュする
+	virtual void Start() {};
 	virtual void ProcessInput(const uint8_t *keyState){};
 	virtual void Update(float deltaTime);
 	int GetUpdateOrder() const { return mUpdateOrder; }
