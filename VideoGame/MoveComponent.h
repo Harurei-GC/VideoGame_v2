@@ -34,6 +34,7 @@ public:
 	Vector2 GetForce()const { return mForce; }
 	Vector2 GetPowerSpeed() const { return mPowerSpeed; }
 	void SetSpeed(Vector2 speed) { mSpeed = speed; }
+	void SetTmpSpeed(Vector2 speed) { tmpSpeed = speed; }
 	void SetAcceleration(Vector2 acceleration) { mAcceleration = acceleration; }
 	void SetForce(Vector2 force) { mForce = force; }
 	void SetPowerSpeed(Vector2 speed){ mPowerSpeed = speed; }
@@ -43,15 +44,15 @@ protected:
 
 private:
 	// 等加速度で移動(Update()中で使用) CHANGED:publicからprivateへ移動
-	void AccelMove(float deltaTime, class Actor* you, class Actor* me);
+	void JudgeActorsCollision(float deltaTime, class Actor* you, class Actor* me, TmpActorStatus& tYou);
 	// 等速度移動　消してもいいかも
-	void NormalMove(Vector2& pos, class Mob* mob, class Player* player);
+	// void NormalMove(Vector2& pos, class Mob* mob, class Player* player);
 	// 移動ステータス決定
-	void meetMoveConditions(float deltaTime, class Actor* you, class Actor* me);
+	void meetMoveConditions(float deltaTime);
 	// 全てのObjectクラスに対して、Actorが重なっていないか判定
-	void judgeBoxCollisionWithObject(float deltaTime);
-	void judgeCircleCollision(float deltaTime, class Actor* you, class Actor* me, char axis);
-	template<typename T>void SwapSpeed(T& mobSpeed, T& playerSpeed);
+	void JudgeBoxCollisionWithObject(float deltaTime);
+	void JudgeCircleCollision(float deltaTime, class Actor* you, class Actor* me, char axis);
+	template<typename T>void SwapSpeed(T& aSpeed, T& bSpeed);
 	void SetTmpActorStatus(const TmpActorStatus& you);
 
 	// 関数内で一時的に使用する変数
@@ -71,6 +72,7 @@ private:
 
 	// MoveComponentで保持する値
 	Vector2 mSpeed;
+	Vector2 tmpSpeed;
 	Vector2 mAcceleration;
 	Vector2 mForce;
 	Vector2 mPowerSpeed;

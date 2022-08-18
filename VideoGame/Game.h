@@ -20,6 +20,8 @@
 #define BLACK 0
 #define BLUE 1
 
+#define ENEMIES 1
+
 // ゲームの起動、終了など管理
 class Game 
 {
@@ -123,6 +125,7 @@ private:
 	class Goal* mGoal;
 	std::vector<class Object*> mObject;
 	std::vector<class Enemy*> mEnemy;
+	class Sprite* timerBackground;
 
 	// Objectの座標配列
 	std::vector<class Vector2> objPosition;

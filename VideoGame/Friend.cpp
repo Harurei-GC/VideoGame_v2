@@ -8,7 +8,8 @@
 Friend::Friend(Game* game)
 	:Actor(game)
 {
-	SetRole(Role::Player);
+
+	SetRole(Role::Friend);
 	SetMass(5.0f);
 	SetFriction(10.0f);
 
@@ -21,4 +22,19 @@ Friend::Friend(Game* game)
 	mMove = new MoveComponent(this);
 
 	mAI = new AIComponent(this);
+}
+
+Friend::~Friend()
+{
+	
+}
+
+void Friend::UpdateActor(float deltaTime)
+{
+
+}
+
+void Friend::ActorInput(const uint8_t* keyState)
+{
+
 }

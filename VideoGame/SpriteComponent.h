@@ -15,9 +15,11 @@ public:
 	int GetDrawOrder() const{ return mDrawOrder; }
 	int GetTexHeight() const{ return mTexHeight; }
 	int GetTexWidth() const { return mTexWidth; }
+	void SetRenderColorAlpha(int alpha) { mAlpha = alpha; }
 protected:
 	SDL_Texture* mTexture;
 	int mDrawOrder;
 	int mTexWidth;
-	int mTexHeight; // ‚±‚ê‚È‚É
+	int mTexHeight;
+	Uint8 mAlpha;
 };

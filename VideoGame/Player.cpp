@@ -31,7 +31,7 @@ Player::Player(Game* game)
 
 Player::~Player()
 {
-
+	// •K—v‚Å‚ ‚ê‚Î delete game->mPlayer ‚Æ‚©
 }
 
 void Player::UpdateActor(float deltaTime)

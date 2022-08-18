@@ -8,6 +8,7 @@ SpriteComponent::SpriteComponent(Actor* owner, int drawOrder)
 	,mTexHeight(0)
 	,mTexWidth(0)
 	,mDrawOrder(drawOrder)
+	,mAlpha(255)
 {
 	mOwner->GetGame()->AddSprite(this);
 }
@@ -21,6 +22,7 @@ void SpriteComponent::Draw(SDL_Renderer* renderer)
 {
 	if (mTexture)
 	{
+		SDL_SetTextureAlphaMod(mTexture, mAlpha);
 		SDL_Rect r;
 		r.w = static_cast<int>(mTexWidth * mOwner->GetScale());
 		r.h = static_cast<int>(mTexHeight * mOwner->GetScale());
@@ -42,5 +44,6 @@ void SpriteComponent::Draw(SDL_Renderer* renderer)
 void SpriteComponent::SetTexture(SDL_Texture* texture)
 {
 	mTexture = texture;
+	SDL_SetTextureAlphaMod(mTexture, mAlpha);
 	SDL_QueryTexture(texture, nullptr, nullptr, &mTexWidth, &mTexHeight);
 }

@@ -15,3 +15,4 @@ private:
 
 // 2つのオブジェクトが衝突している場合true
 bool Intersect(const CircleComponent& a, const CircleComponent& b);
+bool IntersectAsPosition(class CircleComponent& ac, class CircleComponent& bc, Vector2 a, Vector2 b);

@@ -16,6 +16,7 @@ public:
 	enum class Role
 	{
 		Player,
+		Friend,
 		Mob,
 		Enemy,
 		Object,

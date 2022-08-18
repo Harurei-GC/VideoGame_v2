@@ -12,6 +12,7 @@
 #include "Random.h"
 #include "Enemy.h"
 #include "Friend.h"
+#include "Sprite.h"
 
 Game::Game()
 :mWindow(nullptr)
@@ -127,7 +128,12 @@ void Game::LoadData()
 	mMob = new Mob(this);
 	mMob->SetPosition(Vector2(CHARACHIP_EDGE*3.0f, CHARACHIP_EDGE*3.0f));
 
-	new Enemy(this, Vector2(CHARACHIP_EDGE*5.0f, CHARACHIP_EDGE*2.0f));
+	for (int i = 0; i < ENEMIES; i++)
+	{
+		// TODO:positionはそのうちランダム生成させる
+		new Enemy(this, Vector2(CHARACHIP_EDGE * 5.0f, CHARACHIP_EDGE * 2.0f), i);
+		mEnemy.at(i)->SetPosition(mEnemy.at(i)->GetEnemyPosition());
+	}
 
 	dangeon = new MakeDangeon();
 
@@ -149,7 +155,8 @@ void Game::LoadData()
 	Vector2Int goalPosition = mGoal->RandomPosition(dangeon);
 	mGoal->SetPosition(Vector2(CHARACHIP_EDGE * (float)goalPosition.x, CHARACHIP_EDGE * (float)goalPosition.y));
 
-
+	timerBackground = new Sprite(this);
+	timerBackground->SetPosition(Vector2((WIDTH - 80), 60));
 }
 
 
@@ -206,6 +213,11 @@ void Game::ProcessInput()
 	{
 		mPlayer->SetPosition(Vector2(CHARACHIP_EDGE * 3.0f, CHARACHIP_EDGE * 2.0f));
 		mMob->SetPosition(Vector2(CHARACHIP_EDGE * 3.0f, CHARACHIP_EDGE * 3.0f));
+		mFriend->SetPosition(Vector2(CHARACHIP_EDGE * 2.0f, CHARACHIP_EDGE * 2.0f));
+		for (int i = 0; i < ENEMIES; i++)
+		{
+			mEnemy.at(i)->SetPosition(mEnemy.at(i)->GetEnemyPosition());
+		}
 	}
 
 	mUpdatingActors = true;
@@ -281,15 +293,13 @@ void Game::GenerateOutput()
 	SDL_SetRenderDrawColor(mRenderer, 220, 220, 220, 255);
 	SDL_RenderClear(mRenderer);
 
-	// 全てのスプライトコンポーネントを描画
-	//WARNING:メモリ使用量が増えている
 	for (auto sprite : mSprites)
 	{
 		sprite->Draw(mRenderer);
 	}
 
-	// 残り時間表示
 
+	// 残り時間表示
 	RenderText(FONT_BBBOcelot, BLUE
 		, std::to_string(static_cast<int>(timeLimit) + 1).c_str()
 		, static_cast<int>(WIDTH-100),50);

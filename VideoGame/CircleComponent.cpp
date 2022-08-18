@@ -28,3 +28,25 @@ bool Intersect(const CircleComponent& a, const CircleComponent& b)
 
 	return distSq <= radiiSq; 
 }
+
+bool IntersectAsPosition(class CircleComponent& ac, class CircleComponent& bc, Vector2 a, Vector2 b)
+{
+	Vector2 diff = a - b;
+	float distSq = diff.LengthSq();
+	float radiiSq = ac.GetRadius() + bc.GetRadius();
+	radiiSq *= radiiSq;
+	return distSq <= radiiSq;
+}
+
+//
+//bool Intersect(const CircleComponent& a, const CircleComponent& b,
+//	Vector2 posA, Vector2 posB)
+//{
+//	Vector2 diff = posA - posB;
+//	float distSq = diff.LengthSq();
+//
+//	float radiiSq = a.GetRadius() + b.GetRadius();
+//	radiiSq *= radiiSq;
+//
+//	return distSq <= radiiSq;
+//}
