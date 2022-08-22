@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include "Math.h"
 #include "SDL_ttf.h"
+#include <map>
 
 #define WIDTH 1024.0f
 #define HEIGHT 768.0f
@@ -22,24 +23,18 @@
 
 #define ENEMIES 1
 
-// ゲームの起動、終了など管理
 class Game 
 {
 public:
 	Game();
-	// ゲームの初期化
-	// ウインドウの作成やライブラリの初期化を行う
-	// 初期化に成功すればtrue,失敗でfalseを返す
 	bool Initialize();
-	// ゲームでループするメソッドを記述
 	void RunLoop();
-	// ゲームの終了
 	void Shutdown();
 
 	void AddObject(class Object* object);
 	void RemoveObject(class Object* object);
-	void AddEnemy(class Enemy* enemy);
-	void RemoveEnemy(class Enemy* enemy);
+	void AddEnemy(int key,class Enemy* enemy);
+	void RemoveEnemy(int key);
 	void AddActor(class Actor* actor);
 	void RemoveActor(class Actor* actor);
 	void AddSprite(class SpriteComponent* sprite);
@@ -53,12 +48,27 @@ public:
 	class Friend* GetFriend() { return mFriend; }
 	std::vector<class Object*> GetObject() { return mObject; }
 	std::vector<class Vector2> GetObjPosition() const{ return objPosition; }
+	std::map<int,class Enemy*> GetEnemy() const { return mEnemy; }
+
+	template<typename MAP, typename KEY>
+	bool ContainsKey(MAP m, KEY k)
+	{
+		return m.find(k) != m.end();
+	}
+	class Enemy* GetPersonalEnemy(int key)
+	{
+		if (ContainsKey(mEnemy, key))
+		{
+			return mEnemy.at(key);
+		}
+		else
+		{
+			return mEnemy.at(-1);
+		}
+	}
 private:
-	// ゲーム処理
 	void ProcessInput();
-	// ゲーム更新
 	void UpdateGame();
-	// ゲーム描画
 	void GenerateOutput();
 	// テキストレンダラ
 	// 呼び出し前に、txtRectとpasteRectを初期化しておく必要がある
@@ -115,16 +125,15 @@ private:
 	bool mIsCleared;
 	// 時間切れか
 	bool mIsOver;
-	// 現在Actorを更新しているか
 	bool mUpdatingActors;
 
-	// Actorオブジェクト
 	class Player* mPlayer;
 	class Friend* mFriend;
 	class Mob* mMob;
 	class Goal* mGoal;
 	std::vector<class Object*> mObject;
-	std::vector<class Enemy*> mEnemy;
+	// NOTE:キー-1に空のEnemyあり
+	std::map<int ,class Enemy*> mEnemy;
 	class Sprite* timerBackground;
 
 	// Objectの座標配列

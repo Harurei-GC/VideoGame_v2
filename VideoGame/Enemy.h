@@ -1,17 +1,22 @@
 #pragma once
 #include "Actor.h"
+#include "MoveComponent.h"
+
+// TODO:もしかしたらこれから敵の種類が増えたときにEnemyの派生クラスが出てくるかも
 class Enemy :public Actor
 {
 public:
 	Enemy(class Game* game,Vector2 pos,int number);
 	~Enemy();
 	void UpdateActor(float deltaTime) override;
-	Vector2 GetEnemyPosition() const { return mPosition; }
+	Vector2 GetInitialPosition() const { return mPosition; }
+	TmpActorStatus GetTmpActorStatus() const { return mStatus; }
+	class CircleComponent* GetCircle() const { return mCircle; }
+	class MoveComponent* GetMove() const { return mMove; }
 private:
 	class CircleComponent* mCircle;
 	class MoveComponent* mMove;
 	class AIComponent* mAI;
-	// 0から始まるEnemy識別番号
-	int IDNo;
 	Vector2 mPosition;
+	TmpActorStatus mStatus;
 };

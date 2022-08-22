@@ -10,6 +10,8 @@ Actor::Actor(Game* game)
 	,mMass(1.0f)
 	,mFriction(0.0f)
 	,mGame(game)
+	,IDNo(-1)
+	,mHP(100)
 {
 	mGame->AddActor(this);
 }

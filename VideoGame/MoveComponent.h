@@ -3,6 +3,8 @@
 #include "Math.h"
 #include <vector>
 #include "Actor.h"
+#include <map>
+#include <iostream>
 
 struct Physics
 {
@@ -55,16 +57,18 @@ private:
 	template<typename T>void SwapSpeed(T& aSpeed, T& bSpeed);
 	void SetTmpActorStatus(const TmpActorStatus& you);
 
+
 	// ŠÖ”“à‚Åˆê“I‚Ég—p‚·‚é•Ï”
 	class Player* player;
 	class Friend* fri;
 	class Mob* mob;
+	std::map<int, class Enemy*> enemy;
 	std::vector<class Vector2>objPosition;
 	TmpActorStatus tPlayer;
 	TmpActorStatus tFriend;
 	TmpActorStatus tMob;
-	//TmpActorStatus tme; // ‚¢‚ç‚È‚¢à
 	TmpActorStatus tyou;
+	TmpActorStatus tEnemy;
 	Physics mePhy;
 	Vector2 replacePos;
 	Actor::Role mRole;

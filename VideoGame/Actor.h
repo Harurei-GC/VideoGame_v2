@@ -27,23 +27,16 @@ public:
 	virtual ~Actor();
 
 	void Start();
-	// Gameから呼び出されるProcessInput関数（オーバーライド不可）
 	void ProcessInput(const uint8_t* keyState);
-	// Gameから呼び出されるUpdate関数（オーバーライド不可）
 	void Update(float deltaTime);
-	// Actorに関連付けられたコンポーネントの更新（オーバーライド不可）
 	void UpdateComponents(float deltaTime);
-	// Actor固有の入力コード（オーバーライド）
+	// 更新順はActorInput→UpdateActor
 	virtual void ActorInput(const uint8_t* keyState);
-	// 各Actorの更新処理
 	virtual void UpdateActor(float deltaTime);
 
-	// コンポーネント追加
 	void AddComponent(class Component* component);
-	// コンポーネント削除
 	void RemoveComponent(class Component* component);
 
-	// Getter,Setter
 	float GetScale() const { return mScale; }
 	void SetScale(float scale) { mScale = scale; }
 	const Vector2& GetPosition() const { return mPosition; }
@@ -56,9 +49,14 @@ public:
 	void SetFriction(float friction) { mFriction = friction; }
 	Role GetRole() const { return mRole; }
 	void SetRole(Role role) { mRole = role; }
-	// Rotationいらないかも?verticalhorizontalあるから
+	// NOTE:Rotationいらないかも?verticalhorizontalあるから
 	float GetRotation() const { return mRotation; }
 	void SetRotation(float rotation) { mRotation = rotation; }
+	int GetID() const { return IDNo; }
+	void SetID(int num) { IDNo = num; }
+	int GetHP() const { return mHP; }
+	void SetHP(int hp) { mHP = hp; }
+	void TakeDamage(int damage) { mHP -= damage; }
 
 	class Game* GetGame() { return mGame; }
 
@@ -66,6 +64,9 @@ protected:
 	class Game* mGame;
 
 private:
+	int mHP;
+	// 0から始まる識別番号、Enemyのように複数あるオブジェクト用
+	int IDNo;
 	State mState;
 	Role mRole;
 	std::vector<class Component*> mComponents;

@@ -128,11 +128,14 @@ void Game::LoadData()
 	mMob = new Mob(this);
 	mMob->SetPosition(Vector2(CHARACHIP_EDGE*3.0f, CHARACHIP_EDGE*3.0f));
 
+	// NOTE:ぬるぽ防止のためここでキーが-1のEnemyを追加
+	new Enemy(this, Vector2(-100.0f, -100.0f), -1);
+	mEnemy.at(-1)->SetPosition(mEnemy.at(-1)->GetInitialPosition());
 	for (int i = 0; i < ENEMIES; i++)
 	{
 		// TODO:positionはそのうちランダム生成させる
 		new Enemy(this, Vector2(CHARACHIP_EDGE * 5.0f, CHARACHIP_EDGE * 2.0f), i);
-		mEnemy.at(i)->SetPosition(mEnemy.at(i)->GetEnemyPosition());
+		mEnemy.at(i)->SetPosition(mEnemy.at(i)->GetInitialPosition());
 	}
 
 	dangeon = new MakeDangeon();
@@ -216,7 +219,7 @@ void Game::ProcessInput()
 		mFriend->SetPosition(Vector2(CHARACHIP_EDGE * 2.0f, CHARACHIP_EDGE * 2.0f));
 		for (int i = 0; i < ENEMIES; i++)
 		{
-			mEnemy.at(i)->SetPosition(mEnemy.at(i)->GetEnemyPosition());
+			mEnemy.at(i)->SetPosition(mEnemy.at(i)->GetInitialPosition());
 		}
 	}
 
@@ -370,19 +373,16 @@ void Game::RemoveObject(Object* object)
 }
 
 
-void Game::AddEnemy(Enemy* enemy)
+void Game::AddEnemy(int key,Enemy* enemy)
 {
-	mEnemy.emplace_back(enemy);
+	mEnemy.emplace(key,enemy);
 }
 
-
-void Game::RemoveEnemy(Enemy* enemy)
+// TODO:ちゃんと指定のIDのEnemyが消えるようにする
+// vectorの仕様のままmap型のmEnemyに応用しているので、バグの可能性あり
+void Game::RemoveEnemy(int key)
 {
-	auto iter = std::find(mEnemy.begin(), mEnemy.end(), enemy);
-	if (iter != mEnemy.end())
-	{
-		mEnemy.erase(iter);
-	}
+	mEnemy.erase(key);
 }
 
 

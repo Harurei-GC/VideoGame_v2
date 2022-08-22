@@ -9,12 +9,14 @@
 #include "InputComponent.h"
 #include <iostream>
 #include "Friend.h"
+#include "Enemy.h"
 using namespace std;
 
-// 現時点では、PlayerとMob間の閉鎖的な条件でしか成り立たない。
-// これを変更して、Player-Enemy、Player-Player間の衝突などを実装する。
-// 
-//
+// MoveComponent.cpp
+// 一時的にID格納
+// TODO:enemyNumが適切に設定できるようにする
+// GameからID取得して…みたいな
+const int tmpEnemyNum = 0;
 
 MoveComponent::MoveComponent(class Actor* owner, int updateOrder)
 	:Component(owner, updateOrder)
@@ -45,6 +47,8 @@ void MoveComponent::Update(float deltaTime)
 	player = mGame->GetPlayer();
 	fri = mGame->GetFriend();
 	mob = mGame->GetMob();
+	enemy = mGame->GetEnemy();
+	
 	objPosition = mGame->GetObjPosition();
 
 	replacePos = mOwner->GetPosition();
@@ -73,27 +77,44 @@ void MoveComponent::Update(float deltaTime)
 	tMob.powerSpeed = mob->GetMove()->GetPowerSpeed();
 	tMob.radius = mob->GetCircle()->GetRadius();
 
-	// 各Actorと衝突していればtrue
+	// HACK:一時的な書き方
+	// FIXME:EnemyがDeadになったときエラー
+	// enemyが存在するか判定が必要
+	// enemy.at(tmpEnemyNumを呼び出すときにチェックする仕組みが必要
+	// 関数であらかじめ処理を書いておくなど
+	tEnemy = mGame->GetPersonalEnemy(tmpEnemyNum)->GetTmpActorStatus();
+
+	bool isEnemyNull = (mGame->GetPersonalEnemy(tmpEnemyNum)->GetID() == -1);
 	bool player_mob = Intersect(*(player->GetCircle()), *(mob->GetCircle()));
 	bool player_fri = Intersect(*(player->GetCircle()), *(fri->GetCircle()));
 	bool fri_mob = Intersect(*(mob->GetCircle()), *(fri->GetCircle()));
+	bool player_enemy = (isEnemyNull)?(false):
+		(Intersect(*(player->GetCircle()), *(mGame->GetPersonalEnemy(tmpEnemyNum)->GetCircle())));
 
-	// 衝突判定
 	if (mRole == Actor::Role::Player)
 	{
 		mRadius = player->GetCircle()->GetRadius();
-		// Actorとの衝突判定
-		if (!player_mob && !player_fri)
+		if (!player_mob && !player_fri && !player_enemy)
 		{
 			meetMoveConditions(deltaTime);
 			JudgeBoxCollisionWithObject(deltaTime);
-			if (IntersectAsPosition(*(player->GetCircle()),*(mob->GetCircle()),replacePos,tMob.position))
+			// NOTE:(Q)どうしてplayer_mob変数があるのにここでIntersectを使っているの？
+			// (A)Intersect関数で、Actorの位置を取得するために使われているGetCenter関数は
+			// Actor本体からmPositionを取得しているんだけど、このmPositionは現時点ではまだ
+			// 更新されていません！だから代わりに更新済みのreplacePosを使うようにしているよ
+			if (IntersectAsPosition(*(player->GetCircle()), *(mob->GetCircle()), replacePos, tMob.position))
 			{
 				JudgeActorsCollision(deltaTime, mob, player, tMob);
 			}
 			else if (IntersectAsPosition(*(player->GetCircle()), *(fri->GetCircle()), replacePos, tFriend.position))
 			{
 				JudgeActorsCollision(deltaTime, fri, player, tFriend);
+			}
+			else if ((!isEnemyNull) && (IntersectAsPosition(*(player->GetCircle()),
+				*(mGame->GetPersonalEnemy(tmpEnemyNum)->GetCircle()), replacePos, tEnemy.position)))
+			{
+				JudgeActorsCollision(deltaTime, mGame->GetPersonalEnemy(tmpEnemyNum), player, tEnemy);
+				mGame->GetPersonalEnemy(tmpEnemyNum)->TakeDamage(50);
 			}
 		}
 		else if (!player_mob)
@@ -167,18 +188,27 @@ void MoveComponent::Update(float deltaTime)
 			JudgeActorsCollision(deltaTime, fri, mob, tFriend);
 		}
 	}
-	// NOTE:Enemyも移動させるなら記述する
-	// 単にダメージ与えるなどであれば新しくコンポーネントを用意する
 	else if (mRole == Actor::Role::Enemy)
 	{
+		mRadius = enemy.at(mOwner->GetID())->GetCircle()->GetRadius();
+		if (!player_enemy)
+		{
+			meetMoveConditions(deltaTime);
+			JudgeBoxCollisionWithObject(deltaTime);
+			if (!isEnemyNull && (IntersectAsPosition(*(player->GetCircle()),
+				*(mGame->GetPersonalEnemy(tmpEnemyNum)->GetCircle()), replacePos, tPlayer.position)))
+			{
+				JudgeActorsCollision(deltaTime, player, mGame->GetPersonalEnemy(tmpEnemyNum), tEnemy);
+				player->TakeDamage(10);
+			}
+		}
 	}
 	mOwner->SetPosition(replacePos);
 
 }
 
 
-// 自主的な移動
-// replacePosは更新するが、ownerのmPositionはまだ更新しない
+// NOTE:replacePosは更新するが、ownerのmPositionはまだ更新しない
 void MoveComponent::meetMoveConditions(float deltaTime)
 {
 	Vector2 sign;
@@ -298,8 +328,6 @@ void MoveComponent::JudgeActorsCollision(float deltaTime, Actor* you, Actor* me,
 }
 
 // 自身の物理状態を相手Actorに押し付け
-// NOTE:この状態だと自分のスピードを更新する前に
-// 相手と自分のスピードがまったく同じになってしまう
 void MoveComponent::JudgeCircleCollision(float deltaTime, Actor* you, Actor* me, char axis)
 {
 	float* position = NULL;
@@ -332,7 +360,7 @@ void MoveComponent::JudgeCircleCollision(float deltaTime, Actor* you, Actor* me,
 	{
 
 		*position -= *speed * deltaTime;
-	// 衝突した相手に自分のスピードを与える
+		// 衝突した相手に自分のスピードを与える
 		SwapSpeed(*speed, *youSpeed);
 		switch (tyou.role)
 		{
@@ -346,6 +374,7 @@ void MoveComponent::JudgeCircleCollision(float deltaTime, Actor* you, Actor* me,
 			fri->GetMove()->SetSpeed(tyou.speed);
 			break;
 		case Actor::Role::Enemy:
+			mGame->GetPersonalEnemy(tmpEnemyNum)->GetMove()->SetSpeed(tyou.speed);
 			break;
 		default:
 			break;

@@ -7,9 +7,9 @@
 
 Enemy::Enemy(Game* game, Vector2 pos, int number)
 	:Actor(game)
-	,IDNo(number)
 	,mPosition(pos)
 {
+	SetID(number);
 	SetRole(Role::Enemy);
 	SetMass(10.0f);
 	SetFriction(10.0f);
@@ -24,14 +24,24 @@ Enemy::Enemy(Game* game, Vector2 pos, int number)
 
 	mAI = new AIComponent(this);
 
-	mGame->AddEnemy(this);
+	mGame->AddEnemy(GetID(), this);
 }
 
 Enemy::~Enemy()
 {
-	mGame->RemoveEnemy(this);
+	mGame->RemoveEnemy(GetID());
 }
 
 void Enemy::UpdateActor(float deltaTime)
 {
+	mStatus.position = GetPosition();
+	mStatus.speed = mMove->GetSpeed();
+	mStatus.acceleration = mMove->GetAcceleration();
+	mStatus.force = mMove->GetForce();
+	mStatus.role = GetRole();
+	mStatus.powerSpeed = mMove->GetPowerSpeed();
+	mStatus.radius = mCircle->GetRadius();
+
+	// ‚±‚±‚Ådelete‚ªg‚í‚ê‚Äƒƒ‚ƒŠ‰ğ•ú‚³‚ê‚é
+	if (GetHP() <= 0) { SetState(State::Dead); }
 }
