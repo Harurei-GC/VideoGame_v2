@@ -35,7 +35,7 @@ void RigidbodyComponent::Update(float deltaTime)
 	{
 		mSpeed.x += sign.x * mPowerSpeed.x;
 	}
-	if (isPowered && (replacePos.y > 20.0f && replacePos.y + 20.0f < WIDTH))
+	if (isPowered && (replacePos.y > 20.0f && replacePos.y + 20.0f < HEIGHT))
 	{
 		mSpeed.y += sign.y * mPowerSpeed.y;
 	}

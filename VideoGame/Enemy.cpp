@@ -4,6 +4,7 @@
 #include "CircleComponent.h"
 #include "MoveComponent.h"
 #include "AIComponent.h"
+#include "RigidbodyComponent.h"
 
 Enemy::Enemy(Game* game, Vector2 pos, int number)
 	:Actor(game)
@@ -20,7 +21,9 @@ Enemy::Enemy(Game* game, Vector2 pos, int number)
 	mCircle = new CircleComponent(this);
 	mCircle->SetRadius(10.0f);
 
-	mMove = new MoveComponent(this);
+	mRigidbody = new RigidbodyComponent(this, mCircle);
+
+	//mMove = new MoveComponent(this);
 
 	mAI = new AIComponent(this);
 
@@ -34,13 +37,13 @@ Enemy::~Enemy()
 
 void Enemy::UpdateActor(float deltaTime)
 {
-	mStatus.position = GetPosition();
-	mStatus.speed = mMove->GetSpeed();
-	mStatus.acceleration = mMove->GetAcceleration();
-	mStatus.force = mMove->GetForce();
-	mStatus.role = GetRole();
-	mStatus.powerSpeed = mMove->GetPowerSpeed();
-	mStatus.radius = mCircle->GetRadius();
+	//mStatus.position = GetPosition();
+	//mStatus.speed = mMove->GetSpeed();
+	//mStatus.acceleration = mMove->GetAcceleration();
+	//mStatus.force = mMove->GetForce();
+	//mStatus.role = GetRole();
+	//mStatus.powerSpeed = mMove->GetPowerSpeed();
+	//mStatus.radius = mCircle->GetRadius();
 
 	// ‚±‚±‚Ådelete‚ªg‚í‚ê‚Äƒƒ‚ƒŠ‰ğ•ú‚³‚ê‚é
 	if (GetHP() <= 0) { SetState(State::Dead); }

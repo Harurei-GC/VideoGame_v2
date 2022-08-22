@@ -265,7 +265,8 @@ void Game::UpdateGame()
 	}
 	mUpdatingActors = false;
 
-	//configMoveStatus->Update(deltaTime); ¡ŒãƒRƒƒ“ƒg‰ðœ
+	configMoveStatus->Update(deltaTime);
+	configMoveStatus->SetActorsPosition();
 
 	// •Û—¯’†‚ÌActor‚ðmActors‚ÖˆÚ“®
 	for (auto pending : mPendingActors)

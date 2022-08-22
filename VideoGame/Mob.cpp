@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "CircleComponent.h"
 #include "MoveComponent.h"
+#include "RigidbodyComponent.h"
 
 Mob::Mob(Game* game)
 	:Actor(game)
@@ -18,7 +19,9 @@ Mob::Mob(Game* game)
 	mCircle = new CircleComponent(this);
 	mCircle->SetRadius(8.5f);
 
-	mMove = new MoveComponent(this);
+	mRigidbody = new RigidbodyComponent(this, mCircle);
+
+	//mMove = new MoveComponent(this);
 }
 
 Mob::~Mob()

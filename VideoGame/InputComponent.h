@@ -1,14 +1,14 @@
 #pragma once
-#include "MoveComponent.h"
 #include <cstdint>
+#include "Component.h"
+#include "Math.h"
 
-class InputComponent : public MoveComponent
+class InputComponent : public Component
 {
 public:
 	InputComponent(class Actor* owner);
 	void ProcessInput(const uint8_t* keyState) override;
 
-	float GetMaxSpeed() const { return mMaxSpeed; }
 	float GetMaxForce() const { return mMaxForce; }
 	int GetForwardKey() const { return mForwardKey; }
 	int GetBackKey() const { return mBackKey; }
@@ -16,7 +16,6 @@ public:
 	int GetLeftKey() const { return mLeftKey; }
 	int GetPowerKey() const { return mPowerKey; }
 
-	void SetMaxSpeed(float speed) { mMaxSpeed = speed; }
 	void SetMaxForce(float force) { mMaxForce = force; }
 	void SetForwardKey(int key) { mForwardKey = key; }
 	void SetBackKey(int key) { mBackKey = key; }
@@ -27,7 +26,7 @@ public:
 private:
 	void enableForce(float& force, bool isNegative);
 
-	float mMaxSpeed;
+	class RigidbodyComponent* rigidbody;
 	float mMaxForce;
 	int mForwardKey;
 	int mBackKey;

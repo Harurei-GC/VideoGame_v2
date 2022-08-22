@@ -1,21 +1,22 @@
 #include "InputComponent.h"
 #include "Actor.h"
+#include "RigidbodyComponent.h"
 
 InputComponent::InputComponent(class Actor* owner)
-	:MoveComponent(owner)
+	:Component(owner)
 	, mForwardKey(0)
 	, mBackKey(0)
 	, mRightKey(0)
 	, mLeftKey(0)
 	, mPowerKey(0)
-	, mMaxSpeed(0.0f)
 	, mMaxForce(0.0f)
 {
+	rigidbody = mOwner->GetRigidbody();
 }
 
 void InputComponent::ProcessInput(const uint8_t* keyState)
 {
-	isPowered = false;
+	rigidbody->SetIsPowered(false);
 	inputForce = Vector2{ 0.0f,0.0f };
 	if (keyState[mRightKey])
 	{
@@ -35,9 +36,9 @@ void InputComponent::ProcessInput(const uint8_t* keyState)
 	}
 	if (keyState[mPowerKey])
 	{
-		isPowered = true;
+		rigidbody->SetIsPowered(true);
 	}
-	SetForce(inputForce);
+	rigidbody->SetForce(inputForce);
 }
 
 void InputComponent::enableForce(float& force ,bool isNegative)

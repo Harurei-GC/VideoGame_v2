@@ -4,6 +4,7 @@
 #include "CircleComponent.h"
 #include "MoveComponent.h"
 #include "AIComponent.h"
+#include "RigidbodyComponent.h"
 
 Friend::Friend(Game* game)
 	:Actor(game)
@@ -19,7 +20,9 @@ Friend::Friend(Game* game)
 	mCircle = new CircleComponent(this);
 	mCircle->SetRadius(10.0f);
 
-	mMove = new MoveComponent(this);
+	mRigidbody = new RigidbodyComponent(this, mCircle);
+
+	//mMove = new MoveComponent(this);
 
 	mAI = new AIComponent(this);
 }

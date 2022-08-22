@@ -186,7 +186,6 @@ xcopy "$(SolutionDir)external\SDL\lib\x64\*.dll" "$(OutDir)" /i /s /y</Command>
     <ClInclude Include="MakeDangeon.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Mob.h" />
-    <ClInclude Include="MoveComponent.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Random.h" />
@@ -214,7 +213,6 @@ xcopy "$(SolutionDir)external\SDL\lib\x64\*.dll" "$(OutDir)" /i /s /y</Command>
     <ClCompile Include="MakeDangeon.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Mob.cpp" />
-    <ClCompile Include="MoveComponent.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Random.cpp" />

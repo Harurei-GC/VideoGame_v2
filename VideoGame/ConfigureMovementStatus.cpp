@@ -17,30 +17,44 @@ ConfigureMovementStatus::ConfigureMovementStatus(Game* game)
 
 void ConfigureMovementStatus::Update(float deltaTime)
 {
-	if (Intersect(player->GetCircle()->GetRadius(), fri->GetCircle()->GetRadius()
-		, player->GetRigidbody()->GetReplacePosition(), fri->GetRigidbody()->GetReplacePosition()))
+	// NOTE:x軸側とy軸側両方回す
+	for (int i = 0; i < 2; i++)
 	{
-		//JudgeActorsCollision();// TODO:すべての条件分岐にこれ入れる
-	}
-	if (Intersect(player->GetCircle()->GetRadius(), mob->GetCircle()->GetRadius()
-		, player->GetRigidbody()->GetReplacePosition(), mob->GetRigidbody()->GetReplacePosition()))
-	{
+		char a;
+		(i == 0) ? a = 'x' : a = 'y';
+		if (Intersect(player->GetCircle()->GetRadius(), fri->GetCircle()->GetRadius()
+			, player->GetRigidbody()->GetReplacePosition(), fri->GetRigidbody()->GetReplacePosition()))
+		{
+			JudgeActorsCollision(deltaTime, fri, player, a);
+		}
+		if (Intersect(player->GetCircle()->GetRadius(), mob->GetCircle()->GetRadius()
+			, player->GetRigidbody()->GetReplacePosition(), mob->GetRigidbody()->GetReplacePosition()))
+		{
+			JudgeActorsCollision(deltaTime, mob, player, a);
+		}
 
-	}
+		if (Intersect(fri->GetCircle()->GetRadius(), player->GetCircle()->GetRadius()
+			, fri->GetRigidbody()->GetReplacePosition(), player->GetRigidbody()->GetReplacePosition()))
+		{
+			JudgeActorsCollision(deltaTime, player, fri, a);
+		}
+		if (Intersect(fri->GetCircle()->GetRadius(), mob->GetCircle()->GetRadius()
+			, fri->GetRigidbody()->GetReplacePosition(), mob->GetRigidbody()->GetReplacePosition()))
+		{
+			JudgeActorsCollision(deltaTime, mob, fri, a);
+		}
 
-	if (Intersect(fri->GetCircle()->GetRadius(), player->GetCircle()->GetRadius()
-		, fri->GetRigidbody()->GetReplacePosition(), player->GetRigidbody()->GetReplacePosition()))
-	{
-
+		if (Intersect(mob->GetCircle()->GetRadius(), player->GetCircle()->GetRadius()
+			, mob->GetRigidbody()->GetReplacePosition(), player->GetRigidbody()->GetReplacePosition()))
+		{
+			JudgeActorsCollision(deltaTime, player, mob, a);
+		}
+		if (Intersect(mob->GetCircle()->GetRadius(), fri->GetCircle()->GetRadius()
+			, mob->GetRigidbody()->GetReplacePosition(), fri->GetRigidbody()->GetReplacePosition()))
+		{
+			JudgeActorsCollision(deltaTime, fri, mob, a);
+		}
 	}
-	if (Intersect(fri->GetCircle()->GetRadius(), mob->GetCircle()->GetRadius()
-		, fri->GetRigidbody()->GetReplacePosition(), mob->GetRigidbody()->GetReplacePosition()))
-	{
-
-	}
-	player->SetPosition(player->GetRigidbody()->GetReplacePosition());
-	fri->SetPosition(fri->GetRigidbody()->GetReplacePosition());
-	mob->SetPosition(mob->GetRigidbody()->GetReplacePosition());
 }
 
 bool ConfigureMovementStatus::Intersect(RADIUS arad, RADIUS brad, Vector2 apos, Vector2 bpos)
@@ -73,16 +87,16 @@ void ConfigureMovementStatus::JudgeActorsCollision(float deltaTime,Actor* you, A
 		{
 		case 'x':
 			position.x -= meSpeed.x * deltaTime;
+			SwapSpeed(meSpeed.x, youSpeed.x);
 			break;
 		case 'y':
 			position.y -= meSpeed.y * deltaTime;
+			SwapSpeed(meSpeed.y, youSpeed.y);
 			break;
 		default:
 			break;
 		}
 		me->GetRigidbody()->SetReplacePosition(position);
-		// 衝突した相手に自分のスピードを与える
-		SwapSpeed(meSpeed, youSpeed);
 		me->GetRigidbody()->SetSpeed(meSpeed);
 		switch (you->GetRole())
 		{
@@ -104,9 +118,17 @@ void ConfigureMovementStatus::JudgeActorsCollision(float deltaTime,Actor* you, A
 	}
 }
 
-void ConfigureMovementStatus::SwapSpeed(Vector2& aSpeed, Vector2& bSpeed)
+template<typename T>
+void ConfigureMovementStatus::SwapSpeed(T& aSpeed, T& bSpeed)
 {
-	Vector2 tmp = aSpeed;
+	T tmp = aSpeed;
 	aSpeed = bSpeed;
 	bSpeed = tmp;
+}
+
+void ConfigureMovementStatus::SetActorsPosition()
+{
+	player->SetPosition(player->GetRigidbody()->GetReplacePosition());
+	fri->SetPosition(fri->GetRigidbody()->GetReplacePosition());
+	mob->SetPosition(mob->GetRigidbody()->GetReplacePosition());
 }

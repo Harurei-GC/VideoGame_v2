@@ -7,11 +7,12 @@ public:
 	Mob(class Game* game);
 	~Mob();
 	class CircleComponent* GetCircle() override { return mCircle; }
-	//class RigidbodyComponent* GetRigidbody() override { }
-	class MoveComponent* GetMove() { return mMove; }
+	class RigidbodyComponent* GetRigidbody() override { return mRigidbody; }
+	//class MoveComponent* GetMove() { return mMove; }
 	void ActorInput(const uint8_t* keyState) override;
 	void UpdateActor(float deltaTime) override;
 private:
 	class CircleComponent* mCircle;
-	class MoveComponent* mMove;
+	class RigidbodyComponent* mRigidbody;
+	//class MoveComponent* mMove;
 };

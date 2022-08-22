@@ -4,6 +4,7 @@
 #include "InputComponent.h"
 #include "CircleComponent.h"
 #include "Mob.h"
+#include "RigidbodyComponent.h"
 
 Player::Player(Game* game)
 	:Actor(game)
@@ -19,6 +20,9 @@ Player::Player(Game* game)
 	mCircle = new CircleComponent(this);
 	mCircle->SetRadius(10.0f);
 
+	mRigidbody = new RigidbodyComponent(this, mCircle);
+	mRigidbody->SetPowerSpeed(Vector2(200.0f,200.0f));
+
 	mInput = new InputComponent(this);
 	mInput->SetForwardKey(SDL_SCANCODE_W);
 	mInput->SetBackKey(SDL_SCANCODE_S);
@@ -26,12 +30,11 @@ Player::Player(Game* game)
 	mInput->SetLeftKey(SDL_SCANCODE_A);
 	mInput->SetPowerKey(SDL_SCANCODE_SPACE);
 	mInput->SetMaxForce(60.0f);
-	mInput->SetPowerSpeed(Vector2(200.0f,200.0f));
 }
 
 Player::~Player()
 {
-	// •K—v‚Å‚ ‚ê‚Î delete game->mPlayer ‚Æ‚©
+	SetState(Actor::State::Dead);
 }
 
 void Player::UpdateActor(float deltaTime)
