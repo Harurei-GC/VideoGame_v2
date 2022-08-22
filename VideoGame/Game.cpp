@@ -13,6 +13,7 @@
 #include "Enemy.h"
 #include "Friend.h"
 #include "Sprite.h"
+#include "ConfigureMovementStatus.h"
 
 Game::Game()
 :mWindow(nullptr)
@@ -158,6 +159,8 @@ void Game::LoadData()
 	Vector2Int goalPosition = mGoal->RandomPosition(dangeon);
 	mGoal->SetPosition(Vector2(CHARACHIP_EDGE * (float)goalPosition.x, CHARACHIP_EDGE * (float)goalPosition.y));
 
+	configMoveStatus = new ConfigureMovementStatus(this);
+	
 	timerBackground = new Sprite(this);
 	timerBackground->SetPosition(Vector2((WIDTH - 80), 60));
 }
@@ -252,14 +255,17 @@ void Game::UpdateGame()
 	{
 		mIsOver = true;
 	}
-
-	// Actorの更新
+	
+	// ここに、Actorが他のActorと接触していないことを確認する機能を入れて、
+	// 接触していればRigidbodyをUpdateしないようにする
 	mUpdatingActors = true;
 	for (auto actor : mActors)
 	{
 		actor->Update(deltaTime);
 	}
 	mUpdatingActors = false;
+
+	//configMoveStatus->Update(deltaTime); 今後コメント解除
 
 	// 保留中のActorをmActorsへ移動
 	for (auto pending : mPendingActors)
@@ -277,7 +283,6 @@ void Game::UpdateGame()
 			deadActors.emplace_back(actor);
 		}
 	}
-	// Dead Actorの削除
 	for (auto dead : deadActors)
 	{
 		delete dead;

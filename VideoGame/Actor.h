@@ -57,6 +57,8 @@ public:
 	int GetHP() const { return mHP; }
 	void SetHP(int hp) { mHP = hp; }
 	void TakeDamage(int damage) { mHP -= damage; }
+	virtual class CircleComponent* GetCircle() { return nullptr; }
+	virtual class RigidbodyComponent* GetRigidbody() { return nullptr; }
 
 	class Game* GetGame() { return mGame; }
 

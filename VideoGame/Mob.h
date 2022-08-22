@@ -6,7 +6,8 @@ class Mob : public Actor
 public:
 	Mob(class Game* game);
 	~Mob();
-	class CircleComponent* GetCircle() { return mCircle; }
+	class CircleComponent* GetCircle() override { return mCircle; }
+	//class RigidbodyComponent* GetRigidbody() override { }
 	class MoveComponent* GetMove() { return mMove; }
 	void ActorInput(const uint8_t* keyState) override;
 	void UpdateActor(float deltaTime) override;

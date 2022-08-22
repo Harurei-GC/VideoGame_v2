@@ -5,7 +5,7 @@
 class RigidbodyComponent : public Component
 {
 public:
-	RigidbodyComponent(Actor* owner);
+	RigidbodyComponent(Actor* owner, class CircleComponent* circle);
 	void Update(float deltaTime) override;
 	Vector2 GetSpeed() const { return mSpeed; }
 	Vector2 GetAcceleration() const { return mAcceleration; }
@@ -19,6 +19,7 @@ public:
 	void SetReplacePosition(Vector2 position) { replacePos = position; }
 	void SetIsPowered(bool power) { isPowered = power; }
 private:
+	void JudgeCollisionWithObject(float deltaTime);
 	Vector2 mSpeed;
 	Vector2 mAcceleration;
 	Vector2 mForce;

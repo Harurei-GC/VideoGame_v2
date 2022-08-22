@@ -1,8 +1,10 @@
 #include "RigidbodyComponent.h"
 #include "Actor.h"
 #include "Game.h"
+#include "ConfigureMovementStatus.h"
+#include "CircleComponent.h"
 
-RigidbodyComponent::RigidbodyComponent(Actor* owner)
+RigidbodyComponent::RigidbodyComponent(Actor* owner, CircleComponent* circle)
 	:Component(owner)
 	,mSpeed(Vector2{0.0f,0.0f})
 	,mAcceleration(Vector2{0.0f,0.0f})
@@ -11,7 +13,6 @@ RigidbodyComponent::RigidbodyComponent(Actor* owner)
 	,replacePos(Vector2{0.0f,0.0f})
 	,isPowered(false)
 {
-
 }
 
 void RigidbodyComponent::Update(float deltaTime)
@@ -92,5 +93,25 @@ void RigidbodyComponent::Update(float deltaTime)
 	// 現在の位置を更新
 	replacePos.x += mSpeed.x * deltaTime;
 	replacePos.y += mSpeed.y * deltaTime;
+	JudgeCollisionWithObject(deltaTime);
+}
 
+void RigidbodyComponent::JudgeCollisionWithObject(float deltaTime)
+{
+	std::vector<Vector2>objPos = mGame->GetObjPosition();
+	for (int i = 0; i < objPos.size(); i++)
+	{
+		if ((objPos.at(i).x - CHARACHIP_EDGE / 2 <= replacePos.x + mOwner->GetCircle()->GetRadius()) &&
+			(replacePos.x - mOwner->GetCircle()->GetRadius() <= objPos.at(i).x + CHARACHIP_EDGE / 2))
+		{
+			if ((objPos.at(i).y - CHARACHIP_EDGE / 2 <= replacePos.y + mOwner->GetCircle()->GetRadius()) &&
+				(replacePos.y - mOwner->GetCircle()->GetRadius() <= objPos.at(i).y + CHARACHIP_EDGE / 2))
+			{
+				replacePos -= mSpeed * deltaTime;
+				// 壁に当たったときにすぐに壁から離れられるようにスピードと力をリセット
+				mForce = Vector2{ 0.0f,0.0f };
+				mSpeed = Vector2{ 0.0f,0.0f };
+			}
+		}
+	}
 }

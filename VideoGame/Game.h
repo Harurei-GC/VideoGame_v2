@@ -107,9 +107,7 @@ private:
 
 	// 2Dレンダラ
 	SDL_Renderer* mRenderer;
-	// 経過時間カウント
 	uint32_t mTicksCount;
-	// 制限時間
 	float timeLimit;
 	// ゲームに登場するすべてのActor
 	std::vector<class Actor*> mActors;
@@ -117,13 +115,10 @@ private:
 	std::vector<class Actor*> mPendingActors;
 	// SpriteComponent
 	std::vector<class SpriteComponent*> mSprites;
-	// スタート画面かどうか
+
 	bool mIsStart;
-	// ゲームが動いているかどうか。trueである限りRunLoop関数は実行し続ける
 	bool mIsRunning;
-	// クリアしたか
 	bool mIsCleared;
-	// 時間切れか
 	bool mIsOver;
 	bool mUpdatingActors;
 
@@ -140,4 +135,5 @@ private:
 	std::vector<class Vector2> objPosition;
 	
 	class MakeDangeon* dangeon;
+	class ConfigureMovementStatus* configMoveStatus;
 };
