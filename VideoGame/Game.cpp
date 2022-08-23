@@ -74,13 +74,6 @@ bool Game::Initialize()
 
 	LoadData();
 
-	// FIXME:‚¤‚Ü‚­‹@”\‚µ‚È‚¢
-	mUpdatingActors = true;
-	for (auto actor : mActors)
-	{
-		actor->Start();
-	}
-	mUpdatingActors = false;
 
 	mTicksCount = SDL_GetTicks();
 
@@ -163,6 +156,13 @@ void Game::LoadData()
 	
 	timerBackground = new Sprite(this);
 	timerBackground->SetPosition(Vector2((WIDTH - 80), 60));
+
+	mUpdatingActors = true;
+	for (auto actor : mActors)
+	{
+		actor->Start();
+	}
+	mUpdatingActors = false;
 }
 
 
