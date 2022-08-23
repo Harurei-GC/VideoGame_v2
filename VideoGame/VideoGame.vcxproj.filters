@@ -15,142 +15,148 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h">
+    <ClInclude Include="src\Game.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Actor.h">
+    <ClInclude Include="src\actors\Actor.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Component.h">
+    <ClInclude Include="src\components\Component.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteComponent.h">
+    <ClInclude Include="src\components\SpriteComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Math.h">
+    <ClInclude Include="src\Math.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
+    <ClInclude Include="src\actors\Player.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="InputComponent.h">
+    <ClInclude Include="src\components\InputComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Mob.h">
+    <ClInclude Include="src\actors\Mob.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CircleComponent.h">
+    <ClInclude Include="src\components\CircleComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
+    <ClInclude Include="src\actors\Object.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="BoxColliderComponent.h">
+    <ClInclude Include="src\components\BoxColliderComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Goal.h">
+    <ClInclude Include="src\actors\Goal.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="MakeDangeon.h">
+    <ClInclude Include="src\managers\MakeDangeon.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Random.h">
+    <ClInclude Include="src\Random.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
+    <ClInclude Include="src\actors\Enemy.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="AIComponent.h">
+    <ClInclude Include="src\components\AIComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Friend.h">
+    <ClInclude Include="src\actors\Friend.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Sprite.h">
+    <ClInclude Include="src\actors\Sprite.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="RigidbodyComponent.h">
+    <ClInclude Include="src\components\RigidbodyComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ConfigureMovementStatus.h">
+    <ClInclude Include="src\managers\ConfigureMovementStatus.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scenes\Scene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Game.cpp">
+    <ClCompile Include="src\Game.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="src\Main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Actor.cpp">
+    <ClCompile Include="src\actors\Actor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Component.cpp">
+    <ClCompile Include="src\components\Component.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="SpriteComponent.cpp">
+    <ClCompile Include="src\components\SpriteComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Math.cpp">
+    <ClCompile Include="src\Math.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
+    <ClCompile Include="src\actors\Player.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="InputComponent.cpp">
+    <ClCompile Include="src\components\InputComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Mob.cpp">
+    <ClCompile Include="src\actors\Mob.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CircleComponent.cpp">
+    <ClCompile Include="src\components\CircleComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
+    <ClCompile Include="src\actors\Object.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="BoxColliderComponent.cpp">
+    <ClCompile Include="src\components\BoxColliderComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Goal.cpp">
+    <ClCompile Include="src\actors\Goal.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="MakeDangeon.cpp">
+    <ClCompile Include="src\managers\MakeDangeon.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Random.cpp">
+    <ClCompile Include="src\Random.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Game_GameOver.cpp">
+    <ClCompile Include="src\scenes\Game_GameOver.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Game_GameClear.cpp">
+    <ClCompile Include="src\scenes\Game_GameClear.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Game_GameStart.cpp">
+    <ClCompile Include="src\scenes\Game_GameStart.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
+    <ClCompile Include="src\actors\Enemy.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="AIComponent.cpp">
+    <ClCompile Include="src\components\AIComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Friend.cpp">
+    <ClCompile Include="src\actors\Friend.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite.cpp">
+    <ClCompile Include="src\actors\Sprite.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="RigidbodyComponent.cpp">
+    <ClCompile Include="src\components\RigidbodyComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ConfigureMovementStatus.cpp">
+    <ClCompile Include="src\managers\ConfigureMovementStatus.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scenes\Scene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Text.txt" />
+    <Text Include="src\Text.txt" />
   </ItemGroup>
 </Project>
