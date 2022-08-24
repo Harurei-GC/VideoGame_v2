@@ -78,6 +78,9 @@
     <ClInclude Include="src\scenes\Scene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="src\scenes\GameStart.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game.cpp">
@@ -155,8 +158,11 @@
     <ClCompile Include="src\scenes\Scene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="src\scenes\GameStart.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="src\Text.txt" />
+    <Text Include="assets\Text.txt" />
   </ItemGroup>
 </Project>

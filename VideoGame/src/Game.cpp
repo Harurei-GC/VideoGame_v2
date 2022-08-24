@@ -97,7 +97,7 @@ void Game::LoadData()
 
 	// テキストファイル読み込み
 	// なぜかコマンドラインに表示される
-	if (fopen_s(&fp, "src/Text.txt", "r") != 0)
+	if (fopen_s(&fp, "assets/Text.txt", "r") != 0)
 	{
 		std::cout << "Failed to open a text file" << std::endl;
 	}

@@ -15,7 +15,7 @@ Enemy::Enemy(Game* game, Vector2 pos, int number)
 	SetFriction(10.0f);
 
 	SpriteComponent* sprite = new SpriteComponent(this);
-	sprite->SetTexture(mGame->GetTexture("Assets/Enemy.png"));
+	sprite->SetTexture(mGame->GetTexture("assets/Enemy.png"));
 
 	mCircle = new CircleComponent(this);
 	mCircle->SetRadius(10.0f);

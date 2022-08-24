@@ -173,6 +173,7 @@ xcopy "$(SolutionDir)external\SDL\lib\x64\*.dll" "$(OutDir)" /i /s /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\scenes\GameStart.h" />
     <ClInclude Include="src\actors\Actor.h" />
     <ClInclude Include="src\components\BoxColliderComponent.h" />
     <ClInclude Include="src\components\CircleComponent.h" />
@@ -205,6 +206,7 @@ xcopy "$(SolutionDir)external\SDL\lib\x64\*.dll" "$(OutDir)" /i /s /y</Command>
     <ClCompile Include="src\actors\Enemy.cpp" />
     <ClCompile Include="src\actors\Friend.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\scenes\GameStart.cpp" />
     <ClCompile Include="src\scenes\Game_GameClear.cpp" />
     <ClCompile Include="src\scenes\Game_GameOver.cpp" />
     <ClCompile Include="src\scenes\Game_GameStart.cpp" />
@@ -223,7 +225,7 @@ xcopy "$(SolutionDir)external\SDL\lib\x64\*.dll" "$(OutDir)" /i /s /y</Command>
     <ClCompile Include="src\components\SpriteComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="src\Text.txt" />
+    <Text Include="assets\Text.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
