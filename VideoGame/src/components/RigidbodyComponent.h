@@ -26,4 +26,5 @@ private:
 	Vector2 mPowerSpeed;
 	Vector2 replacePos;
 	bool isPowered; // InputComponent‚È‚Ç‚©‚ç•ÏX‚Å‚«‚é‚æ‚¤‚É‚·‚é
+	class Battle* battle;
 };

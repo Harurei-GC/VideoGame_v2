@@ -173,7 +173,10 @@ xcopy "$(SolutionDir)external\SDL\lib\x64\*.dll" "$(OutDir)" /i /s /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\scenes\GameStart.h" />
+    <ClInclude Include="src\scenes\Battle.h" />
+    <ClInclude Include="src\scenes\GameClear.h" />
+    <ClInclude Include="src\scenes\GameOver.h" />
+    <ClInclude Include="src\scenes\Start.h" />
     <ClInclude Include="src\actors\Actor.h" />
     <ClInclude Include="src\components\BoxColliderComponent.h" />
     <ClInclude Include="src\components\CircleComponent.h" />
@@ -206,10 +209,10 @@ xcopy "$(SolutionDir)external\SDL\lib\x64\*.dll" "$(OutDir)" /i /s /y</Command>
     <ClCompile Include="src\actors\Enemy.cpp" />
     <ClCompile Include="src\actors\Friend.cpp" />
     <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\scenes\GameStart.cpp" />
-    <ClCompile Include="src\scenes\Game_GameClear.cpp" />
-    <ClCompile Include="src\scenes\Game_GameOver.cpp" />
-    <ClCompile Include="src\scenes\Game_GameStart.cpp" />
+    <ClCompile Include="src\scenes\Battle.cpp" />
+    <ClCompile Include="src\scenes\GameClear.cpp" />
+    <ClCompile Include="src\scenes\GameOver.cpp" />
+    <ClCompile Include="src\scenes\Start.cpp" />
     <ClCompile Include="src\actors\Goal.cpp" />
     <ClCompile Include="src\components\InputComponent.cpp" />
     <ClCompile Include="src\Main.cpp" />

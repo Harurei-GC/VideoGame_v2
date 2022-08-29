@@ -78,7 +78,16 @@
     <ClInclude Include="src\scenes\Scene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="src\scenes\GameStart.h">
+    <ClInclude Include="src\scenes\Start.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scenes\GameOver.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scenes\GameClear.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scenes\Battle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -128,15 +137,6 @@
     <ClCompile Include="src\Random.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\scenes\Game_GameOver.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\scenes\Game_GameClear.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\scenes\Game_GameStart.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="src\actors\Enemy.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -158,7 +158,16 @@
     <ClCompile Include="src\scenes\Scene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\scenes\GameStart.cpp">
+    <ClCompile Include="src\scenes\Start.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scenes\GameOver.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scenes\GameClear.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scenes\Battle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

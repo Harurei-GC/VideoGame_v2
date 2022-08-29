@@ -7,12 +7,12 @@
 #include "../actors/Enemy.h"
 
 // TODO:Enemy‚àŽÀ‘•
-ConfigureMovementStatus::ConfigureMovementStatus(Game* game)
-	:mGame(game)
+ConfigureMovementStatus::ConfigureMovementStatus(Battle* battle)
+	:mScene(battle)
 {
-	player = mGame->GetPlayer();
-	fri = mGame->GetFriend();
-	mob = mGame->GetMob();
+	player = mScene->GetPlayer();
+	fri = mScene->GetFriend();
+	mob = mScene->GetMob();
 }
 
 void ConfigureMovementStatus::Update(float deltaTime)

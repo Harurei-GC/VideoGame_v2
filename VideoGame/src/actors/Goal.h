@@ -6,7 +6,7 @@
 class Goal : public Actor
 {
 public:
-	Goal(class Game* game);
+	Goal(class Scene* scene);
 
 	void UpdateActor(float deltaTime) override;
 	void ActorInput(const uint8_t* keyState) override;

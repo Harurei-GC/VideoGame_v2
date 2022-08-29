@@ -2,6 +2,8 @@
 #include <vector>
 #define HORIZONTAL 3 // x方向
 #define VERTICAL 4 // y方向
+#define W_BOXES 32 // 横方向のマス目の数
+#define H_BOXES 24 // 縦方向のマス目の数
 
 // TODO:演算子のオーバーロード出来たら楽
 struct Vector2Int

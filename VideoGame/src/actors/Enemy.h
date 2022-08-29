@@ -5,7 +5,7 @@
 class Enemy :public Actor
 {
 public:
-	Enemy(class Game* game,Vector2 pos,int number);
+	Enemy(class Scene* scene,Vector2 pos,int number);
 	~Enemy();
 	void UpdateActor(float deltaTime) override;
 	Vector2 GetInitialPosition() const { return mPosition; }

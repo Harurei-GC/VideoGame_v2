@@ -4,7 +4,7 @@
 class Mob : public Actor
 {
 public:
-	Mob(class Game* game);
+	Mob(class Scene* scene);
 	~Mob();
 	class CircleComponent* GetCircle() override { return mCircle; }
 	class RigidbodyComponent* GetRigidbody() override { return mRigidbody; }

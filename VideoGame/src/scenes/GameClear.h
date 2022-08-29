@@ -1,11 +1,12 @@
 #pragma once
 #include "Scene.h"
 
-class GameStart :public Scene
+class GameClear :public Scene
 {
 public:
-	GameStart();
+	GameClear(Game* game);
 	void ProcessInput()override;
 	void UpdateGame()override;
-	void GeneralOutput()override;
+	void GenerateOutput()override;
+private:
 };

@@ -1,24 +1,24 @@
 #include "Actor.h"
 #include "../components/Component.h"
-#include "../Game.h"
+#include "../scenes/Scene.h"
 
-Actor::Actor(Game* game)
+Actor::Actor(Scene* scene)
 	:mState(State::Active)
 	,mScale(1.0f)
 	,mPosition(Vector2::Zero)
 	,mRotation(0.0f)
 	,mMass(1.0f)
 	,mFriction(0.0f)
-	,mGame(game)
+	,mScene(scene)
 	,IDNo(-1)
 	,mHP(100)
 {
-	mGame->AddActor(this);
+	mScene->AddActor(this);
 }
 
 Actor::~Actor()
 {
-	mGame->RemoveActor(this);
+	mScene->RemoveActor(this);
 	while (!mComponents.empty())
 	{
 		delete mComponents.back();

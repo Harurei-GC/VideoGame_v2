@@ -23,7 +23,7 @@ public:
 		Goal
 	};
 
-	Actor(class Game* game);
+	Actor(class Scene* scene);
 	virtual ~Actor();
 
 	void Start();
@@ -60,10 +60,10 @@ public:
 	virtual class CircleComponent* GetCircle() { return nullptr; }
 	virtual class RigidbodyComponent* GetRigidbody() { return nullptr; }
 
-	class Game* GetGame() { return mGame; }
+	class Scene* GetScene() { return mScene; }
 
 protected:
-	class Game* mGame;
+	class Scene* mScene;
 
 private:
 	int mHP;

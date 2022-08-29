@@ -4,7 +4,7 @@
 class Friend :public Actor
 {
 public:
-	Friend(class Game* game);
+	Friend(class Scene* scene);
 	~Friend();
 	void UpdateActor(float deltaTime) override;
 	void ActorInput(const uint8_t* keyState) override;

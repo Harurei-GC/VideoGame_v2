@@ -1,20 +1,20 @@
 #include "Player.h"
 #include "../components/SpriteComponent.h"
-#include "../Game.h"
+#include "../scenes/Scene.h"
 #include "../components/InputComponent.h"
 #include "../components/CircleComponent.h"
 #include "Mob.h"
 #include "../components/RigidbodyComponent.h"
 
-Player::Player(Game* game)
-	:Actor(game)
+Player::Player(Scene* scene)
+	:Actor(scene)
 {
 	SetRole(Role::Player);
 	SetMass(5.0f);
 	SetFriction(10.0f);
 
 	SpriteComponent* sprite = new SpriteComponent(this);
-	sprite->SetTexture(game->GetTexture("assets/Player.png"));
+	sprite->SetTexture(scene->GetTexture("assets/Player.png"));
 
 
 	mCircle = new CircleComponent(this);

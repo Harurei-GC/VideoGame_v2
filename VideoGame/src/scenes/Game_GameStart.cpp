@@ -1,5 +1,5 @@
 #include "../Game.h"
-#include <stdio.h>
+#include <cstdio>
 
 void Game::GameStart()
 {

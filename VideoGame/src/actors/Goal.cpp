@@ -1,17 +1,17 @@
-#include "../Game.h"
+#include "../scenes/Scene.h"
 #include "Goal.h"
 #include "../components/SpriteComponent.h"
 #include "../components/CircleComponent.h"
 #include "Mob.h"
 #include "../Random.h"
 
-Goal::Goal(Game* game) 
-	:Actor(game)
+Goal::Goal(Scene* scene) 
+	:Actor(scene)
 {
 	SetRole(Role::Goal);
 
 	SpriteComponent* sprite = new SpriteComponent(this,80);
-	sprite->SetTexture(game->GetTexture("assets/Goal.png"));
+	sprite->SetTexture(scene->GetTexture("assets/Goal.png"));
 	Random* rand = new Random();
 }
 
@@ -25,6 +25,7 @@ void Goal::ActorInput(const uint8_t* keyState)
 
 }
 
+// TODO:このクラスじゃなくて別のクラスで部品化したい
 Vector2Int Goal::RandomPosition(class MakeDangeon* dangeon)
 {
 	Vector2Int position = dangeon->getLastRoomBoxPosition();

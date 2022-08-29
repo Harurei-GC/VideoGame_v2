@@ -1,12 +1,12 @@
 #include "Enemy.h"
-#include "../Game.h"
+#include "../scenes/Scene.h"
 #include "../components/SpriteComponent.h"
 #include "../components/CircleComponent.h"
 #include "../components/AIComponent.h"
 #include "../components/RigidbodyComponent.h"
 
-Enemy::Enemy(Game* game, Vector2 pos, int number)
-	:Actor(game)
+Enemy::Enemy(Scene* scene, Vector2 pos, int number)
+	:Actor(scene)
 	,mPosition(pos)
 {
 	SetID(number);
@@ -15,23 +15,21 @@ Enemy::Enemy(Game* game, Vector2 pos, int number)
 	SetFriction(10.0f);
 
 	SpriteComponent* sprite = new SpriteComponent(this);
-	sprite->SetTexture(mGame->GetTexture("assets/Enemy.png"));
+	sprite->SetTexture(mScene->GetTexture("assets/Enemy.png"));
 
 	mCircle = new CircleComponent(this);
 	mCircle->SetRadius(10.0f);
 
 	mRigidbody = new RigidbodyComponent(this, mCircle);
 
-	//mMove = new MoveComponent(this);
-
 	mAI = new AIComponent(this);
 
-	mGame->AddEnemy(GetID(), this);
+	mScene->AddEnemy(GetID(), this);
 }
 
 Enemy::~Enemy()
 {
-	mGame->RemoveEnemy(GetID());
+	mScene->RemoveEnemy(GetID());
 }
 
 void Enemy::UpdateActor(float deltaTime)

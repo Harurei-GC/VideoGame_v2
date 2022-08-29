@@ -1,9 +1,10 @@
 #include "MakeDangeon.h"
-#include "../Game.h"
 #include "../Random.h"
 #include "../Math.h"
 #include <vector>
 #include <iostream>
+
+
 
 MakeDangeon::MakeDangeon()
 	:areaNumX(0)

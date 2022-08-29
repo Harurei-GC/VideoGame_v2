@@ -1,6 +1,6 @@
 #include "SpriteComponent.h"
 #include "../actors/Actor.h"
-#include "../Game.h"
+#include "../scenes/Scene.h"
 
 SpriteComponent::SpriteComponent(Actor* owner, int drawOrder)
 	:Component(owner)
@@ -10,12 +10,12 @@ SpriteComponent::SpriteComponent(Actor* owner, int drawOrder)
 	,mDrawOrder(drawOrder)
 	,mAlpha(255)
 {
-	mOwner->GetGame()->AddSprite(this);
+	mOwner->GetScene()->AddSprite(this);
 }
 
 SpriteComponent::~SpriteComponent()
 {
-	mOwner->GetGame()->RemoveSprite(this);
+	mOwner->GetScene()->RemoveSprite(this);
 }
 
 void SpriteComponent::Draw(SDL_Renderer* renderer)

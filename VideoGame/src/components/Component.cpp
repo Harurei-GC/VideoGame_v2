@@ -3,7 +3,7 @@
 Component::Component(Actor* owner, int updateOrder)
 	:mOwner(owner)
 	,mUpdateOrder(updateOrder)
-	,mGame(owner->GetGame())
+	,mScene(owner->GetScene())
 {
 	// Actor‚Ì¬•ªƒxƒNƒgƒ‹‚É’Ç‰Á
 	mOwner->AddComponent(this);

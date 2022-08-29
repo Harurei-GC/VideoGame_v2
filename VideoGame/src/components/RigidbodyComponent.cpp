@@ -1,17 +1,18 @@
 #include "RigidbodyComponent.h"
 #include "../actors/Actor.h"
-#include "../Game.h"
 #include "../managers/ConfigureMovementStatus.h"
 #include "CircleComponent.h"
+#include "../scenes/Battle.h"
 
 RigidbodyComponent::RigidbodyComponent(Actor* owner, CircleComponent* circle)
 	:Component(owner)
-	,mSpeed(Vector2{0.0f,0.0f})
-	,mAcceleration(Vector2{0.0f,0.0f})
-	,mForce(Vector2{0.0f,0.0f})
-	,mPowerSpeed(Vector2{0.0f,0.0f})
-	,replacePos(Vector2{0.0f,0.0f})
-	,isPowered(false)
+	, mSpeed(Vector2{ 0.0f,0.0f })
+	, mAcceleration(Vector2{ 0.0f,0.0f })
+	, mPowerSpeed(Vector2{ 0.0f,0.0f })
+	, mForce(Vector2{ 0.0f,0.0f })
+	, replacePos(Vector2{ 0.0f,0.0f })
+	, isPowered(false)
+	, battle(mOwner->GetScene()->GetGame()->battle)
 {
 }
 
@@ -98,7 +99,7 @@ void RigidbodyComponent::Update(float deltaTime)
 
 void RigidbodyComponent::JudgeCollisionWithObject(float deltaTime)
 {
-	std::vector<Vector2>objPos = mGame->GetObjPosition();
+	std::vector<Vector2>objPos = battle->GetObjPosition();
 	for (int i = 0; i < objPos.size(); i++)
 	{
 		if ((objPos.at(i).x - CHARACHIP_EDGE / 2 <= replacePos.x + mOwner->GetCircle()->GetRadius()) &&

@@ -4,7 +4,7 @@
 class Sprite :public Actor
 {
 public:
-	Sprite(class Game* game);
+	Sprite(class Scene* scene);
 	~Sprite();
 private:
 	class SpriteComponent* sprite;

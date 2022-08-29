@@ -1,12 +1,12 @@
 #include "Friend.h"
-#include "../Game.h"
+#include "../scenes/Scene.h"
 #include "../components/SpriteComponent.h"
 #include "../components/CircleComponent.h"
 #include "../components/AIComponent.h"
 #include "../components/RigidbodyComponent.h"
 
-Friend::Friend(Game* game)
-	:Actor(game)
+Friend::Friend(Scene* scene)
+	:Actor(scene)
 {
 
 	SetRole(Role::Friend);
@@ -14,7 +14,7 @@ Friend::Friend(Game* game)
 	SetFriction(10.0f);
 
 	sprite = new SpriteComponent(this);
-	sprite->SetTexture(game->GetTexture("assets/Friend.png"));
+	sprite->SetTexture(scene->GetTexture("assets/Friend.png"));
 
 	mCircle = new CircleComponent(this);
 	mCircle->SetRadius(10.0f);
