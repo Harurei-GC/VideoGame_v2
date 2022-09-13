@@ -8,11 +8,16 @@
 
 // TODO:Enemy‚àŽÀ‘•
 ConfigureMovementStatus::ConfigureMovementStatus(Battle* battle)
-	:mScene(battle)
+	:cBattle(battle)
 {
-	player = mScene->GetPlayer();
-	fri = mScene->GetFriend();
-	mob = mScene->GetMob();
+
+}
+
+void ConfigureMovementStatus::Start()
+{
+	player = cBattle->GetPlayer();
+	fri = cBattle->GetFriend();
+	mob = cBattle->GetMob();
 }
 
 void ConfigureMovementStatus::Update(float deltaTime)

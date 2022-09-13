@@ -1,6 +1,7 @@
 #include "InputComponent.h"
 #include "../actors/Actor.h"
 #include "RigidbodyComponent.h"
+#include <iostream>
 
 InputComponent::InputComponent(class Actor* owner)
 	:Component(owner)

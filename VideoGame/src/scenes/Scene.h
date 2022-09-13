@@ -24,7 +24,7 @@ public:
 	~Scene();
 	void RunLoop();
 	// DANGER:クラスのStartと同名
-	virtual void Start(){};
+	virtual void Start() {}
 	virtual void ProcessInput(){}
 	virtual void UpdateGame(){}
 	virtual void GenerateOutput(){}
@@ -49,9 +49,6 @@ public:
 	// NOTE:呼び出し前に、txtRectとpasteRectを初期化しておく必要がある
 	void RenderText(int font, int color, const char* text, int rw, int rh);
 
-
-	// bufの一部文字列を表示させる
-	void DispTextfile(int font, int color, int rw, int rh);
 protected:
 	Game* mGame;
 	bool mIsRunning;
@@ -60,12 +57,19 @@ protected:
 	// 問題点については下記参考
 	//SDL_Renderer* mRenderer;
 	int texW, texH;
-private:
-	std::unordered_map<std::string, SDL_Texture*> mTextures;
 
+	bool mUpdatingActors;
+	std::vector<Actor*> mActors;
+	std::vector<Actor*> mPendingActors;
+	std::vector<class SpriteComponent*>mSprites;
+
+private:
+
+	std::unordered_map<std::string, SDL_Texture*> mTextures;
 	// RenderText()内で使用する変数群
 	// HACK:Sceneクラスか、派生クラスか、Gameクラスか、どれで保持するか考える
 	//TTF_Font* mFont[FONT];
 	SDL_Color mColor[COLOR];
 	SDL_Rect txtRect, pasteRect;
+
 };

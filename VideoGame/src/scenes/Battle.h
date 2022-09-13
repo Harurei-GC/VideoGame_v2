@@ -8,6 +8,7 @@ class Battle :public Scene
 public:
 	Battle(Game* game);
 	~Battle();
+	void Start()override;
 	void ProcessInput()override;
 	void UpdateGame()override;
 	void GenerateOutput()override;
@@ -55,8 +56,4 @@ private:
 	MakeDangeon dangeon;
 	class ConfigureMovementStatus* configMoveStatus;
 	float timeLimit;
-	bool mUpdatingActors;
-	std::vector<Actor*> mActors;
-	std::vector<Actor*> mPendingActors;
-	std::vector<class SpriteComponent*>mSprites;
 };

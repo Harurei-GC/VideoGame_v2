@@ -26,6 +26,7 @@ public:
 	//void AddSprite(class SpriteComponent* sprite);
 	//void RemoveSprite(class SpriteComponent* sprite);
 	void AddScene(class Scene* scene);
+	void RemoveScene(class Scene* scene);
 
 	//SDL_Texture* GetTexture(const std::string& filename);
 
@@ -65,7 +66,6 @@ private:
 	//void GameOver();
 	
 	void LoadData();
-	void UnloadScene();
 	//void UnloadData();
 	// êßå¿éûä‘âﬂÇ¨ÇΩÇ©
 	bool isTimeOut(float deltaTime);

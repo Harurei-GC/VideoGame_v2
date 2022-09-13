@@ -20,9 +20,15 @@ void GameClear::ProcessInput()
 	}
 
 	const uint8_t* keyState = SDL_GetKeyboardState(NULL);
+	if (keyState[SDL_SCANCODE_ESCAPE])
+	{
+		mIsRunning = false;
+		mGame->SetQuitGame(true);
+	}
 	if (keyState[SDL_SCANCODE_RETURN])
 	{
 		mIsRunning = false;
+		mGame->SetQuitGame(true);
 	}
 
 }
@@ -46,3 +52,4 @@ void GameClear::GenerateOutput()
 	RenderText(FONT_BBBOcelot, BLACK, "GAME CLEAR!!", static_cast<int>(WIDTH / 2 - 100), static_cast<int>(HEIGHT / 2));
 	SDL_RenderPresent(mGame->gameRenderer);
 }
+

@@ -3,6 +3,7 @@
 Scene::Scene(Game* game)
 	:mIsRunning(true)
 	,mGame(game)
+	, mUpdatingActors(false)
 {
 	mColor[BLACK] = { 0,0,0,255 };
 	mColor[BLUE] = { 30, 30, 240, 255 };
@@ -10,13 +11,20 @@ Scene::Scene(Game* game)
 	game->AddScene(this);
 }
 
+
 Scene::~Scene()
 {
-	for (auto i : mTextures)
-	{
-		SDL_DestroyTexture(i.second);
-	}
-	mTextures.clear();
+	// FIXME:ゲームをやめるときブレークポイントが発生する
+	// 正しくdeleteできていない？
+	//if (mTextures.size() != 0)
+	//{
+	//	for (auto i : mTextures)
+	//	{
+	//		SDL_DestroyTexture(i.second);
+	//	}
+	//	mTextures.clear();
+	//}
+	mGame->RemoveScene(this);
 }
 
 // NOTE:派生クラスにおいてUpdateGame()などのoverride関数を読み込むようにしたい
@@ -50,7 +58,6 @@ SDL_Texture* Scene::GetTexture(const std::string& filename)
 			SDL_Log("Failed to convert surface to texture for %s", filename.c_str());
 			return nullptr;
 		}
-
 		mTextures.emplace(filename.c_str(), tex);
 	}
 	return tex;
@@ -68,3 +75,4 @@ void Scene::RenderText(int font, int color, const char* text, int rw, int rh)
 	SDL_FreeSurface(surf);
 	SDL_DestroyTexture(txtr);
 }
+

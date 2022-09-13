@@ -31,7 +31,7 @@ Game::Game()
 ,mIsCleared(false)
 ,mIsOver(false)
 //,mUpdatingActors(false)
-,timeLimit(35.0f)
+//,timeLimit(35.0f)
 //,bufCount(0)
 ,quitGame(false)
 {
@@ -174,7 +174,7 @@ void Game::LoadData()
 	gameOver = new GameOver(this);
 
 	// Start()‚ðŽÀs‚µ‚½‚¢‚Æ‚«‚Í‚±‚±‚É“ü‚ê‚é 
-	
+	battle->Start();
 
 	//mUpdatingActors = false;
 }
@@ -207,12 +207,16 @@ void Game::RunLoop()
 	{
 		start->RunLoop();
 	}
-	if (quitGame) { return; }
+	if (quitGame) { 
+		return; 
+	}
 	while (battle->GetIsRunning())
 	{
 		battle->RunLoop();
 	}
-	if (quitGame) { return; }
+	if (quitGame) { 
+		return; 
+	}
 	if (mIsCleared)
 	{
 		while (gameClear->GetIsRunning())
@@ -234,7 +238,7 @@ void Game::RunLoop()
 void Game::Shutdown()
 {
 	//UnloadData();
-	UnloadScene();
+	//UnloadScene();
 	IMG_Quit();
 	SDL_DestroyRenderer(gameRenderer);
 	SDL_DestroyWindow(mWindow);
@@ -252,11 +256,18 @@ void Game::AddScene(Scene* scene)
 	mScenes.emplace_back(scene);
 }
 
-void Game::UnloadScene()
+void Game::RemoveScene(Scene* scene)
 {
-	while (!mScenes.empty())
+	for (auto iter = mScenes.begin(); iter != mScenes.end();)
 	{
-		delete mScenes.back();
+		if (*iter == scene)
+		{
+			mScenes.erase(iter);
+		}
+		else
+		{
+			iter++;
+		}
 	}
 }
 

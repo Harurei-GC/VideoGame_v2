@@ -6,6 +6,7 @@ class RigidbodyComponent : public Component
 {
 public:
 	RigidbodyComponent(Actor* owner, class CircleComponent* circle);
+	void Start() override;
 	void Update(float deltaTime) override;
 	Vector2 GetSpeed() const { return mSpeed; }
 	Vector2 GetAcceleration() const { return mAcceleration; }

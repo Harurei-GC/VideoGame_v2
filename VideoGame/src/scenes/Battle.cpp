@@ -11,8 +11,7 @@
 
 Battle::Battle(Game* game)
 	:Scene(game)
-	,timeLimit(0.0f)
-	,mUpdatingActors(false)
+	,timeLimit(35.0f)
 {
 	mPlayer = new Player(this);
 	mPlayer->SetPosition(Vector2(CHARACHIP_EDGE * 3.0f, CHARACHIP_EDGE * 2.0f));
@@ -63,7 +62,21 @@ Battle::~Battle()
 	{
 		delete mActors.back();
 	}
+
 }
+
+void Battle::Start()
+{
+	mUpdatingActors = true;
+	for (auto actor : mActors)
+	{
+		actor->Start();
+	}
+	mUpdatingActors = false;
+
+	configMoveStatus->Start();
+}
+
 
 void Battle::ProcessInput()
 {
@@ -98,11 +111,10 @@ void Battle::ProcessInput()
 			mEnemy.at(i)->SetPosition(mEnemy.at(i)->GetInitialPosition());
 		}
 	}
-
 	mUpdatingActors = true;
 	for (auto actor : mActors)
 	{
-		actor->Start();
+		actor->ProcessInput(keyState);
 	}
 	mUpdatingActors = false;
 }
@@ -118,8 +130,10 @@ void Battle::UpdateGame()
 		deltaTime = 0.05f;
 	}
 	mGame->mTicksCount = SDL_GetTicks();
+	// §ŒÀŠÔ‚ğ’´‚¦‚½‚È‚ç
 	if (IsTimeOut(deltaTime))
 	{
+		mIsRunning = false;
 		mGame->SetGameOver(true);
 	}
 
@@ -184,6 +198,7 @@ void Battle::GenerateOutput()
 	SDL_RenderPresent(mGame->gameRenderer);
 }
 
+// §ŒÀŠÔ‚ğ’´‚¦‚½‚Æ‚«‚Ìˆ—
 bool Battle::IsTimeOut(float deltaTime)
 {
 	timeLimit -= deltaTime;

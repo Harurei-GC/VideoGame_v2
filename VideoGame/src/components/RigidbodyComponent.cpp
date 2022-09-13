@@ -12,8 +12,13 @@ RigidbodyComponent::RigidbodyComponent(Actor* owner, CircleComponent* circle)
 	, mForce(Vector2{ 0.0f,0.0f })
 	, replacePos(Vector2{ 0.0f,0.0f })
 	, isPowered(false)
-	, battle(mOwner->GetScene()->GetGame()->battle)
+	, battle(NULL)
 {
+}
+
+void RigidbodyComponent::Start()
+{
+	battle = mOwner->GetScene()->GetGame()->battle;
 }
 
 void RigidbodyComponent::Update(float deltaTime)

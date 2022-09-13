@@ -18,7 +18,10 @@ void GameOver::ProcessInput()
 		}
 	}
 	const uint8_t* keyState = SDL_GetKeyboardState(NULL);
-
+	if (keyState[SDL_SCANCODE_ESCAPE])
+	{
+		mIsRunning = false;
+	}
 	if (keyState[SDL_SCANCODE_RETURN])
 	{
 		mIsRunning = false;

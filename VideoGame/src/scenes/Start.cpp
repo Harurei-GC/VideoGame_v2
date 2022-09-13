@@ -40,6 +40,7 @@ void Start::ProcessInput()
 	const uint8_t* keyState = SDL_GetKeyboardState(NULL);
 	if (keyState[SDL_SCANCODE_ESCAPE])
 	{
+		mIsRunning = false;
 		mGame->SetQuitGame(true);
 	}
 	if (keyState[SDL_SCANCODE_RETURN])
