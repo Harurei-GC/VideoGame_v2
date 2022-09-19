@@ -181,7 +181,6 @@ xcopy "$(SolutionDir)external\SDL\lib\x64\*.dll" "$(OutDir)" /i /s /y</Command>
     <ClInclude Include="src\components\BoxColliderComponent.h" />
     <ClInclude Include="src\components\CircleComponent.h" />
     <ClInclude Include="src\components\Component.h" />
-    <ClInclude Include="src\managers\ConfigureMovementStatus.h" />
     <ClInclude Include="src\actors\Enemy.h" />
     <ClInclude Include="src\actors\Friend.h" />
     <ClInclude Include="src\Game.h" />

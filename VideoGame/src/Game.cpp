@@ -17,7 +17,6 @@
 #include "actors/Enemy.h"
 #include "actors/Friend.h"
 #include "actors/Sprite.h"
-#include "managers/ConfigureMovementStatus.h"
 #include "scenes/Start.h"
 #include "scenes/Battle.h"
 #include "scenes/GameClear.h"
@@ -103,70 +102,6 @@ void Game::LoadData()
 		std::cout << "Failed to get font for timer" << std::endl;
 	}
 
-	//// テキストファイル読み込み
-	//// なぜかコマンドラインに表示される
-	//if (fopen_s(&fp, "assets/Text.txt", "r") != 0)
-	//{
-	//	std::cout << "Failed to open a text file" << std::endl;
-	//}
-	//else
-	//{
-	//	int i = 0;
-	//	while ((buf[i] = fgetc(fp)) != EOF)
-	//	{
-	//		putchar(buf[i]);
-	//		i++;
-	//	}
-	//	fclose(fp);
-	//}
-
-
-	//mPlayer = new Player(this);
-	//mPlayer->SetPosition(Vector2(CHARACHIP_EDGE*3.0f, CHARACHIP_EDGE*2.0f));
-
-	//mFriend = new Friend(this);
-	//mFriend->SetPosition(Vector2(CHARACHIP_EDGE * 2.0f, CHARACHIP_EDGE * 2.0f));
-
-	//mMob = new Mob(this);
-	//mMob->SetPosition(Vector2(CHARACHIP_EDGE*3.0f, CHARACHIP_EDGE*3.0f));
-
-	//// NOTE:ぬるぽ防止のためここでキーが-1のEnemyを追加
-	//new Enemy(this, Vector2(-100.0f, -100.0f), -1);
-	//mEnemy.at(-1)->SetPosition(mEnemy.at(-1)->GetInitialPosition());
-	//for (int i = 0; i < ENEMIES; i++)
-	//{
-	//	// TODO:positionはそのうちランダム生成させる
-	//	new Enemy(this, Vector2(CHARACHIP_EDGE * 5.0f, CHARACHIP_EDGE * 2.0f), i);
-	//	mEnemy.at(i)->SetPosition(mEnemy.at(i)->GetInitialPosition());
-	//}
-
-	//dangeon = new MakeDangeon();
-
-	// 先に画面を埋め尽くして、部屋の部分だけdeleteする
-	//for (int i = 0; i < W_BOXES; i++)
-	//{
-	//	for (int j = 0; j < H_BOXES; j++)
-	//	{
-	//		// 座標(i,j)が地形に被っていなければ
-	//		if (!(dangeon->IsInRooms(i,j)) && !(dangeon->IsInCorridor(i,j)))
-	//		{
-	//			objPosition.push_back(Vector2(CHARACHIP_EDGE * (float)i, CHARACHIP_EDGE * (float)j));
-	//			new Object(this, Vector2(CHARACHIP_EDGE * (float)i, CHARACHIP_EDGE * (float)j));
-	//		}
-	//	}
-	//}
-
-	//mGoal = new Goal(this);
-	//Vector2Int goalPosition = mGoal->RandomPosition(dangeon);
-	//mGoal->SetPosition(Vector2(CHARACHIP_EDGE * (float)goalPosition.x, CHARACHIP_EDGE * (float)goalPosition.y));
-
-	//configMoveStatus = new ConfigureMovementStatus(this);
-	
-	//timerBackground = new Sprite(this);
-	//timerBackground->SetPosition(Vector2((WIDTH - 80), 60));
-
-	//mUpdatingActors = true;
-
 	// TODO:Sceneの追加
 	start = new Start(this);
 	battle = new Battle(this);
@@ -174,9 +109,10 @@ void Game::LoadData()
 	gameOver = new GameOver(this);
 
 	// Start()を実行したいときはここに入れる 
+	start->Scene::Start();
 	battle->Start();
-
-	//mUpdatingActors = false;
+	gameClear->Start();
+	gameOver->Start();
 }
 
 
@@ -203,6 +139,7 @@ void Game::RunLoop()
 	//		mIsRunning = false;
 	//	}
 	//}
+	// 各シーンへの遷移
 	while (start->GetIsRunning())
 	{
 		start->RunLoop();

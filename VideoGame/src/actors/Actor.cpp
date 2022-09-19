@@ -10,7 +10,6 @@ Actor::Actor(Scene* scene)
 	,mMass(1.0f)
 	,mFriction(0.0f)
 	,mScene(scene)
-	,IDNo(-1)
 	,mHP(100)
 {
 	mScene->AddActor(this);

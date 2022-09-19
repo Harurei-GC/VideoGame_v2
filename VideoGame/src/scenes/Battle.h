@@ -3,6 +3,8 @@
 #include "../managers/MakeDangeon.h"
 #include <map>
 
+#define ENEMIES 2
+
 class Battle :public Scene
 {
 public:
@@ -16,13 +18,11 @@ public:
 	void RemoveActor(Actor* actor)override;
 	void AddSprite(class SpriteComponent* sprite)override;
 	void RemoveSprite(class SpriteComponent* sprite)override;
-	void AddEnemy(int id, class Enemy* enemy)override;
-	void RemoveEnemy(int id)override;
 	void AddObject(class Object* object)override;
 	void RemoveObject(class Object* object)override;
 	std::vector<class Object*> GetObject() { return mObject; }
 	std::vector<class Vector2> GetObjPosition()const { return objPosition; }
-	std::map<int,class Enemy*> GetEnemy() const { return mEnemy; }
+	std::map<int,class Enemy*> GetEnemiesMap() const { return mEnemy; }
 	class Player* GetPlayer() { return mPlayer; }
 	class Friend* GetFriend() { return mFriend; }
 	class Mob* GetMob() { return mMob; }
@@ -56,4 +56,32 @@ private:
 	MakeDangeon dangeon;
 	class ConfigureMovementStatus* configMoveStatus;
 	float timeLimit;
+};
+
+
+
+#include <vector>
+#include "../Math.h"
+#include "../scenes/Battle.h"
+#include "../components/RigidbodyComponent.h"
+#include "../components/CircleComponent.h"
+using RADIUS = float;
+
+class ConfigureMovementStatus
+{
+public:
+	ConfigureMovementStatus(Battle* battle);
+	void Start();
+	void Update(float deltaTime);
+	void SetActorsPosition();
+	void EraseEnemy(int i) { enemy.erase(enemy.find(i)); }
+private:
+	bool Intersect(RADIUS arad, RADIUS brad, Vector2 apos, Vector2 bpos);
+	void JudgeActorsCollision(float deltaTime, Actor* you, Actor* me,int ID, char axis);
+	template<typename T>void SwapSpeed(T& aSpeed, T& bSpeed);
+	class Battle* cBattle;
+	class Player* player;
+	class Friend* fri;
+	class Mob* mob;
+	std::map<int, class Enemy*>enemy;
 };

@@ -5,19 +5,16 @@
 class Enemy :public Actor
 {
 public:
-	Enemy(class Scene* scene,Vector2 pos,int number);
+	Enemy(class Scene* scene,Vector2 pos);
 	~Enemy();
 	void UpdateActor(float deltaTime) override;
-	Vector2 GetInitialPosition() const { return mPosition; }
-	//TmpActorStatus GetTmpActorStatus() const { return mStatus; }
+	Vector2 GetInitialPosition() const { return mInitialPosition; }
 	class CircleComponent* GetCircle() override { return mCircle; }
 	class RigidbodyComponent* GetRigidbody() override { return mRigidbody; }
-	//class MoveComponent* GetMove() const { return mMove; }
+	void TakeDamage(int damage)override { mHP -= damage; }
 private:
 	class CircleComponent* mCircle;
 	class RigidbodyComponent* mRigidbody;
-	//class MoveComponent* mMove;
 	class AIComponent* mAI;
-	Vector2 mPosition;
-	//TmpActorStatus mStatus;
+	Vector2 mInitialPosition;
 };

@@ -1,6 +1,5 @@
 #include "RigidbodyComponent.h"
 #include "../actors/Actor.h"
-#include "../managers/ConfigureMovementStatus.h"
 #include "CircleComponent.h"
 #include "../scenes/Battle.h"
 

@@ -15,7 +15,6 @@
 #define BLACK 0
 #define BLUE 1
 
-#define ENEMIES 1
 
 class Scene
 {
@@ -31,8 +30,6 @@ public:
 
 	virtual void AddActor(Actor* actor){};
 	virtual void RemoveActor(Actor* actor){};
-	virtual void AddEnemy(int id, class Enemy* enemy){};
-	virtual void RemoveEnemy(int id){};
 	virtual void AddObject(class Object* object){};
 	virtual void RemoveObject(class Object* object){};
 	virtual void AddSprite(class SpriteComponent* sprite){};
@@ -53,9 +50,6 @@ protected:
 	Game* mGame;
 	bool mIsRunning;
 
-	// HACK:RenderText()内で使用する変数群。
-	// 問題点については下記参考
-	//SDL_Renderer* mRenderer;
 	int texW, texH;
 
 	bool mUpdatingActors;
@@ -66,9 +60,6 @@ protected:
 private:
 
 	std::unordered_map<std::string, SDL_Texture*> mTextures;
-	// RenderText()内で使用する変数群
-	// HACK:Sceneクラスか、派生クラスか、Gameクラスか、どれで保持するか考える
-	//TTF_Font* mFont[FONT];
 	SDL_Color mColor[COLOR];
 	SDL_Rect txtRect, pasteRect;
 

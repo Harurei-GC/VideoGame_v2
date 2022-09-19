@@ -72,9 +72,6 @@
     <ClInclude Include="src\components\RigidbodyComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="src\managers\ConfigureMovementStatus.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="src\scenes\Scene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>

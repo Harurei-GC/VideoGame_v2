@@ -52,11 +52,8 @@ public:
 	// NOTE:Rotationいらないかも?verticalhorizontalあるから
 	float GetRotation() const { return mRotation; }
 	void SetRotation(float rotation) { mRotation = rotation; }
-	int GetID() const { return IDNo; }
-	void SetID(int num) { IDNo = num; }
 	int GetHP() const { return mHP; }
-	void SetHP(int hp) { mHP = hp; }
-	void TakeDamage(int damage) { mHP -= damage; }
+	virtual void TakeDamage(int damage) {}
 	virtual class CircleComponent* GetCircle() { return nullptr; }
 	virtual class RigidbodyComponent* GetRigidbody() { return nullptr; }
 
@@ -64,19 +61,15 @@ public:
 
 protected:
 	class Scene* mScene;
+	int mHP;
 
 private:
-	int mHP;
-	// 0から始まる識別番号、Enemyのように複数あるオブジェクト用
-	int IDNo;
 	State mState;
 	Role mRole;
 	std::vector<class Component*> mComponents;
-
 	float mScale;
 	Vector2 mPosition;
 	float mRotation;
-
 	float mMass;
 	float mFriction;
 };

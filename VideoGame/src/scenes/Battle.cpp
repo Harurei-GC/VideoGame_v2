@@ -6,13 +6,16 @@
 #include "../actors/Object.h"
 #include "../actors/Goal.h"
 #include "../actors/Sprite.h"
-#include "../managers/ConfigureMovementStatus.h"
 #include "../components/SpriteComponent.h"
+
+
 
 Battle::Battle(Game* game)
 	:Scene(game)
 	,timeLimit(35.0f)
 {
+	configMoveStatus = new ConfigureMovementStatus(this);
+
 	mPlayer = new Player(this);
 	mPlayer->SetPosition(Vector2(CHARACHIP_EDGE * 3.0f, CHARACHIP_EDGE * 2.0f));
 
@@ -23,13 +26,12 @@ Battle::Battle(Game* game)
 	mMob->SetPosition(Vector2(CHARACHIP_EDGE * 3.0f, CHARACHIP_EDGE * 3.0f));
 
 	// NOTE:ぬるぽ防止のためここでキーが-1のEnemyを追加
-	new Enemy(this, Vector2(-100.0f, -100.0f), -1);
-	mEnemy.at(-1)->SetPosition(mEnemy.at(-1)->GetInitialPosition());
+	mEnemy.insert(std::make_pair(-1, new Enemy(this, Vector2(-100.0f, -100.0f))));
+
 	for (int i = 0; i < ENEMIES; i++)
 	{
-		// TODO:positionはそのうちランダム生成させる
-		new Enemy(this, Vector2(CHARACHIP_EDGE * 5.0f, CHARACHIP_EDGE * 2.0f), i);
-		mEnemy.at(i)->SetPosition(mEnemy.at(i)->GetInitialPosition());
+		// TODO:初期位置はそのうちランダム生成させる
+		mEnemy.insert(std::make_pair(i,new Enemy(this, Vector2(CHARACHIP_EDGE * (5.0f+i), CHARACHIP_EDGE * (2.0f+i)))));
 	}
 
 	for (int i = 0; i < W_BOXES; i++)
@@ -49,7 +51,6 @@ Battle::Battle(Game* game)
 	Vector2Int goalPosition = mGoal->RandomPosition(&dangeon);
 	mGoal->SetPosition(Vector2(CHARACHIP_EDGE * (float)goalPosition.x, CHARACHIP_EDGE * (float)goalPosition.y));
 
-	configMoveStatus = new ConfigureMovementStatus(this);
 
 	timerBackground = new Sprite(this);
 	timerBackground->SetPosition(Vector2((WIDTH - 80), 60));
@@ -106,9 +107,9 @@ void Battle::ProcessInput()
 		mPlayer->SetPosition(Vector2(CHARACHIP_EDGE * 3.0f, CHARACHIP_EDGE * 2.0f));
 		mMob->SetPosition(Vector2(CHARACHIP_EDGE * 3.0f, CHARACHIP_EDGE * 3.0f));
 		mFriend->SetPosition(Vector2(CHARACHIP_EDGE * 2.0f, CHARACHIP_EDGE * 2.0f));
-		for (int i = 0; i < ENEMIES; i++)
+		for (auto iter = mEnemy.begin(); iter != mEnemy.end(); ++iter)
 		{
-			mEnemy.at(i)->SetPosition(mEnemy.at(i)->GetInitialPosition());
+			iter->second->SetPosition(iter->second->GetInitialPosition());
 		}
 	}
 	mUpdatingActors = true;
@@ -156,18 +157,19 @@ void Battle::UpdateGame()
 	}
 	mPendingActors.clear();
 
-	// Dead状態のActorを一時配列へ移動
-	std::vector<Actor*> deadActors;
-	for (auto actor : mActors)
+	// Dead状態のEnemyをdelete
+	for (int i = 0; i < ENEMIES; i++)
 	{
-		if (actor->GetState() == Actor::State::Dead)
+		if(mEnemy.find(i)==mEnemy.end()) 
 		{
-			deadActors.emplace_back(actor);
+			continue;
 		}
-	}
-	for (auto dead : deadActors)
-	{
-		delete dead;
+		else if (mEnemy.at(i)->GetState() == Actor::State::Dead)
+		{
+			delete mEnemy.at(i);
+			configMoveStatus->EraseEnemy(i);
+			mEnemy.erase(mEnemy.find(i));
+		}
 	}
 
 	if (GoalIntersect(*mGoal, *mMob))
@@ -255,17 +257,7 @@ void Battle::RemoveSprite(SpriteComponent* sprite)
 	mSprites.erase(iter);
 }
 
-void Battle::AddEnemy(int id, class Enemy* enemy)
-{
-	mEnemy.emplace(id, enemy);
-}
 
-// TODO:ちゃんと指定のIDのEnemyが消えるようにする
-// vectorの仕様のままmap型のmEnemyに応用しているので、バグの可能性あり
-void Battle::RemoveEnemy(int id)
-{
-	mEnemy.erase(id);
-}
 
 void Battle::AddObject(Object* object)
 {

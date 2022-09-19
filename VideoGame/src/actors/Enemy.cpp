@@ -4,15 +4,16 @@
 #include "../components/CircleComponent.h"
 #include "../components/AIComponent.h"
 #include "../components/RigidbodyComponent.h"
+#include <iostream>
 
-Enemy::Enemy(Scene* scene, Vector2 pos, int number)
+Enemy::Enemy(Scene* scene, Vector2 pos)
 	:Actor(scene)
-	,mPosition(pos)
+	,mInitialPosition(pos)
 {
-	SetID(number);
 	SetRole(Role::Enemy);
 	SetMass(10.0f);
 	SetFriction(10.0f);
+	SetPosition(mInitialPosition);
 
 	SpriteComponent* sprite = new SpriteComponent(this);
 	sprite->SetTexture(mScene->GetTexture("assets/Enemy.png"));
@@ -24,24 +25,14 @@ Enemy::Enemy(Scene* scene, Vector2 pos, int number)
 
 	mAI = new AIComponent(this);
 
-	mScene->AddEnemy(GetID(), this);
 }
 
 Enemy::~Enemy()
 {
-	mScene->RemoveEnemy(GetID());
+	std::cout << "Enemy.cpp: Delete Enemy" << std::endl;
 }
 
 void Enemy::UpdateActor(float deltaTime)
 {
-	//mStatus.position = GetPosition();
-	//mStatus.speed = mMove->GetSpeed();
-	//mStatus.acceleration = mMove->GetAcceleration();
-	//mStatus.force = mMove->GetForce();
-	//mStatus.role = GetRole();
-	//mStatus.powerSpeed = mMove->GetPowerSpeed();
-	//mStatus.radius = mCircle->GetRadius();
-
-	// ‚±‚±‚Ådelete‚ªg‚í‚ê‚Äƒƒ‚ƒŠ‰ğ•ú‚³‚ê‚é
 	if (GetHP() <= 0) { SetState(State::Dead); }
 }
