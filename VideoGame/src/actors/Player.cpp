@@ -39,7 +39,7 @@ Player::~Player()
 
 void Player::UpdateActor(float deltaTime)
 {
-
+	if (GetHP() <= 0) { SetState(State::Dead); }
 }
 
 void Player::ActorInput(const uint8_t* keyState)

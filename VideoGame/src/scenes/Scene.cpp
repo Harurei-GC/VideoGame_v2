@@ -14,16 +14,6 @@ Scene::Scene(Game* game)
 
 Scene::~Scene()
 {
-	// FIXME:ゲームをやめるときブレークポイントが発生する
-	// 正しくdeleteできていない？
-	//if (mTextures.size() != 0)
-	//{
-	//	for (auto i : mTextures)
-	//	{
-	//		SDL_DestroyTexture(i.second);
-	//	}
-	//	mTextures.clear();
-	//}
 	mGame->RemoveScene(this);
 }
 

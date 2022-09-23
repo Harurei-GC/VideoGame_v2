@@ -176,6 +176,7 @@ xcopy "$(SolutionDir)external\SDL\lib\x64\*.dll" "$(OutDir)" /i /s /y</Command>
     <ClInclude Include="src\scenes\Battle.h" />
     <ClInclude Include="src\scenes\GameClear.h" />
     <ClInclude Include="src\scenes\GameOver.h" />
+    <ClInclude Include="src\scenes\KeyConfig.h" />
     <ClInclude Include="src\scenes\Start.h" />
     <ClInclude Include="src\actors\Actor.h" />
     <ClInclude Include="src\components\BoxColliderComponent.h" />
@@ -211,6 +212,7 @@ xcopy "$(SolutionDir)external\SDL\lib\x64\*.dll" "$(OutDir)" /i /s /y</Command>
     <ClCompile Include="src\scenes\Battle.cpp" />
     <ClCompile Include="src\scenes\GameClear.cpp" />
     <ClCompile Include="src\scenes\GameOver.cpp" />
+    <ClCompile Include="src\scenes\KeyConfig.cpp" />
     <ClCompile Include="src\scenes\Start.cpp" />
     <ClCompile Include="src\actors\Goal.cpp" />
     <ClCompile Include="src\components\InputComponent.cpp" />

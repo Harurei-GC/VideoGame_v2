@@ -214,7 +214,7 @@ public:
 		return temp;
 	}
 
-	// Dot product between two vectors (a dot b)
+	// Åyì‡êœÅzDot product between two vectors (a dot b)
 	static float Dot(const Vector2& a, const Vector2& b)
 	{
 		return (a.x * b.x + a.y * b.y);

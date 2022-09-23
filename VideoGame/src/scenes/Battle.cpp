@@ -19,8 +19,10 @@ Battle::Battle(Game* game)
 	mPlayer = new Player(this);
 	mPlayer->SetPosition(Vector2(CHARACHIP_EDGE * 3.0f, CHARACHIP_EDGE * 2.0f));
 
-	mFriend = new Friend(this);
-	mFriend->SetPosition(Vector2(CHARACHIP_EDGE * 2.0f, CHARACHIP_EDGE * 2.0f));
+	// NOTE:Enemyが完成するまでインスタンス作成しない
+	// ConfigureMovementStatus.cppやBattle.hでもコメントアウトしている
+	//mFriend = new Friend(this);
+	//mFriend->SetPosition(Vector2(CHARACHIP_EDGE * 2.0f, CHARACHIP_EDGE * 2.0f));
 
 	mMob = new Mob(this);
 	mMob->SetPosition(Vector2(CHARACHIP_EDGE * 3.0f, CHARACHIP_EDGE * 3.0f));
@@ -170,6 +172,11 @@ void Battle::UpdateGame()
 			configMoveStatus->EraseEnemy(i);
 			mEnemy.erase(mEnemy.find(i));
 		}
+	}
+
+	if (mPlayer->GetState() == Actor::State::Dead)
+	{
+		delete mPlayer;
 	}
 
 	if (GoalIntersect(*mGoal, *mMob))

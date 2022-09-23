@@ -79,9 +79,11 @@ private:
 	bool Intersect(RADIUS arad, RADIUS brad, Vector2 apos, Vector2 bpos);
 	void JudgeActorsCollision(float deltaTime, Actor* you, Actor* me,int ID, char axis);
 	template<typename T>void SwapSpeed(T& aSpeed, T& bSpeed);
+	bool IsMeDamaged(Vector2 youSpeed, Vector2 meSpeed, Vector2 youPos, Vector2 mePos);
 	class Battle* cBattle;
 	class Player* player;
-	class Friend* fri;
+	// NOTE:Enemyが完成するまでコメントアウト
+	// class Friend* fri;
 	class Mob* mob;
 	std::map<int, class Enemy*>enemy;
 };

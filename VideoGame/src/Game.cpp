@@ -24,21 +24,10 @@
 
 Game::Game()
 :mWindow(nullptr)
-//,mRenderer(nullptr)
-//,mIsStart(true)
-//,mIsRunning(true)
 ,mIsCleared(false)
 ,mIsOver(false)
-//,mUpdatingActors(false)
-//,timeLimit(35.0f)
-//,bufCount(0)
 ,quitGame(false)
 {
-	// 先頭要素代入
-	//objPosition = { Vector2(-1.0f, -1.0f) };
-
-	//mColor[BLACK] = {0,0,0,255};
-	//mColor[BLUE] = {30, 30, 240, 255};
 }
 
 bool Game::Initialize() 
@@ -118,27 +107,6 @@ void Game::LoadData()
 
 void Game::RunLoop() 
 {
-	//// TODO:ここにSceneからゲーム強制終了のフラグを受けられるようにする
-	//while (mIsStart)
-	//{
-	//	GameStart();
-	//}
-	//while (mIsRunning)
-	//{
-	//	ProcessInput();
-	//	UpdateGame();
-	//	GenerateOutput();
-	//	while (mIsCleared)
-	//	{
-	//		GameClear();
-	//		mIsRunning = false;
-	//	}
-	//	while (mIsOver)
-	//	{
-	//		GameOver();
-	//		mIsRunning = false;
-	//	}
-	//}
 	// 各シーンへの遷移
 	while (start->GetIsRunning())
 	{
@@ -174,8 +142,6 @@ void Game::RunLoop()
 
 void Game::Shutdown()
 {
-	//UnloadData();
-	//UnloadScene();
 	IMG_Quit();
 	SDL_DestroyRenderer(gameRenderer);
 	SDL_DestroyWindow(mWindow);

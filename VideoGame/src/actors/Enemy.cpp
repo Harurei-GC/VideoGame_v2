@@ -29,7 +29,6 @@ Enemy::Enemy(Scene* scene, Vector2 pos)
 
 Enemy::~Enemy()
 {
-	std::cout << "Enemy.cpp: Delete Enemy" << std::endl;
 }
 
 void Enemy::UpdateActor(float deltaTime)

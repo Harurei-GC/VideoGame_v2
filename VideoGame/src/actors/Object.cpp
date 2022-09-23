@@ -9,7 +9,7 @@ Object::Object(Scene* scene, Vector2 pos)
 	SetRole(Role::Object);
 	SetPosition(pos);
 	SpriteComponent* sprite = new SpriteComponent(this,90);
-	sprite->SetTexture(scene->GetTexture("assets/Box.png"));
+	sprite->SetTexture(scene->GetTexture("assets/Tree.png"));
 
 	mScene->AddObject(this);
 }

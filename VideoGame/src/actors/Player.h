@@ -6,8 +6,8 @@ class Player :public Actor
 public:
 	Player(class Scene* scene);
 	~Player();
-	void UpdateActor(float deltaTime) override;
 	void ActorInput(const uint8_t* keyState) override;
+	void UpdateActor(float deltaTime) override;
 	class CircleComponent* GetCircle() { return mCircle; }
 	class RigidbodyComponent* GetRigidbody() { return mRigidbody; }
 	class InputComponent* GetInput() { return mInput; }
