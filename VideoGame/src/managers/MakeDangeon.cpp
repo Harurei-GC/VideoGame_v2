@@ -12,7 +12,6 @@ MakeDangeon::MakeDangeon()
 	,areaCountSize({0,0})
 	,allCorridor{ Vector2Int{-1,-1} }
 {
-	Random* rand = new Random();
 
 	// 範囲外参照防止のため要素1つ多めに作成
 	for (int i = 0; i <= HORIZONTAL; i++)
@@ -27,13 +26,12 @@ MakeDangeon::MakeDangeon()
 	MakeMaps();
 }
 
-// TODO:呼び出し1回で十分だからコンストラクタでよくね
 void MakeDangeon::MakeMaps()
 {
 	// areaSizeとroomSize[][]とroomPosition[][]を決定
 	// （Game.cpp）roomSizeとroomPositionを使用して空白となる空間を描画
-	areaNumX = rand->Sampling(1, 3);
-	areaNumY = rand->Sampling(2, 4);
+	areaNumX = Random::Sampling(1, 3);
+	areaNumY = Random::Sampling(2, 4);
 	areaCountSize.x = W_BOXES / areaNumX;
 	areaCountSize.y = H_BOXES / areaNumY;
 	// roomPositionが変化しうる範囲
@@ -52,10 +50,10 @@ void MakeDangeon::MakeMaps()
 				
 				continue;
 			}
-			roomBoxes[i][j] = { rand->Sampling(2,areaCountSize.x - 2), rand->Sampling(2,areaCountSize.y - 2) };
+			roomBoxes[i][j] = { Random::Sampling(2,areaCountSize.x - 2), Random::Sampling(2,areaCountSize.y - 2) };
 
 			range = { areaCountSize.x-2 - roomBoxes[i][j].x, areaCountSize.y - 2 - roomBoxes[i][j].y};
-			r = { rand->Sampling(0,range.x),rand->Sampling(0,range.y) };
+			r = { Random::Sampling(0,range.x),Random::Sampling(0,range.y) };
 
 			roomBoxPosition[i][j] = {(i * areaCountSize.x) +1+ r.x , (j * areaCountSize.y) +1+ r.y};
 		}
@@ -86,8 +84,8 @@ bool MakeDangeon::IsInCorridor(int x, int y)
 {
 	// TODO:一部の通路は行き止まりにしたい
 	// 最初の部屋以外でランダムに
-	int rx = rand->Sampling(1, areaNumX-1);
-	int ry = rand->Sampling(1, areaNumY-1);
+	int rx = Random::Sampling(1, areaNumX-1);
+	int ry = Random::Sampling(1, areaNumY-1);
 
 	for (int hor = 0; hor < areaNumX; hor++)
 	{
@@ -96,7 +94,7 @@ bool MakeDangeon::IsInCorridor(int x, int y)
 
 
 			// 現在指している部屋
-			position = roomBoxPosition[hor][ver];
+			Vector2Int position = roomBoxPosition[hor][ver];
 			// 入力座標がxyどちらにも被っていなければ
 
 			// x方向の連絡通路

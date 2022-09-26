@@ -25,7 +25,7 @@ void Goal::ActorInput(const uint8_t* keyState)
 
 }
 
-// TODO:このクラスじゃなくて別のクラスで部品化したい
+// HACK:このクラスじゃなくて別のクラスで部品化したい
 Vector2Int Goal::RandomPosition(class MakeDangeon* dangeon)
 {
 	Vector2Int position = dangeon->getLastRoomBoxPosition();

@@ -49,34 +49,14 @@ public:
 	{
 		return roomBoxes[areaNumX - 1][areaNumY - 1];
 	}
-	//void getRoomSize(Vector2Int data[3][4])
-	//{
-	//	for (int i = 0; i < HORIZONTAL; i++)
-	//	{
-	//		for (int j = 0; j < VERTICAL; j++)
-	//		{
-	//			data[i][j] = roomBoxes[i][j];
-	//		}
-	//	}
-	//}
-	//void getRoomBoxPosition(Vector2Int data[3][4])
-	//{
-	//	for (int i = 0; i < HORIZONTAL; i++)
-	//	{
-	//		for (int j = 0; j < VERTICAL; j++)
-	//		{
-	//			data[i][j] = roomBoxPosition[i][j];
-	//		}
-	//	}
-	//}
+	int GetAreaNumX() { return areaNumX; }
+	int GetAreaNumY() { return areaNumY; }
+	Vector2Int GetRoomBoxPosition(int x, int y) { return roomBoxPosition[x][y]; }
+	Vector2Int GetRoomBoxes(int x, int y) { return roomBoxes[x][y]; }
+
 private:
 	void MakeMaps();
 
-	// 7/27 変数名変更
-	// xBox,yBox->areaNumX,areaNumY
-	// areaSize->areaCountSize
-	// roomSize->roomBoxes
-	// roomPosition->roomBoxPosition
 	
 	// 縦方向もしくは横方向のエリアの数
 	int areaNumX;
@@ -93,9 +73,6 @@ private:
 	// 通路座標変数
 	// 最初に(-1,-1)のダミーが格納されているため注意
 	std::vector<Vector2Int> allCorridor;
-	// 部屋座標一時保存用
-	Vector2Int position;
 
-	class Random* rand;
 };
 

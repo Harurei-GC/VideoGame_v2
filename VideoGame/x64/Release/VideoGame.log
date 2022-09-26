@@ -1,8 +1,8 @@
-﻿  ConfigureMovementStatus.cpp
+﻿  Battle.cpp
   コード生成しています。
-  3 of 1339 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+  2 of 1343 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    5 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
   VideoGame.vcxproj -> C:\Users\arare.DESKTOP-NVMPQJV\source\repos\VideoGame\x64\Release\VideoGame.exe
   C:\Users\arare.DESKTOP-NVMPQJV\source\repos\VideoGame\external\SDL2-2.0.22\lib\x64\SDL2.dll

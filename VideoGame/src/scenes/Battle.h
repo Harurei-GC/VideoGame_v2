@@ -24,7 +24,7 @@ public:
 	std::vector<class Vector2> GetObjPosition()const { return objPosition; }
 	std::map<int,class Enemy*> GetEnemiesMap() const { return mEnemy; }
 	class Player* GetPlayer() { return mPlayer; }
-	class Friend* GetFriend() { return mFriend; }
+	//class Friend* GetFriend() { return mFriend; }
 	class Mob* GetMob() { return mMob; }
 
 	template<typename MAP, typename KEY>
@@ -47,7 +47,7 @@ private:
 	bool IsTimeOut(float deltaTime);
 	std::vector<class Vector2> objPosition;
 	class Player* mPlayer;
-	class Friend* mFriend;
+	//class Friend* mFriend;
 	class Mob* mMob;
 	class Goal* mGoal;
 	class Sprite* timerBackground;

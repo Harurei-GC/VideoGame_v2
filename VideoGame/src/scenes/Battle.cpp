@@ -7,12 +7,13 @@
 #include "../actors/Goal.h"
 #include "../actors/Sprite.h"
 #include "../components/SpriteComponent.h"
-
+#include "../Random.h"
+#include <iostream>
 
 
 Battle::Battle(Game* game)
 	:Scene(game)
-	,timeLimit(35.0f)
+	,timeLimit(60.0f)
 {
 	configMoveStatus = new ConfigureMovementStatus(this);
 
@@ -32,8 +33,19 @@ Battle::Battle(Game* game)
 
 	for (int i = 0; i < ENEMIES; i++)
 	{
-		// TODO:初期位置はそのうちランダム生成させる
-		mEnemy.insert(std::make_pair(i,new Enemy(this, Vector2(CHARACHIP_EDGE * (5.0f+i), CHARACHIP_EDGE * (2.0f+i)))));
+		// 部屋番号ランダム選択
+		int rx = Random::Sampling(0, dangeon.GetAreaNumX()-1);
+		int ry = Random::Sampling(0, dangeon.GetAreaNumY()-1);
+		if (rx == 0 && dangeon.GetAreaNumX() != 1) { rx = 1; }
+		else if (ry == 0) { ry = 1; }
+		// 部屋左上座標取得
+		Vector2Int position = dangeon.GetRoomBoxPosition(rx, ry);
+		// 部屋の範囲内で座標決定
+		position.x += Random::Sampling(1, dangeon.GetRoomBoxes(rx, ry).x - 1);
+		position.y += Random::Sampling(1, dangeon.GetRoomBoxes(rx, ry).y - 1);
+		// enemyの生成
+		mEnemy.insert(std::make_pair(i,new Enemy(this, Vector2(CHARACHIP_EDGE * (position.x), CHARACHIP_EDGE * (position.y)))));
+		// TODO:ゴールと被っていたら回避する処理もほしい
 	}
 
 	for (int i = 0; i < W_BOXES; i++)
@@ -50,7 +62,21 @@ Battle::Battle(Game* game)
 	}
 
 	mGoal = new Goal(this);
-	Vector2Int goalPosition = mGoal->RandomPosition(&dangeon);
+	Vector2Int goalPosition;
+	bool goalenemy = false;
+	do
+	{
+		goalPosition = mGoal->RandomPosition(&dangeon);
+		goalenemy = false;
+		for (int i = 0; i < ENEMIES; i++)
+		{
+			if (goalPosition.x == int(mEnemy.at(i)->GetInitialPosition().x) && goalPosition.y == int(mEnemy.at(i)->GetInitialPosition().y))
+			{
+				std::cout << "ゴールとエネミーが被りました" << std::endl;
+				goalenemy = true;
+			}
+		}
+	} while (goalenemy);
 	mGoal->SetPosition(Vector2(CHARACHIP_EDGE * (float)goalPosition.x, CHARACHIP_EDGE * (float)goalPosition.y));
 
 
@@ -108,7 +134,7 @@ void Battle::ProcessInput()
 	{
 		mPlayer->SetPosition(Vector2(CHARACHIP_EDGE * 3.0f, CHARACHIP_EDGE * 2.0f));
 		mMob->SetPosition(Vector2(CHARACHIP_EDGE * 3.0f, CHARACHIP_EDGE * 3.0f));
-		mFriend->SetPosition(Vector2(CHARACHIP_EDGE * 2.0f, CHARACHIP_EDGE * 2.0f));
+		// mFriend->SetPosition(Vector2(CHARACHIP_EDGE * 2.0f, CHARACHIP_EDGE * 2.0f));
 		for (auto iter = mEnemy.begin(); iter != mEnemy.end(); ++iter)
 		{
 			iter->second->SetPosition(iter->second->GetInitialPosition());
