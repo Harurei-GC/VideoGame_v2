@@ -205,6 +205,9 @@ void Battle::UpdateGame()
 		delete mPlayer;
 	}
 
+	// enemy‚ªŽc‚Á‚Ä‚¢‚ê‚ÎƒS[ƒ‹”»’è‚Í‚³‚ê‚È‚­‚È‚é
+	if (mEnemy.size() > 1) { return; }
+
 	if (GoalIntersect(*mGoal, *mMob))
 	{
 		mIsRunning = false;
@@ -228,6 +231,9 @@ void Battle::GenerateOutput()
 	RenderText(FONT_BBBOcelot, BLUE
 		, std::to_string(static_cast<int>(timeLimit) + 1).c_str()
 		, static_cast<int>(WIDTH - 100), 50);
+
+	// Žc‚è‚Ì“G‚Ì”•\Ž¦
+	RenderText(FONT_BBBOcelot, RED, std::to_string(mEnemy.size() - 1).c_str(), 30, 50);
 
 	// ‰æ–Ê‚É•`‰æ
 	SDL_RenderPresent(mGame->gameRenderer);

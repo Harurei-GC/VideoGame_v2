@@ -16,7 +16,7 @@ Enemy::Enemy(Scene* scene, Vector2 pos)
 	SetPosition(mInitialPosition);
 
 	SpriteComponent* sprite = new SpriteComponent(this);
-	sprite->SetTexture(mScene->GetTexture("assets/Enemy.png"));
+	sprite->SetTexture(mScene->GetTexture("assets/Snake.png"));
 
 	mCircle = new CircleComponent(this);
 	mCircle->SetRadius(10.0f);

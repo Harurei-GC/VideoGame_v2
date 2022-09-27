@@ -7,6 +7,7 @@ Scene::Scene(Game* game)
 {
 	mColor[BLACK] = { 0,0,0,255 };
 	mColor[BLUE] = { 30, 30, 240, 255 };
+	mColor[RED] = { 240, 50, 50, 255 };
 
 	game->AddScene(this);
 }

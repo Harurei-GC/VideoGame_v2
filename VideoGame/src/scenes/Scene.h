@@ -11,9 +11,11 @@
 
 #define FONT_BBBOcelot 0 // フォント番号
 #define FONT_PixelMplus 1
-#define COLOR 2 // 総使用フォントカラー数
+#define COLOR 3 // 総使用フォントカラー数
+// HACK:#define BLACK {0,0,0,255}のように直接指定した方がいい
 #define BLACK 0
 #define BLUE 1
+#define RED 2
 
 
 class Scene
