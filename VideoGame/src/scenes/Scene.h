@@ -1,8 +1,9 @@
 #pragma once
-#include "../Game.h"
-#include "../actors/Actor.h"
+#include "Game.h"
+#include "actors/Actor.h"
 #include <vector>
 #include "SDL_image.h"
+#include "visitors/Visitor.h"
 
 #define WIDTH 1024.0f
 #define HEIGHT 768.0f
@@ -17,52 +18,60 @@
 #define BLUE 1
 #define RED 2
 
+namespace visitors { 
+	class Visitor;
+	class VisitorGetPositions;
+}
 
-class Scene
-{
-public:
-	Scene(Game* game);
-	~Scene();
-	void RunLoop();
-	// DANGER:クラスのStartと同名
-	virtual void Start() {}
-	virtual void ProcessInput(){}
-	virtual void UpdateGame(){}
-	virtual void GenerateOutput(){}
+	class Scene
+	{
+	public:
+		Scene(Game* game);
+		~Scene();
+		void RunLoop();
+		// DANGER:クラスのStartと同名
+		virtual void Start() {}
+		virtual void ProcessInput() {}
+		virtual void UpdateGame() {}
+		virtual void GenerateOutput() {}
 
-	virtual void AddActor(Actor* actor){};
-	virtual void RemoveActor(Actor* actor){};
-	virtual void AddObject(class Object* object){};
-	virtual void RemoveObject(class Object* object){};
-	virtual void AddSprite(class SpriteComponent* sprite){};
-	virtual void RemoveSprite(class SpriteComponent* sprite){};
-	
-	//virtual std::vector<class Object*> GetObject() { return; }
-	//virtual std::vector<class Vector2> GetObjPosition()const { return; }
-	//virtual std::map<int, class Enemy*> GetEnemy() const { return; }
-	Game* GetGame() { return mGame; }
-	bool GetIsRunning() { return mIsRunning; }
-	SDL_Texture* GetTexture(const std::string& filename);
+		virtual void AddActor(class Actor* actor) {};
+		virtual void RemoveActor(class Actor* actor) {};
+		virtual void AddObject(class Object* object) {};
+		virtual void RemoveObject(class Object* object) {};
+		virtual void AddSprite(class SpriteComponent* sprite) {};
+		virtual void RemoveSprite(class SpriteComponent* sprite) {};
+		// Visitorクラスをインスタンス化したときに自動で呼び出される
+		void AddVisitor(visitors::Visitor* visitor) ;
+		void RemoveVisitor(visitors::Visitor* visitor) ;
 
-	
-	// NOTE:呼び出し前に、txtRectとpasteRectを初期化しておく必要がある
-	void RenderText(int font, int color, const char* text, int rw, int rh);
+		//virtual std::vector<class Object*> GetObject() { return; }
+		//virtual std::vector<class Vector2> GetObjPosition()const { return; }
+		//virtual std::map<int, class Enemy*> GetEnemy() const { return; }
+		Game* GetGame() { return mGame; }
+		bool GetIsRunning() { return mIsRunning; }
+		SDL_Texture* GetTexture(const std::string& filename);
 
-protected:
-	Game* mGame;
-	bool mIsRunning;
 
-	int texW, texH;
+		// NOTE:呼び出し前に、txtRectとpasteRectを初期化しておく必要がある
+		void RenderText(int font, int color, const char* text, int rw, int rh);
 
-	bool mUpdatingActors;
-	std::vector<Actor*> mActors;
-	std::vector<Actor*> mPendingActors;
-	std::vector<class SpriteComponent*>mSprites;
+	protected:
+		Game* mGame;
+		bool mIsRunning;
 
-private:
+		int texW, texH;
 
-	std::unordered_map<std::string, SDL_Texture*> mTextures;
-	SDL_Color mColor[COLOR];
-	SDL_Rect txtRect, pasteRect;
+		bool mUpdatingActors;
+		std::vector<Actor*> mActors;
+		std::vector<Actor*> mPendingActors;
+		std::vector<class SpriteComponent*>mSprites;
+		std::vector<class visitors::Visitor*>mVisitors;
 
-};
+	private:
+
+		std::unordered_map<std::string, SDL_Texture*> mTextures;
+		SDL_Color mColor[COLOR];
+		SDL_Rect txtRect, pasteRect;
+
+	};

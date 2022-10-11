@@ -1,6 +1,11 @@
 #pragma once
 #include "Actor.h"
 
+namespace visitors
+{
+	class Visitor;
+}
+
 // TODO:‚à‚µ‚©‚µ‚½‚ç‚±‚ê‚©‚ç“G‚Ìí—Ş‚ª‘‚¦‚½‚Æ‚«‚ÉEnemy‚Ì”h¶ƒNƒ‰ƒX‚ªo‚Ä‚­‚é‚©‚à
 class Enemy :public Actor
 {
@@ -12,6 +17,7 @@ public:
 	class CircleComponent* GetCircle() override { return mCircle; }
 	class RigidbodyComponent* GetRigidbody() override { return mRigidbody; }
 	void TakeDamage(int damage)override { mHP -= damage; }
+	void AcceptVisitor(visitors::Visitor* visitor)override;
 private:
 	class CircleComponent* mCircle;
 	class RigidbodyComponent* mRigidbody;

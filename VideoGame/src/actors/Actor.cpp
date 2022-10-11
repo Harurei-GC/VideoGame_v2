@@ -1,6 +1,7 @@
 #include "Actor.h"
-#include "../components/Component.h"
-#include "../scenes/Scene.h"
+#include "components/Component.h"
+#include "scenes/Scene.h"
+#include "visitors/Visitor.h"
 
 Actor::Actor(Scene* scene)
 	:mState(State::Active)

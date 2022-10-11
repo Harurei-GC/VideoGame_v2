@@ -7,6 +7,8 @@
 #include "../actors/Enemy.h"
 #include <iostream>
 
+#define TESTING_CONFIGUREMOVEMENTSTATUS_CPP_ // 一時的にfriend消去
+
 ConfigureMovementStatus::ConfigureMovementStatus(Battle* battle)
 	:cBattle(battle)
 {
@@ -15,7 +17,9 @@ ConfigureMovementStatus::ConfigureMovementStatus(Battle* battle)
 void ConfigureMovementStatus::Start()
 {
 	player = cBattle->GetPlayer();
-	// fri = cBattle->GetFriend();
+#ifndef TESTING_CONFIGUREMOVEMENTSTATUS_CPP_
+	fri = cBattle->GetFriend();
+#endif
 	mob = cBattle->GetMob();
 	enemy = cBattle->GetEnemiesMap();
 }
@@ -37,34 +41,38 @@ void ConfigureMovementStatus::Update(float deltaTime)
 		{
 			JudgeActorsCollision(deltaTime, mob, player,-1, a);
 		}
-		//if (Intersect(player->GetCircle()->GetRadius(), fri->GetCircle()->GetRadius()
-		//	, player->GetRigidbody()->GetReplacePosition(), fri->GetRigidbody()->GetReplacePosition()))
-		//{
-		//	JudgeActorsCollision(deltaTime, fri, player,-1, a);
-		//}
+#ifndef TESTING_CONFIGUREMOVEMENTSTATUS_CPP_
+		if (Intersect(player->GetCircle()->GetRadius(), fri->GetCircle()->GetRadius()
+			, player->GetRigidbody()->GetReplacePosition(), fri->GetRigidbody()->GetReplacePosition()))
+		{
+			JudgeActorsCollision(deltaTime, fri, player,-1, a);
+		}
 		// friend視点
-		//if (Intersect(fri->GetCircle()->GetRadius(), mob->GetCircle()->GetRadius()
-		//	, fri->GetRigidbody()->GetReplacePosition(), mob->GetRigidbody()->GetReplacePosition()))
-		//{
-		//	JudgeActorsCollision(deltaTime, mob, fri,-1, a);
-		//}
-		//if (Intersect(fri->GetCircle()->GetRadius(), player->GetCircle()->GetRadius()
-		//	, fri->GetRigidbody()->GetReplacePosition(), player->GetRigidbody()->GetReplacePosition()))
-		//{
-		//	JudgeActorsCollision(deltaTime, player, fri,-1, a);
-		//}
+		if (Intersect(fri->GetCircle()->GetRadius(), mob->GetCircle()->GetRadius()
+			, fri->GetRigidbody()->GetReplacePosition(), mob->GetRigidbody()->GetReplacePosition()))
+		{
+			JudgeActorsCollision(deltaTime, mob, fri,-1, a);
+		}
+		if (Intersect(fri->GetCircle()->GetRadius(), player->GetCircle()->GetRadius()
+			, fri->GetRigidbody()->GetReplacePosition(), player->GetRigidbody()->GetReplacePosition()))
+		{
+			JudgeActorsCollision(deltaTime, player, fri,-1, a);
+		}
+#endif
 		// mob視点
 		if (Intersect(mob->GetCircle()->GetRadius(), player->GetCircle()->GetRadius()
 			, mob->GetRigidbody()->GetReplacePosition(), player->GetRigidbody()->GetReplacePosition()))
 		{
 			JudgeActorsCollision(deltaTime, player, mob,-1, a);
 		}
-		//if (Intersect(mob->GetCircle()->GetRadius(), fri->GetCircle()->GetRadius()
-		//	, mob->GetRigidbody()->GetReplacePosition(), fri->GetRigidbody()->GetReplacePosition()))
-		//{
-		//	JudgeActorsCollision(deltaTime, fri, mob,-1, a);
-		//}
-		
+#ifndef TESTING_CONFIGUREMOVEMENTSTATUS_CPP_
+		if (Intersect(mob->GetCircle()->GetRadius(), fri->GetCircle()->GetRadius()
+			, mob->GetRigidbody()->GetReplacePosition(), fri->GetRigidbody()->GetReplacePosition()))
+		{
+			JudgeActorsCollision(deltaTime, fri, mob,-1, a);
+		}
+#endif
+
 		// enemyに関連する処理
 		for (int j = 0; j < ENEMIES; j++)
 		{
@@ -81,12 +89,14 @@ void ConfigureMovementStatus::Update(float deltaTime)
 					// Player視点の条件分岐に持っていこうにも、enemyを識別することが出来なくなる。なのでここに置いておく。
 					JudgeActorsCollision(deltaTime, enemy.at(j),player, j, a);
 				}
-				//if (Intersect(enemy.at(j)->GetCircle()->GetRadius(), fri->GetCircle()->GetRadius()
-				//	, enemy.at(j)->GetRigidbody()->GetReplacePosition(), fri->GetRigidbody()->GetReplacePosition()))
-				//{
-				//	isEnemyDamaged[j] = IsMeDamaged();
-				//	JudgeActorsCollision(deltaTime, enemy.at(j), fri, j, a);
-				//}
+#ifndef TESTING_CONFIGUREMOVEMENTSTATUS_CPP_
+				if (Intersect(enemy.at(j)->GetCircle()->GetRadius(), fri->GetCircle()->GetRadius()
+					, enemy.at(j)->GetRigidbody()->GetReplacePosition(), fri->GetRigidbody()->GetReplacePosition()))
+				{
+					isEnemyDamaged[j] = IsMeDamaged();
+					JudgeActorsCollision(deltaTime, enemy.at(j), fri, j, a);
+				}
+#endif
 			}
 		}
 	}
@@ -147,9 +157,11 @@ void ConfigureMovementStatus::JudgeActorsCollision(float deltaTime,Actor* you, A
 		case Actor::Role::Player:
 			player->GetRigidbody()->SetSpeed(youSpeed);
 			break;
-		//case Actor::Role::Friend:
-		//	fri->GetRigidbody()->SetSpeed(youSpeed);
-		//	break;
+#ifndef TESTING_CONFIGUREMOVEMENTSTATUS_CPP_
+		case Actor::Role::Friend:
+			fri->GetRigidbody()->SetSpeed(youSpeed);
+			break;
+#endif
 		case Actor::Role::Enemy:
 			enemy.at(ID)->GetRigidbody()->SetSpeed(youSpeed);
 			break;
@@ -171,7 +183,9 @@ void ConfigureMovementStatus::SwapSpeed(T& aSpeed, T& bSpeed)
 void ConfigureMovementStatus::SetActorsPosition()
 {
 	player->SetPosition(player->GetRigidbody()->GetReplacePosition());
-	//fri->SetPosition(fri->GetRigidbody()->GetReplacePosition());
+#ifndef TESTING_CONFIGUREMOVEMENTSTATUS_CPP_
+	fri->SetPosition(fri->GetRigidbody()->GetReplacePosition());
+#endif
 	mob->SetPosition(mob->GetRigidbody()->GetReplacePosition());
 	for (auto iter = enemy.begin(); iter != enemy.end(); ++iter)
 	{

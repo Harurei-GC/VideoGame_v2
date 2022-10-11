@@ -2,6 +2,11 @@
 #include <cstdint>
 #include <vector>
 #include "../Math.h"
+#include "visitors/Visitor.h"
+
+namespace visitors {
+	class Visitor; 
+}
 
 class Actor
 {
@@ -36,6 +41,9 @@ public:
 
 	void AddComponent(class Component* component);
 	void RemoveComponent(class Component* component);
+	
+	// visitorŽó‚¯“ü‚ê
+	virtual void AcceptVisitor(visitors::Visitor* visitor){}
 
 	float GetScale() const { return mScale; }
 	void SetScale(float scale) { mScale = scale; }
@@ -53,6 +61,7 @@ public:
 	float GetRotation() const { return mRotation; }
 	void SetRotation(float rotation) { mRotation = rotation; }
 	int GetHP() const { return mHP; }
+
 	virtual void TakeDamage(int damage) {}
 	virtual class CircleComponent* GetCircle() { return nullptr; }
 	virtual class RigidbodyComponent* GetRigidbody() { return nullptr; }
@@ -66,10 +75,11 @@ protected:
 private:
 	State mState;
 	Role mRole;
-	std::vector<class Component*> mComponents;
 	float mScale;
 	Vector2 mPosition;
 	float mRotation;
 	float mMass;
 	float mFriction;
+
+	std::vector<class Component*> mComponents;
 };

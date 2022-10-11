@@ -1,10 +1,12 @@
-#include "Enemy.h"
-#include "../scenes/Scene.h"
-#include "../components/SpriteComponent.h"
-#include "../components/CircleComponent.h"
-#include "../components/AIComponent.h"
-#include "../components/RigidbodyComponent.h"
+#include "actors/Enemy.h"
+#include "scenes/Scene.h"
+#include "components/SpriteComponent.h"
+#include "components/CircleComponent.h"
+#include "components/AIComponent.h"
+#include "components/RigidbodyComponent.h"
 #include <iostream>
+#include "visitors/Visitor.h"
+
 
 Enemy::Enemy(Scene* scene, Vector2 pos)
 	:Actor(scene)
@@ -34,4 +36,9 @@ Enemy::~Enemy()
 void Enemy::UpdateActor(float deltaTime)
 {
 	if (GetHP() <= 0) { SetState(State::Dead); }
+}
+
+void Enemy::AcceptVisitor(visitors::Visitor* visitor)
+{
+	visitor->VstEnemy(this);
 }

@@ -9,6 +9,10 @@
 #include "../components/SpriteComponent.h"
 #include "../Random.h"
 #include <iostream>
+#define TEST_VISIT // Visitorが正しく動くかどうか
+#ifdef TEST_VISIT
+#include "visitors/VisitorGetPositions.h"
+#endif
 
 
 Battle::Battle(Game* game)
@@ -83,6 +87,11 @@ Battle::Battle(Game* game)
 	timerBackground = new Sprite(this);
 	timerBackground->SetPosition(Vector2((WIDTH - 80), 60));
 
+
+#ifdef TEST_VISIT
+	vstGetPos = new visitors::VisitorGetPositions(this);
+
+#endif
 }
 
 Battle::~Battle()
@@ -150,15 +159,17 @@ void Battle::ProcessInput()
 
 void Battle::UpdateGame()
 {
+	// deltaTimeの計算
 	while (!SDL_TICKS_PASSED(SDL_GetTicks(), mGame->mTicksCount + 16));
-
 	// SDLが初期化されてから今回までに経過した時間-前回までに経過した時間
 	float deltaTime = (SDL_GetTicks() - mGame->mTicksCount) / 1000.0f;
+
 	if (deltaTime > 0.05f)
 	{
 		deltaTime = 0.05f;
 	}
 	mGame->mTicksCount = SDL_GetTicks();
+
 	// 制限時間を超えたなら
 	if (IsTimeOut(deltaTime))
 	{
@@ -172,11 +183,18 @@ void Battle::UpdateGame()
 	for (auto actor : mActors)
 	{
 		actor->Update(deltaTime);
+		for (auto visitor : mVisitors)
+		{
+			// @hack 更新のタイミング要検討
+			actor->AcceptVisitor(visitor);
+		}
 	}
 	mUpdatingActors = false;
 
 	configMoveStatus->Update(deltaTime);
-	configMoveStatus->SetActorsPosition();
+	// @todo これconfigMoveStatusのUpdate内で処理させる
+	configMoveStatus->SetActorsPosition(); 
+
 
 	// 保留中のActorをmActorsへ移動
 	for (auto pending : mPendingActors)

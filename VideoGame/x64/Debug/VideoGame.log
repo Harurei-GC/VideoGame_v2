@@ -1,6 +1,33 @@
 ﻿  Game.cpp
-C:\Users\arare.DESKTOP-NVMPQJV\source\repos\VideoGame\VideoGame\Game.cpp(42,60): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\arare.DESKTOP-NVMPQJV\source\repos\VideoGame\VideoGame\Game.cpp(42,53): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\arare.DESKTOP-NVMPQJV\source\repos\VideoGame\VideoGame\src\Game.cpp(43,60): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\arare.DESKTOP-NVMPQJV\source\repos\VideoGame\VideoGame\src\Game.cpp(43,53): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  Actor.cpp
+  Enemy.cpp
+  Friend.cpp
+  Goal.cpp
+  Mob.cpp
+  Object.cpp
+  Player.cpp
+  Sprite.cpp
+  AIComponent.cpp
+  BoxColliderComponent.cpp
+  CircleComponent.cpp
+  Component.cpp
+  InputComponent.cpp
+  RigidbodyComponent.cpp
+  SpriteComponent.cpp
+  ConfigureMovementStatus.cpp
+  Battle.cpp
+  GameClear.cpp
+  GameOver.cpp
+  コードを生成中...
+  コンパイル中...
+  KeyConfig.cpp
+  Scene.cpp
+  Start.cpp
+  Visitor.cpp
+  VisitorGetPositions.cpp
+  コードを生成中...
   VideoGame.vcxproj -> C:\Users\arare.DESKTOP-NVMPQJV\source\repos\VideoGame\x64\Debug\VideoGame.exe
   C:\Users\arare.DESKTOP-NVMPQJV\source\repos\VideoGame\external\SDL2-2.0.22\lib\x64\SDL2.dll
   1 個のファイルをコピーしました

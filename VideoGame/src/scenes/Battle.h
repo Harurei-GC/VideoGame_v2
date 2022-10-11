@@ -2,8 +2,14 @@
 #include "Scene.h"
 #include "../managers/MakeDangeon.h"
 #include <map>
+#include "visitors/VisitorGetPositions.h"
 
 #define ENEMIES 2
+
+namespace visitors { 
+	class VisitorGetPositions;
+	class Visitor;
+}
 
 class Battle :public Scene
 {
@@ -45,6 +51,7 @@ public:
 	}
 private:
 	bool IsTimeOut(float deltaTime);
+
 	std::vector<class Vector2> objPosition;
 	class Player* mPlayer;
 	//class Friend* mFriend;
@@ -56,10 +63,12 @@ private:
 	MakeDangeon dangeon;
 	class ConfigureMovementStatus* configMoveStatus;
 	float timeLimit;
+
+	class visitors::VisitorGetPositions* vstGetPos;
 };
 
 
-
+// @todo 専用のヘッダファイル作成
 #include <vector>
 #include "../Math.h"
 #include "../scenes/Battle.h"

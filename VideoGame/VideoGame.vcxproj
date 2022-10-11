@@ -73,16 +73,20 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\x64\Debug\</OutDir>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);;$(ProjectDir)src\</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(ProjectDir)src\;$(IncludePath);$(ProjectDir)src\</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\x64\Debug\</OutDir>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);;$(ProjectDir)src\</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(ProjectDir)src\;$(IncludePath);$(ProjectDir)src\</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -198,6 +202,8 @@ xcopy "$(SolutionDir)external\SDL\lib\x64\*.dll" "$(OutDir)" /i /s /y</Command>
     <ClInclude Include="src\actors\Sprite.h" />
     <ClInclude Include="src\components\SpriteComponent.h" />
     <ClInclude Include="src\components\AIComponent.h" />
+    <ClInclude Include="src\visitors\Visitor.h" />
+    <ClInclude Include="src\visitors\VisitorGetPositions.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\actors\Actor.cpp" />
@@ -227,6 +233,8 @@ xcopy "$(SolutionDir)external\SDL\lib\x64\*.dll" "$(OutDir)" /i /s /y</Command>
     <ClCompile Include="src\scenes\Scene.cpp" />
     <ClCompile Include="src\actors\Sprite.cpp" />
     <ClCompile Include="src\components\SpriteComponent.cpp" />
+    <ClCompile Include="src\visitors\Visitor.cpp" />
+    <ClCompile Include="src\visitors\VisitorGetPositions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="assets\Text.txt" />
