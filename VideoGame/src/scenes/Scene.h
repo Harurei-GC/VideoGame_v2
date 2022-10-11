@@ -1,9 +1,31 @@
 #pragma once
-#include "Game.h"
+#include "game/Game.h"
 #include "actors/Actor.h"
 #include <vector>
 #include "SDL_image.h"
 #include "visitors/Visitor.h"
+
+namespace visitors
+{ 
+	class Visitor;
+	class VisitorGetPositions;
+}
+namespace game
+{
+	class Game;
+}
+namespace actors
+{
+	class Actor;
+	namespace background
+	{
+		class BlockTree;
+	}
+}
+namespace components
+{
+	class SpriteComponent;
+}
 
 #define WIDTH 1024.0f
 #define HEIGHT 768.0f
@@ -18,37 +40,33 @@
 #define BLUE 1
 #define RED 2
 
-namespace visitors { 
-	class Visitor;
-	class VisitorGetPositions;
-}
 
+namespace scenes
+{
 	class Scene
 	{
 	public:
-		Scene(Game* game);
+		Scene(game::Game* game);
 		~Scene();
 		void RunLoop();
-		// DANGER:クラスのStartと同名
 		virtual void Start() {}
 		virtual void ProcessInput() {}
 		virtual void UpdateGame() {}
 		virtual void GenerateOutput() {}
 
-		virtual void AddActor(class Actor* actor) {};
-		virtual void RemoveActor(class Actor* actor) {};
-		virtual void AddObject(class Object* object) {};
-		virtual void RemoveObject(class Object* object) {};
-		virtual void AddSprite(class SpriteComponent* sprite) {};
-		virtual void RemoveSprite(class SpriteComponent* sprite) {};
+		// @todo sceneの派生クラスで、ポインタ配列を保持しているものは、デストラクタで消去が出来ているかどうかを確認する。加えて、Add,Removeが作成されており、対象クラスのコンストラクタ・デストラクタでAdd,Removeが呼び出されているか確認する。
+		void AddActor(class actors::Actor* actor);
+		void RemoveActor(class actors::Actor* actor);
+		void AddSprite(class components::SpriteComponent* sprite);
+		void RemoveSprite(class components::SpriteComponent* sprite);
 		// Visitorクラスをインスタンス化したときに自動で呼び出される
 		void AddVisitor(visitors::Visitor* visitor) ;
 		void RemoveVisitor(visitors::Visitor* visitor) ;
+		// @note BlockTreeはBattleクラスで実装
+		virtual void AddBlockTree(class actors::background::BlockTree* block) {};
+		virtual void RemoveBlockTree(class actors::background::BlockTree* block) {};
 
-		//virtual std::vector<class Object*> GetObject() { return; }
-		//virtual std::vector<class Vector2> GetObjPosition()const { return; }
-		//virtual std::map<int, class Enemy*> GetEnemy() const { return; }
-		Game* GetGame() { return mGame; }
+		game::Game* GetGame() { return mGame; }
 		bool GetIsRunning() { return mIsRunning; }
 		SDL_Texture* GetTexture(const std::string& filename);
 
@@ -57,15 +75,13 @@ namespace visitors {
 		void RenderText(int font, int color, const char* text, int rw, int rh);
 
 	protected:
-		Game* mGame;
+		game::Game* mGame;
 		bool mIsRunning;
-
-		int texW, texH;
-
 		bool mUpdatingActors;
-		std::vector<Actor*> mActors;
-		std::vector<Actor*> mPendingActors;
-		std::vector<class SpriteComponent*>mSprites;
+		int texW, texH;
+		std::vector<actors::Actor*> mActors;
+		std::vector<actors::Actor*> mPendingActors;
+		std::vector<class components::SpriteComponent*>mSprites;
 		std::vector<class visitors::Visitor*>mVisitors;
 
 	private:
@@ -75,3 +91,4 @@ namespace visitors {
 		SDL_Rect txtRect, pasteRect;
 
 	};
+}

@@ -1,9 +1,12 @@
-#include "AIComponent.h"
-#include "../actors/Actor.h"
-#include "Component.h"
+#include "components/AIComponent.h"
+#include "actors/Actor.h"
+#include "components/Component.h"
 
-AIComponent::AIComponent(Actor* owner, int updateOrder)
-	:Component(owner, updateOrder)
+namespace components
 {
+	AIComponent::AIComponent(actors::Actor* owner, int updateOrder)
+		:Component(owner, updateOrder)
+	{
 
+	}
 }

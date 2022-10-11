@@ -7,7 +7,7 @@
 
 namespace visitors
 {
-	VisitorGetPositions::VisitorGetPositions(::Scene* scene)
+	VisitorGetPositions::VisitorGetPositions(scenes::Scene* scene)
 		:Visitor(scene)
 	{
 
@@ -18,11 +18,8 @@ namespace visitors
 
 	}
 
-	void VisitorGetPositions::VstEnemy(::Enemy* enemy)
+	void VisitorGetPositions::VstEnemy(ch::Enemy* enemy)
 	{
-		Vector2 pos = enemy->GetPosition();
-		enemy->SetPosition(Vector2{pos.x + 1.0f,pos.y + 1.0f });
-
 #ifdef DEBUG_VISITORGETPOSITION_CPP_
 		std::cout << enemy->GetPosition().x << ", " << enemy->GetPosition().y << std::endl;
 #endif

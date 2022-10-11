@@ -1,15 +1,15 @@
 #pragma once
 #include "visitors/Visitor.h"
-#include "actors/Enemy.h"
+#include "actors/characters/Enemy.h"
 
 namespace visitors
 {
 	class VisitorGetPositions :public Visitor
 	{
 	public:
-		VisitorGetPositions(class ::Scene* scene);
+		VisitorGetPositions(scenes::Scene* scene);
 		~VisitorGetPositions();
-		void VstEnemy(class ::Enemy* enemy) override;
+		void VstEnemy(ch::Enemy* enemy) override;
 
 	};
 }

@@ -1,10 +1,17 @@
 #pragma once
 #include "scenes/Scene.h"
 
-class Player;
-class Enemy;
-class Friend;
-class Mob;
+namespace actors
+{
+	namespace characters
+	{
+		class Player;
+		class Enemy;
+		class Friend;
+		class MBox;
+	}
+}namespace ch = actors::characters;
+
 
 namespace visitors
 {
@@ -25,16 +32,16 @@ namespace visitors
 		// 宣言し、visitors::VstEnemyなどの中に処理を記述する。
 
 	public:
-		Visitor(Scene* scene);
+		Visitor(scenes::Scene* scene);
 		~Visitor();
 
 		// 各関数で、visit先のオブジェクトに行う処理を記述
-		virtual void VstPlayer(class ::Player* player){}
-		virtual void VstEnemy(class ::Enemy* enemy){}
-		virtual void VstFriend(class ::Friend* fri){}
-		virtual void VstMob(class  ::Mob* mob){}
+		virtual void VstPlayer(ch::Player* player){}
+		virtual void VstEnemy(ch::Enemy* enemy){}
+		virtual void VstFriend(ch::Friend* fri){}
+		virtual void VstMBox(ch::MBox* box){}
 
 	private:
-		Scene* mScene;
+		scenes::Scene* mScene;
 	};
 }

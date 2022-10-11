@@ -1,7 +1,10 @@
-#include "Scene.h"
+#include "scenes/Scene.h"
 #include "visitors/Visitor.h"
+#include "components/SpriteComponent.h"
 
-	Scene::Scene(Game* game)
+namespace scenes
+{
+	Scene::Scene(game::Game* game)
 		:mIsRunning(true)
 		, mGame(game)
 		, mUpdatingActors(false)
@@ -16,6 +19,23 @@
 
 	Scene::~Scene()
 	{
+		while (!mActors.empty())
+		{
+			delete mActors.back();
+		}
+		while (!mPendingActors.empty())
+		{
+			delete mPendingActors.back();
+		}
+		while (!mSprites.empty())
+		{
+			delete mSprites.back();
+		}
+		while (!mVisitors.empty())
+		{
+			delete mVisitors.back();
+		}
+
 		mGame->RemoveScene(this);
 	}
 
@@ -27,9 +47,63 @@
 		GenerateOutput();
 	}
 
+	void Scene::AddActor(actors::Actor* actor)
+	{
+		if (mUpdatingActors)
+		{
+			mPendingActors.emplace_back(actor);
+		}
+		else
+		{
+			mActors.emplace_back(actor);
+		}
+	}
+
+	void Scene::RemoveActor(actors::Actor* actor)
+	{
+		auto iter = std::find(mPendingActors.begin(), mPendingActors.end(), actor);
+		if (iter != mPendingActors.end())
+		{
+			std::iter_swap(iter, mPendingActors.end() - 1);
+			mPendingActors.pop_back();
+		}
+
+		iter = std::find(mActors.begin(), mActors.end(), actor);
+		if (iter != mActors.end())
+		{
+			std::iter_swap(iter, mActors.end() - 1);
+			mActors.pop_back();
+		}
+	}
+
+	void Scene::AddSprite(components::SpriteComponent* sprite)
+	{
+		int myDrawOrder = sprite->GetDrawOrder();
+		auto iter = mSprites.begin();
+		for (; iter != mSprites.end(); iter++)
+		{
+			if (myDrawOrder < (*iter)->GetDrawOrder())
+			{
+				break;
+			}
+		}
+		mSprites.insert(iter, sprite);
+	}
+
+	void Scene::RemoveSprite(components::SpriteComponent* sprite)
+	{
+		auto iter = std::find(mSprites.begin(), mSprites.end(), sprite);
+		if (iter != mSprites.end())
+		{
+			std::iter_swap(iter, mSprites.end() - 1);
+			mSprites.pop_back();
+		}
+	}
+
+
 	void Scene::AddVisitor(visitors::Visitor* visitor)
 	{
-		mVisitors.insert(mVisitors.end(), visitor);
+		mVisitors.emplace_back(visitor);
 	}
 
 	void Scene::RemoveVisitor(visitors::Visitor* visitor)
@@ -81,3 +155,5 @@
 		SDL_FreeSurface(surf);
 		SDL_DestroyTexture(txtr);
 	}
+
+}

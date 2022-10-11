@@ -1,12 +1,15 @@
 #pragma once
 #include "Scene.h"
 
-class GameClear :public Scene
+namespace scenes
 {
-public:
-	GameClear(Game* game);
-	void ProcessInput()override;
-	void UpdateGame()override;
-	void GenerateOutput()override;
-private:
-};
+	class GameClear :public Scene
+	{
+	public:
+		GameClear(game::Game* game);
+		void ProcessInput()override;
+		void UpdateGame()override;
+		void GenerateOutput()override;
+	private:
+	};
+}

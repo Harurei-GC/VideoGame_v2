@@ -1,85 +1,98 @@
 #pragma once
 #include <cstdint>
 #include <vector>
-#include "../Math.h"
-#include "visitors/Visitor.h"
+#include "math/Math.h"
 
+namespace scenes { class Scene; }
 namespace visitors {
 	class Visitor; 
 }
+namespace components { 
+	class Component;
+	class RigidbodyComponent;
+	namespace collider
+	{
+		class CircleComponent; 
+	}
+}
 
-class Actor
+namespace col = components::collider;
+
+namespace actors
 {
-public:
-	enum class State
+	class Actor
 	{
-		Active,
-		Paused,
-		Dead
-	};
+	public:
+		enum class State
+		{
+			Active,
+			Paused,
+			Dead
+		};
 
-	enum class Role
-	{
-		Player,
-		Friend,
-		Mob,
-		Enemy,
-		Object,
-		Goal
-	};
+		enum class Role
+		{
+			Player,
+			Friend,
+			MBox,
+			Enemy,
+			BlockTree,
+			Goal
+		};
 
-	Actor(class Scene* scene);
-	virtual ~Actor();
+		Actor(scenes::Scene* scene);
+		virtual ~Actor();
 
-	void Start();
-	void ProcessInput(const uint8_t* keyState);
-	void Update(float deltaTime);
-	void UpdateComponents(float deltaTime);
-	// 更新順はActorInput→UpdateActor
-	virtual void ActorInput(const uint8_t* keyState);
-	virtual void UpdateActor(float deltaTime);
+		void Start();
+		void ProcessInput(const uint8_t* keyState);
+		void Update(float deltaTime);
+		void UpdateComponents(float deltaTime);
+		// 更新順はActorInput→UpdateActor
+		virtual void ActorInput(const uint8_t* keyState);
+		virtual void UpdateActor(float deltaTime);
 
-	void AddComponent(class Component* component);
-	void RemoveComponent(class Component* component);
+		void AddComponent(components::Component* component);
+		void RemoveComponent(components::Component* component);
 	
-	// visitor受け入れ
-	virtual void AcceptVisitor(visitors::Visitor* visitor){}
+		// visitor受け入れ
+		virtual void AcceptVisitor(visitors::Visitor* visitor){}
 
-	float GetScale() const { return mScale; }
-	void SetScale(float scale) { mScale = scale; }
-	const Vector2& GetPosition() const { return mPosition; }
-	void SetPosition(const Vector2& pos) { mPosition = pos; }
-	State GetState() const { return mState; }
-	void SetState(State state){ mState = state; }
-	float GetMass() const { return mMass; }
-	void SetMass(float mass) { mMass = mass; }
-	float GetFriction() const { return mFriction; }
-	void SetFriction(float friction) { mFriction = friction; }
-	Role GetRole() const { return mRole; }
-	void SetRole(Role role) { mRole = role; }
-	// NOTE:Rotationいらないかも?verticalhorizontalあるから
-	float GetRotation() const { return mRotation; }
-	void SetRotation(float rotation) { mRotation = rotation; }
-	int GetHP() const { return mHP; }
+		float GetScale() const { return mScale; }
+		void SetScale(float scale) { mScale = scale; }
+		const Vector2& GetPosition() const { return mPosition; }
+		void SetPosition(const Vector2& pos) { mPosition = pos; }
+		State GetState() const { return mState; }
+		void SetState(State state){ mState = state; }
+		float GetMass() const { return mMass; }
+		void SetMass(float mass) { mMass = mass; }
+		float GetFriction() const { return mFriction; }
+		void SetFriction(float friction) { mFriction = friction; }
+		Role GetRole() const { return mRole; }
+		void SetRole(Role role) { mRole = role; }
+		// NOTE:Rotationいらないかも?verticalhorizontalあるから
+		float GetRotation() const { return mRotation; }
+		void SetRotation(float rotation) { mRotation = rotation; }
+		int GetHP() const { return mHP; }
 
-	virtual void TakeDamage(int damage) {}
-	virtual class CircleComponent* GetCircle() { return nullptr; }
-	virtual class RigidbodyComponent* GetRigidbody() { return nullptr; }
+		virtual void TakeDamage(int damage) {}
+		virtual col::CircleComponent* GetCircle() { return nullptr; }
+		virtual components::RigidbodyComponent* GetRigidbody() { return nullptr; }
 
-	class Scene* GetScene() { return mScene; }
+		scenes::Scene* GetScene() { return mScene; }
 
-protected:
-	class Scene* mScene;
-	int mHP;
+	protected:
+		scenes::Scene* mScene;
+		int mHP;
 
-private:
-	State mState;
-	Role mRole;
-	float mScale;
-	Vector2 mPosition;
-	float mRotation;
-	float mMass;
-	float mFriction;
+	private:
+		State mState;
+		Role mRole;
+		float mScale;
+		Vector2 mPosition;
+		float mRotation;
+		float mMass;
+		float mFriction;
 
-	std::vector<class Component*> mComponents;
-};
+		std::vector<components::Component*> mComponents;
+	};
+}

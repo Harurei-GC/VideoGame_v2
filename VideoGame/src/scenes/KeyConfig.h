@@ -1,10 +1,11 @@
 #pragma once
-#include "Scene.h"
+#include "scenes/Scene.h"
 
-class KeyConfig : public Scene
+namespace scenes
 {
-public:
-	KeyConfig(class Game* game);
-private:
-
-};
+	class KeyConfig : public Scene
+	{
+	public:
+		KeyConfig(game::Game* game);
+	};
+}

@@ -1,8 +1,11 @@
 #include "KeyConfig.h"
-#include "../Game.h"
+#include "game/Game.h"
 
-KeyConfig::KeyConfig(Game* game)
-	:Scene(game)
+namespace scenes
 {
+	KeyConfig::KeyConfig(game::Game* game)
+		:Scene(game)
+	{
 
+	}
 }

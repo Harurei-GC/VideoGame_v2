@@ -1,10 +1,13 @@
 #pragma once
-#include "Component.h"
+#include "components/Component.h"
 
-class AIComponent :public Component
+namespace components
 {
-public:
-	AIComponent(class Actor* owner, int updateOrder = 40);
-private:
+	class AIComponent :public Component
+	{
+	public:
+		AIComponent(actors::Actor* owner, int updateOrder = 40);
+	private:
 
-};
+	};
+}

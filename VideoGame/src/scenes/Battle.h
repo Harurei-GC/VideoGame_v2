@@ -1,98 +1,97 @@
 #pragma once
-#include "Scene.h"
-#include "../managers/MakeDangeon.h"
+#include "scenes/Scene.h"
+#include "managers/MakeDangeon.h"
 #include <map>
 #include "visitors/VisitorGetPositions.h"
 
-#define ENEMIES 2
-
-namespace visitors { 
+namespace visitors
+{
 	class VisitorGetPositions;
 	class Visitor;
 }
-
-class Battle :public Scene
-{
-public:
-	Battle(Game* game);
-	~Battle();
-	void Start()override;
-	void ProcessInput()override;
-	void UpdateGame()override;
-	void GenerateOutput()override;
-	void AddActor(Actor* actor)override;
-	void RemoveActor(Actor* actor)override;
-	void AddSprite(class SpriteComponent* sprite)override;
-	void RemoveSprite(class SpriteComponent* sprite)override;
-	void AddObject(class Object* object)override;
-	void RemoveObject(class Object* object)override;
-	std::vector<class Object*> GetObject() { return mObject; }
-	std::vector<class Vector2> GetObjPosition()const { return objPosition; }
-	std::map<int,class Enemy*> GetEnemiesMap() const { return mEnemy; }
-	class Player* GetPlayer() { return mPlayer; }
-	//class Friend* GetFriend() { return mFriend; }
-	class Mob* GetMob() { return mMob; }
-
-	template<typename MAP, typename KEY>
-	bool ContainsKey(MAP m, KEY k)
+namespace game{	class Game; }
+namespace scenes { 
+	class Scene;
+}
+namespace managers { 
+	class ConfigureMovementStatus; 
+	class MakeDangeon;
+}
+namespace actors { 
+	class Actor;
+	namespace background
 	{
-		return m.find(k) != m.end();
-	}
-	class Enemy* GetPersonalEnemy(int key)
+		class BlockTree;
+		class Goal;
+		class Sprite;
+	} 
+	namespace characters
 	{
-		if (ContainsKey(mEnemy, key))
-		{
-			return mEnemy.at(key);
-		}
-		else
-		{
-			return mEnemy.at(-1);
-		}
+		class Enemy;
+		class Player;
+		class MBox;
 	}
-private:
-	bool IsTimeOut(float deltaTime);
-
-	std::vector<class Vector2> objPosition;
-	class Player* mPlayer;
-	//class Friend* mFriend;
-	class Mob* mMob;
-	class Goal* mGoal;
-	class Sprite* timerBackground;
-	std::map<int, class Enemy*> mEnemy;
-	std::vector<class Object*> mObject;
-	MakeDangeon dangeon;
-	class ConfigureMovementStatus* configMoveStatus;
-	float timeLimit;
-
-	class visitors::VisitorGetPositions* vstGetPos;
-};
+}
+namespace components { class SpriteComponent; }
 
 
-// @todo 専用のヘッダファイル作成
-#include <vector>
-#include "../Math.h"
-#include "../scenes/Battle.h"
-#include "../components/RigidbodyComponent.h"
-#include "../components/CircleComponent.h"
-using RADIUS = float;
+#define ENEMIES 2
+namespace bg = actors::background;
+namespace ch = actors::characters;
 
-class ConfigureMovementStatus
+namespace scenes
 {
-public:
-	ConfigureMovementStatus(Battle* battle);
-	void Start();
-	void Update(float deltaTime);
-	void SetActorsPosition();
-	void EraseEnemy(int i) { enemy.erase(enemy.find(i)); }
-private:
-	bool Intersect(RADIUS arad, RADIUS brad, Vector2 apos, Vector2 bpos);
-	void JudgeActorsCollision(float deltaTime, Actor* you, Actor* me,int ID, char axis);
-	template<typename T>void SwapSpeed(T& aSpeed, T& bSpeed);
-	bool IsMeDamaged(Vector2 youSpeed, Vector2 meSpeed, Vector2 youPos, Vector2 mePos);
-	class Battle* cBattle;
-	class Player* player;
-	// NOTE:Enemyが完成するまでコメントアウト
-	// class Friend* fri;
-	class Mob* mob;
-	std::map<int, class Enemy*>enemy;
-};
+	class Battle :public Scene
+	{
+	public:
+		Battle(game::Game* game);
+		~Battle();
+		void Start()override;
+		void ProcessInput()override;
+		void UpdateGame()override;
+		void GenerateOutput()override;
+
+		void AddBlockTree(bg::BlockTree* block)override;
+		void RemoveBlockTree(bg::BlockTree* block)override;
+		std::vector<bg::BlockTree*> GetBlkTree() { return mBlkTree; }
+		std::vector<class Vector2> GetBoxPosition()const { return boxPosition; }
+		std::map<int,ch::Enemy*> GetEnemiesMap() const { return mEnemy; }
+		ch::Player* GetPlayer() { return mPlayer; }
+		//class Friend* GetFriend() { return mFriend; }
+		ch::MBox* GetMBox() { return mMBox; }
+
+		template<typename MAP, typename KEY>
+		bool ContainsKey(MAP m, KEY k)
+		{
+			return m.find(k) != m.end();
+		}
+		ch::Enemy* GetPersonalEnemy(int key)
+		{
+			if (ContainsKey(mEnemy, key))
+			{
+				return mEnemy.at(key);
+			}
+			else
+			{
+				return mEnemy.at(-1);
+			}
+		}
+	private:
+		bool IsTimeOut(float deltaTime);
+
+		ch::Player* mPlayer;
+		//ch::Friend* mFriend;
+		ch::MBox* mMBox;
+		bg::Goal* mGoal;
+		bg::Sprite* timerBackground;
+		managers::MakeDangeon dangeon;
+		managers::ConfigureMovementStatus* configMoveStatus;
+		visitors::VisitorGetPositions* vstGetPos;
+		float timeLimit;
+
+		std::vector<class Vector2> boxPosition;
+		std::map<int, ch::Enemy*> mEnemy;
+		std::vector<bg::BlockTree*> mBlkTree;
+	};
+}
+

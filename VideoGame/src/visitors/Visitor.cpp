@@ -3,13 +3,13 @@
 
 namespace visitors
 {
-	Visitor::Visitor(Scene* scene)
+	Visitor::Visitor(scenes::Scene* scene)
 	{
 		mScene = scene;
 		mScene->AddVisitor(this);
 	}
 
-	visitors::Visitor::~Visitor()
+	Visitor::~Visitor()
 	{
 		mScene->RemoveVisitor(this);
 	}
