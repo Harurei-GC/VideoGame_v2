@@ -17,11 +17,16 @@
 #include "actors/characters/Enemy.h"
 #include "actors/characters/Friend.h"
 #include "actors/background/Sprite.h"
-#include "scenes/GameStart.h"
-#include "scenes/Battle.h"
-#include "scenes/GameClear.h"
-#include "scenes/GameOver.h"
+#include "scenes/ScnGameStart.h"
+#include "scenes/ScnBattle.h"
+#include "scenes/ScnGameClear.h"
+#include "scenes/ScnGameOver.h"
 #include "scenes/Scene.h"
+#include "scenes/ScnKeyConfig.h"
+#include "data/KeyData.h"
+
+
+//#define DEBUG_GAME_CPP_
 
 
 namespace game
@@ -31,6 +36,8 @@ namespace game
 		, mIsCleared(false)
 		, mIsOver(false)
 		, quitGame(false)
+		, mPlayAgain(false)
+		, mIsKConfig(false)
 	{
 	}
 
@@ -84,66 +91,153 @@ namespace game
 	// 各シーンに必要なものを持っていく
 	void Game::LoadData()
 	{
-		mFont[FONT_BBBOcelot] = TTF_OpenFont("font/bbbixxxel/04_Brischke/BBBOcelot-Regular.otf", 24);
-		if (!mFont[FONT_BBBOcelot])
+		mFont[FONT_BBBOcelot_Regular] = TTF_OpenFont("font/BBBOcelot-Regular.otf", 24);
+		if (!mFont[FONT_BBBOcelot_Regular])
 		{
-			std::cout << "Failed to get font for timer" << std::endl;
+			std::cout << "Failed to get font BBBOcelot_Regular" << std::endl;
 		}
-		mFont[FONT_PixelMplus] = TTF_OpenFont("font/PixelMplus-20130602/PixelMplus12-Regular.ttf", 24);
+		mFont[FONT_PixelMplus] = TTF_OpenFont("font/PixelMplus12-Regular.ttf", 24);
 		if (!mFont[FONT_PixelMplus])
 		{
+			std::cout << "Failed to get font PixelMplus" << std::endl;
+		}
+		mFont[FONT_BBB_Simulator_Black] = TTF_OpenFont("font/BBB_Simulator_Black.otf", 30);
+		if (!mFont[FONT_BBB_Simulator_Black])
+		{
 			std::cout << "Failed to get font for timer" << std::endl;
 		}
+		// キーコンフィグのデータを保持するクラス
+		mKeyData = new data::KeyData();
 
 		// TODO:Sceneの追加
-		gameStart = new scenes::GameStart(this);
-		battle = new scenes::Battle(this);
-		gameClear = new scenes::GameClear(this);
-		gameOver = new scenes::GameOver(this);
+		gameStart = new scenes::ScnGameStart(this);
+		battle = new scenes::ScnBattle(this);
+		gameClear = new scenes::ScnGameClear(this);
+		gameOver = new scenes::ScnGameOver(this);
+		keyConfig = new scenes::ScnKeyConfig(this);
 
-		// Start()を実行したいときはここに入れる 
-		gameStart->Start();
-		battle->Start();
-		gameClear->Start();
-		gameOver->Start();
 	}
 
 
 	void Game::RunLoop()
 	{
 		// 各シーンへの遷移
+		// スタート
+	GOTO_START:
+		gameStart->SetIsRunning(true);
 		while (gameStart->GetIsRunning())
 		{
+			gameStart->Start();
 			gameStart->RunLoop();
 		}
-		if (quitGame)
+		if (mIsKConfig)
 		{
-			return;
-		}
-		while (battle->GetIsRunning())
-		{
-			battle->RunLoop();
+			RNLP_IsKConfig();
+			if (quitGame) { return; }
+			goto GOTO_START;
 		}
 		if (quitGame)
 		{
 			return;
-		}
-		if (mIsCleared)
-		{
-			while (gameClear->GetIsRunning())
-			{
-				gameClear->RunLoop();
-			}
-		}
-		if (quitGame) { return; }
-		if (mIsOver)
-		{
-			while (gameOver->GetIsRunning())
-			{
-				gameOver->RunLoop();
-			}
 		}
 
+	GOTO_BATTLE:
+		// バトル
+		while (battle->GetIsRunning())
+		{
+			battle->Start();
+			battle->RunLoop();
+#ifdef DEBUG_GAME_CPP_
+			mIsCleared = true;
+#endif
+		}
+		if (quitGame)
+		{
+			return;
+		}
+
+	GOTO_CLEAR:
+		// ゲームクリア
+		if (mIsCleared)
+		{
+			gameClear->SetIsRunning(true);
+			while (gameClear->GetIsRunning())
+			{
+				gameClear->Start();
+				gameClear->RunLoop();
+			}
+			RNLP_BattleReset();
+			mIsCleared = false;
+		}
+		if (mIsKConfig)
+		{
+			RNLP_IsKConfig();
+			if (quitGame) { return; }
+			goto GOTO_START;
+		}
+		if (mPlayAgain) 
+		{
+			RNLP_PlayAgain();
+			goto GOTO_BATTLE;
+		}
+		if (quitGame) 
+		{
+			return;
+		}
+
+	GOTO_OVER:
+		// ゲーム失敗
+		if (mIsOver)
+		{
+			gameOver->SetIsRunning(true);
+			while (gameOver->GetIsRunning())
+			{
+				gameOver->Start();
+				gameOver->RunLoop();
+			}
+			RNLP_BattleReset();
+			mIsOver = false;
+		}
+		if (mIsKConfig)
+		{
+			RNLP_IsKConfig();
+			if (quitGame) { return; }
+			goto GOTO_START;
+		}
+		if (mPlayAgain)
+		{
+			RNLP_PlayAgain();
+			goto GOTO_BATTLE;
+		}
+		if (quitGame)
+		{
+			return;
+		}
+
+	}
+	void Game::RNLP_BattleReset()
+	{
+		delete battle;
+		battle = new scenes::ScnBattle(this);
+	}
+
+	void Game::RNLP_IsKConfig()
+	{
+		keyConfig->SetIsRunning(true);
+		while (keyConfig->GetIsRunning())
+		{
+			keyConfig->Start();
+			keyConfig->RunLoop();
+		}
+		mIsKConfig = false;
+		battle->SetIsRunning(true);
+
+	}
+
+	void Game::RNLP_PlayAgain()
+	{
+		battle->SetIsRunning(true);
+		mPlayAgain = false;
 	}
 
 	void Game::Shutdown()

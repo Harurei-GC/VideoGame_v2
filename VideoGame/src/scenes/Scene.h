@@ -32,13 +32,16 @@ namespace components
 #define SCREEN_OUT_SPEED 360.0f
 #define CHARACHIP_EDGE 32.0f
 
-#define FONT_BBBOcelot 0 // フォント番号
+// 総使用フォント数はGame.hに定義されています
+#define FONT_BBBOcelot_Regular 0 // フォント番号
 #define FONT_PixelMplus 1
-#define COLOR 3 // 総使用フォントカラー数
-// HACK:#define BLACK {0,0,0,255}のように直接指定した方がいい
-#define BLACK 0
+#define FONT_BBB_Simulator_Black 2
+
+#define COLOR 4 // 総使用フォントカラー数
+#define BLACK 0// HACK:#define BLACK {0,0,0,255}のように直接指定した方がいい
 #define BLUE 1
 #define RED 2
+#define YELLOW 3
 
 
 namespace scenes
@@ -49,10 +52,10 @@ namespace scenes
 		Scene(game::Game* game);
 		~Scene();
 		void RunLoop();
-		virtual void Start() {}
-		virtual void ProcessInput() {}
-		virtual void UpdateGame() {}
-		virtual void GenerateOutput() {}
+		virtual void Start();	// 各シーンのRunLoopが始まる直前に1回実行
+		virtual void ProcessInput();
+		virtual void UpdateGame();
+		virtual void GenerateOutput(){}
 
 		// @todo sceneの派生クラスで、ポインタ配列を保持しているものは、デストラクタで消去が出来ているかどうかを確認する。加えて、Add,Removeが作成されており、対象クラスのコンストラクタ・デストラクタでAdd,Removeが呼び出されているか確認する。
 		void AddActor(class actors::Actor* actor);
@@ -68,13 +71,23 @@ namespace scenes
 
 		game::Game* GetGame() { return mGame; }
 		bool GetIsRunning() { return mIsRunning; }
+		void SetIsRunning(bool run) { mIsRunning = run; }
 		SDL_Texture* GetTexture(const std::string& filename);
 
 
 		// NOTE:呼び出し前に、txtRectとpasteRectを初期化しておく必要がある
 		void RenderText(int font, int color, const char* text, int rw, int rh);
+		// bufの一部文字列を表示させる
+		void DispSentenceFromFile(int font, int color, int rw, int rh);
 
 	protected:
+
+		// オーバーライドしたのち派生クラスのコンストラクタで呼び出す。
+		// オーバーライドするときは、必ず基底クラスの仮想関数を一緒に呼ぶ。
+		// （ScnGameStart::ReadTextFileを参考に）
+		// Sceneごとに読み込むテキストファイルを変える
+		void ReadTextFile(const char* file);
+
 		game::Game* mGame;
 		bool mIsRunning;
 		bool mUpdatingActors;
@@ -84,6 +97,12 @@ namespace scenes
 		std::vector<class components::SpriteComponent*>mSprites;
 		std::vector<class visitors::Visitor*>mVisitors;
 
+		// 文字列表示に使う
+		int bufCount;
+		char buf[1024];
+		FILE* fp;
+
+		float deltaTime;
 	private:
 
 		std::unordered_map<std::string, SDL_Texture*> mTextures;

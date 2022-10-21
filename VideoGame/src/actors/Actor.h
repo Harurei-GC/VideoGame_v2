@@ -9,6 +9,7 @@ namespace visitors {
 }
 namespace components { 
 	class Component;
+	class InputComponent;
 	class RigidbodyComponent;
 	namespace collider
 	{
@@ -48,6 +49,7 @@ namespace actors
 		void Update(float deltaTime);
 		void UpdateComponents(float deltaTime);
 		// çXêVèáÇÕActorInputÅ®UpdateActor
+		virtual void ActorStart(){}
 		virtual void ActorInput(const uint8_t* keyState);
 		virtual void UpdateActor(float deltaTime);
 
@@ -77,6 +79,7 @@ namespace actors
 		virtual void TakeDamage(int damage) {}
 		virtual col::CircleComponent* GetCircle() { return nullptr; }
 		virtual components::RigidbodyComponent* GetRigidbody() { return nullptr; }
+		virtual components::InputComponent* GetInput() { return nullptr; }
 
 		scenes::Scene* GetScene() { return mScene; }
 

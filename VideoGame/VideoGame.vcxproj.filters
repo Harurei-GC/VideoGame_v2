@@ -75,19 +75,19 @@
     <ClInclude Include="src\scenes\Scene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="src\scenes\GameStart.h">
+    <ClInclude Include="src\scenes\ScnGameStart.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="src\scenes\GameOver.h">
+    <ClInclude Include="src\scenes\ScnGameOver.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="src\scenes\GameClear.h">
+    <ClInclude Include="src\scenes\ScnGameClear.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="src\scenes\Battle.h">
+    <ClInclude Include="src\scenes\ScnBattle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="src\scenes\KeyConfig.h">
+    <ClInclude Include="src\scenes\ScnKeyConfig.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="src\visitors\Visitor.h">
@@ -103,6 +103,18 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="src\managers\ConfigureMovementStatus.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\commands\Command.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\commands\MoveCommands.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\data\KeyData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\data\SG_Scancode.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -173,19 +185,19 @@
     <ClCompile Include="src\scenes\Scene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\scenes\GameStart.cpp">
+    <ClCompile Include="src\scenes\ScnGameStart.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\scenes\GameOver.cpp">
+    <ClCompile Include="src\scenes\ScnGameOver.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\scenes\GameClear.cpp">
+    <ClCompile Include="src\scenes\ScnGameClear.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\scenes\Battle.cpp">
+    <ClCompile Include="src\scenes\ScnBattle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\scenes\KeyConfig.cpp">
+    <ClCompile Include="src\scenes\ScnKeyConfig.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\visitors\VisitorGetPositions.cpp">
@@ -200,8 +212,12 @@
     <ClCompile Include="src\actors\background\BackgroundActor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="src\data\KeyData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="assets\Text.txt" />
+    <Text Include="assets\KeyConfig.txt" />
   </ItemGroup>
 </Project>

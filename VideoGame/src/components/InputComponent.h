@@ -14,15 +14,15 @@ namespace components
 		void ProcessInput(const uint8_t* keyState) override;
 
 		float GetMaxForce() const { return mMaxForce; }
-		int GetForwardKey() const { return mForwardKey; }
-		int GetBackKey() const { return mBackKey; }
+		int GetUpKey() const { return mUpKey; }
+		int GetDownKey() const { return mDownKey; }
 		int GetRightKey() const { return mRightKey; }
 		int GetLeftKey() const { return mLeftKey; }
 		int GetPowerKey() const { return mPowerKey; }
 
 		void SetMaxForce(float force) { mMaxForce = force; }
-		void SetForwardKey(int key) { mForwardKey = key; }
-		void SetBackKey(int key) { mBackKey = key; }
+		void SetUpKey(int key) { mUpKey = key; }
+		void SetDownKey(int key) { mDownKey = key; }
 		void SetRightKey(int key) { mRightKey = key; }
 		void SetLeftKey(int key) { mLeftKey = key; }
 		void SetPowerKey(int key) { mPowerKey = key; }
@@ -32,8 +32,8 @@ namespace components
 
 		RigidbodyComponent* rigidbody;
 		float mMaxForce;
-		int mForwardKey;
-		int mBackKey;
+		int mUpKey;
+		int mDownKey;
 		int mRightKey;
 		int mLeftKey;
 		int mPowerKey;

@@ -1,0 +1,6 @@
+Qキーで完了
+上　Up
+下　Down
+右　Right
+左　Left
+リセット　Reset

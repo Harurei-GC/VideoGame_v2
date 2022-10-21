@@ -7,8 +7,8 @@ namespace components
 {
 	InputComponent::InputComponent(actors::Actor* owner)
 		:Component(owner)
-		, mForwardKey(0)
-		, mBackKey(0)
+		, mUpKey(0)
+		, mDownKey(0)
 		, mRightKey(0)
 		, mLeftKey(0)
 		, mPowerKey(0)
@@ -29,11 +29,11 @@ namespace components
 		{
 			enableForce(inputForce.x, true);
 		}
-		if (keyState[mForwardKey])
+		if (keyState[mUpKey])
 		{
 			enableForce(inputForce.y, true);
 		}
-		if (keyState[mBackKey])
+		if (keyState[mDownKey])
 		{
 			enableForce(inputForce.y, false);
 		}

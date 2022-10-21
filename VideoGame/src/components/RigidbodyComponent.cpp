@@ -1,7 +1,7 @@
 #include "RigidbodyComponent.h"
 #include "actors/Actor.h"
 #include "components/collider/CircleComponent.h"
-#include "scenes/Battle.h"
+#include "scenes/ScnBattle.h"
 
 
 namespace components

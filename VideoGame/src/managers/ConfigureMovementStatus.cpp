@@ -1,4 +1,4 @@
-#include "scenes/Battle.h"
+#include "scenes/ScnBattle.h"
 #include "managers/ConfigureMovementStatus.h"
 #include "actors/background/BlockTree.h"
 #include "actors/Actor.h"
@@ -7,7 +7,6 @@
 #include "actors/characters/MBox.h"
 #include "actors/characters/Enemy.h"
 #include <iostream>
-#include "scenes/Battle.h"
 #include "components/RigidbodyComponent.h"
 #include "components/collider/CircleComponent.h"
 
@@ -15,7 +14,7 @@
 
 namespace managers
 {
-	ConfigureMovementStatus::ConfigureMovementStatus(scenes::Battle* battle)
+	ConfigureMovementStatus::ConfigureMovementStatus(scenes::ScnBattle* battle)
 		:cBattle(battle)
 	{
 	}
@@ -185,7 +184,7 @@ namespace managers
 		bSpeed = tmp;
 	}
 
-	// NOTE:Battle.cpp‚ÅŒÄ‚Ño‚·
+	// NOTE:ScnBattle.cpp‚ÅŒÄ‚Ño‚·
 	void ConfigureMovementStatus::SetActorsPosition()
 	{
 		player->SetPosition(player->GetRigidbody()->GetReplacePosition());

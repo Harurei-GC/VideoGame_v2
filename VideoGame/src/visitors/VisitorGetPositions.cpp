@@ -1,6 +1,5 @@
 #include "visitors/VisitorGetPositions.h"
 
-#define DEBUG_VISITORGETPOSITION_CPP_
 #ifdef DEBUG_VISITORGETPOSITION_CPP_ // デバッグ時のみインクルード
 #include <iostream>
 #endif

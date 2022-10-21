@@ -2,7 +2,7 @@
 #include <vector>
 #include "math/Math.h"
 
-namespace scenes { class Battle; }
+namespace scenes { class ScnBattle; }
 namespace actors
 {
 	namespace characters
@@ -20,7 +20,7 @@ namespace managers
 	class ConfigureMovementStatus
 	{
 	public:
-		ConfigureMovementStatus(scenes::Battle* battle);
+		ConfigureMovementStatus(scenes::ScnBattle* battle);
 		void Start();
 		void Update(float deltaTime);
 		void SetActorsPosition();
@@ -30,7 +30,7 @@ namespace managers
 		void JudgeActorsCollision(float deltaTime, actors::Actor* you, actors::Actor* me, int ID, char axis);
 		template<typename T>void SwapSpeed(T& aSpeed, T& bSpeed);
 		bool IsMeDamaged(Vector2 youSpeed, Vector2 meSpeed, Vector2 youPos, Vector2 mePos);
-		scenes::Battle* cBattle;
+		scenes::ScnBattle* cBattle;
 		ch::Player* player;
 		// NOTE:Enemyが完成するまでコメントアウト
 		// class Friend* fri;

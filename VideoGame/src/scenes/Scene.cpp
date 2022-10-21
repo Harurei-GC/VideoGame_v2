@@ -1,6 +1,7 @@
 #include "scenes/Scene.h"
 #include "visitors/Visitor.h"
 #include "components/SpriteComponent.h"
+#include <iostream>
 
 namespace scenes
 {
@@ -8,10 +9,13 @@ namespace scenes
 		:mIsRunning(true)
 		, mGame(game)
 		, mUpdatingActors(false)
+		, bufCount(0)
+		, buf{0}
 	{
 		mColor[BLACK] = { 0,0,0,255 };
 		mColor[BLUE] = { 30, 30, 240, 255 };
 		mColor[RED] = { 240, 50, 50, 255 };
+		mColor[YELLOW] = { 200, 170,10 };
 
 		game->AddScene(this);
 	}
@@ -39,13 +43,74 @@ namespace scenes
 		mGame->RemoveScene(this);
 	}
 
-	// NOTE:派生クラスにおいてUpdateGame()などのoverride関数を読み込むようにしたい
+	void Scene::ReadTextFile(const char* file)
+	{
+		if (fopen_s(&fp, file, "r") != 0)
+		{
+			std::cout << "Failed to open a text file" << std::endl;
+		}
+		else
+		{
+			// テキストファイル読み込み
+			// @hack なぜかコマンドラインに表示される
+			int i = 0;
+			while ((buf[i] = fgetc(fp)) != EOF)
+			{
+				putchar(buf[i]);
+				i++;
+			}
+			fclose(fp);
+		}
+	}
+
+	void Scene::Start()
+	{
+		mUpdatingActors = true;
+		for (auto actor : mActors)
+		{
+			actor->Start();
+			actor->ActorStart();
+		}
+		mUpdatingActors = false;
+	}
+
 	void Scene::RunLoop()
 	{
 		ProcessInput();
 		UpdateGame();
 		GenerateOutput();
 	}
+
+	void Scene::ProcessInput()
+	{
+		// イベント情報event
+		SDL_Event event;
+		while (SDL_PollEvent(&event))
+		{
+			switch (event.type)
+			{
+			case SDL_QUIT:
+				mIsRunning = false;
+				mGame->SetQuitGame(true);
+				break;
+			}
+		}
+	}
+
+	// deltaTimeの計算
+	void Scene::UpdateGame()
+	{
+		while (!SDL_TICKS_PASSED(SDL_GetTicks(), mGame->mTicksCount + 16));
+
+		deltaTime = (SDL_GetTicks() - mGame->mTicksCount) / 1000.0f;
+		if (deltaTime > 0.05f)
+		{
+			deltaTime = 0.05f;
+		}
+		mGame->mTicksCount = SDL_GetTicks();
+
+	}
+
 
 	void Scene::AddActor(actors::Actor* actor)
 	{
@@ -156,4 +221,21 @@ namespace scenes
 		SDL_DestroyTexture(txtr);
 	}
 
+	void Scene::DispSentenceFromFile(int font, int color, int rw, int rh)
+	{
+		char r[128] = { 0 };
+		if (bufCount != 0)
+		{
+			bufCount++;
+		}
+		int i = 0;
+		while (buf[bufCount] != '\n')				// 改行文字に当たるまで
+		{
+			if (bufCount > sizeof(buf)) { break; }	// 添え字の指す先が文字配列をオーバーしたら終了
+			r[i] = buf[bufCount];
+			i++;
+			bufCount++; //@attention 必ずレンダリング後にリセットする
+		}
+		RenderText(font, color, r, rw, rh);
+	}
 }

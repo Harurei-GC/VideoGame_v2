@@ -179,12 +179,16 @@ xcopy "$(SolutionDir)external\SDL\lib\x64\*.dll" "$(OutDir)" /i /s /y</Command>
   <ItemGroup>
     <ClInclude Include="src\actors\background\BackgroundActor.h" />
     <ClInclude Include="src\actors\characters\CharacterActor.h" />
+    <ClInclude Include="src\commands\Command.h" />
+    <ClInclude Include="src\commands\MoveCommands.h" />
+    <ClInclude Include="src\data\SG_Scancode.h" />
     <ClInclude Include="src\managers\ConfigureMovementStatus.h" />
-    <ClInclude Include="src\scenes\Battle.h" />
-    <ClInclude Include="src\scenes\GameClear.h" />
-    <ClInclude Include="src\scenes\GameOver.h" />
-    <ClInclude Include="src\scenes\KeyConfig.h" />
-    <ClInclude Include="src\scenes\GameStart.h" />
+    <ClInclude Include="src\data\KeyData.h" />
+    <ClInclude Include="src\scenes\ScnBattle.h" />
+    <ClInclude Include="src\scenes\ScnGameClear.h" />
+    <ClInclude Include="src\scenes\ScnGameOver.h" />
+    <ClInclude Include="src\scenes\ScnKeyConfig.h" />
+    <ClInclude Include="src\scenes\ScnGameStart.h" />
     <ClInclude Include="src\actors\Actor.h" />
     <ClInclude Include="src\components\collider\BoxColliderComponent.h" />
     <ClInclude Include="src\components\collider\CircleComponent.h" />
@@ -220,11 +224,12 @@ xcopy "$(SolutionDir)external\SDL\lib\x64\*.dll" "$(OutDir)" /i /s /y</Command>
     <ClCompile Include="src\actors\characters\Enemy.cpp" />
     <ClCompile Include="src\actors\characters\Friend.cpp" />
     <ClCompile Include="src\game\Game.cpp" />
-    <ClCompile Include="src\scenes\Battle.cpp" />
-    <ClCompile Include="src\scenes\GameClear.cpp" />
-    <ClCompile Include="src\scenes\GameOver.cpp" />
-    <ClCompile Include="src\scenes\KeyConfig.cpp" />
-    <ClCompile Include="src\scenes\GameStart.cpp" />
+    <ClCompile Include="src\data\KeyData.cpp" />
+    <ClCompile Include="src\scenes\ScnBattle.cpp" />
+    <ClCompile Include="src\scenes\ScnGameClear.cpp" />
+    <ClCompile Include="src\scenes\ScnGameOver.cpp" />
+    <ClCompile Include="src\scenes\ScnKeyConfig.cpp" />
+    <ClCompile Include="src\scenes\ScnGameStart.cpp" />
     <ClCompile Include="src\actors\background\Goal.cpp" />
     <ClCompile Include="src\components\InputComponent.cpp" />
     <ClCompile Include="src\game\Main.cpp" />
@@ -242,6 +247,7 @@ xcopy "$(SolutionDir)external\SDL\lib\x64\*.dll" "$(OutDir)" /i /s /y</Command>
     <ClCompile Include="src\visitors\VisitorGetPositions.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="assets\KeyConfig.txt" />
     <Text Include="assets\Text.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

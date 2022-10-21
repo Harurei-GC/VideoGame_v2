@@ -3,7 +3,7 @@
 #include "actors/Actor.h"
 #include "math/Math.h"
 
-namespace scenes { class Battle; }
+namespace scenes { class ScnBattle; }
 namespace components
 {
 	class RigidbodyComponent : public Component
@@ -31,6 +31,6 @@ namespace components
 		Vector2 mPowerSpeed;
 		Vector2 replacePos;
 		bool isPowered; // InputComponent‚È‚Ç‚©‚ç•ÏX‚Å‚«‚é‚æ‚¤‚É‚·‚é
-		scenes::Battle* battle;
+		scenes::ScnBattle* battle;
 	};
 }
