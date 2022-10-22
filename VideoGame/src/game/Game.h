@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "SDL.h"
 #include <vector>
 #include <string>
@@ -7,7 +7,7 @@
 #include "SDL_ttf.h"
 #include <map>
 
-#define FONT 3 // ‘g—pƒtƒHƒ“ƒg”
+#define FONT 3 // ç·ä½¿ç”¨ãƒ•ã‚©ãƒ³ãƒˆæ•°
 
 namespace scenes
 {
@@ -61,7 +61,7 @@ namespace game
 		void RNLP_PlayAgain();
 		void RNLP_BattleReset();
 
-		// ƒQ[ƒ€ƒEƒCƒ“ƒhƒE
+		// ã‚²ãƒ¼ãƒ ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦
 		SDL_Window* mWindow;
 		data::KeyData* mKeyData;
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <cstdint>
 #include "components/Component.h"
 #include "math/Math.h"

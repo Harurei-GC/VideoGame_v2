@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <cstdint>
 #include <vector>
 #include "math/Math.h"
@@ -48,7 +48,7 @@ namespace actors
 		void ProcessInput(const uint8_t* keyState);
 		void Update(float deltaTime);
 		void UpdateComponents(float deltaTime);
-		// XV‡‚ÍActorInput¨UpdateActor
+		// æ›´æ–°é †ã¯ActorInputâ†’UpdateActor
 		virtual void ActorStart(){}
 		virtual void ActorInput(const uint8_t* keyState);
 		virtual void UpdateActor(float deltaTime);
@@ -56,7 +56,7 @@ namespace actors
 		void AddComponent(components::Component* component);
 		void RemoveComponent(components::Component* component);
 	
-		// visitoró‚¯“ü‚ê
+		// visitorå—ã‘å…¥ã‚Œ
 		virtual void AcceptVisitor(visitors::Visitor* visitor){}
 
 		float GetScale() const { return mScale; }
@@ -71,7 +71,7 @@ namespace actors
 		void SetFriction(float friction) { mFriction = friction; }
 		Role GetRole() const { return mRole; }
 		void SetRole(Role role) { mRole = role; }
-		// NOTE:Rotation‚¢‚ç‚È‚¢‚©‚à?verticalhorizontal‚ ‚é‚©‚ç
+		// NOTE:Rotationã„ã‚‰ãªã„ã‹ã‚‚?verticalhorizontalã‚ã‚‹ã‹ã‚‰
 		float GetRotation() const { return mRotation; }
 		void SetRotation(float rotation) { mRotation = rotation; }
 		int GetHP() const { return mHP; }

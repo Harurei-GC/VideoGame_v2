@@ -1,4 +1,4 @@
-#include "scenes/ScnGameStart.h"
+﻿#include "scenes/ScnGameStart.h"
 #include "game/Game.h"
 #include <iostream>
 

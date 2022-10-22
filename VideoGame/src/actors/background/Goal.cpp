@@ -1,4 +1,4 @@
-#include "scenes/Scene.h"
+ï»¿#include "scenes/Scene.h"
 #include "actors/background/Goal.h"
 #include "components/SpriteComponent.h"
 #include "components/collider/CircleComponent.h"
@@ -32,7 +32,7 @@ namespace actors
 
 		}
 
-		// HACK:‚±‚ÌƒNƒ‰ƒX‚¶‚á‚È‚­‚Ä•Ê‚ÌƒNƒ‰ƒX‚Å•”•i‰»‚µ‚½‚¢
+		// HACK:ã“ã®ã‚¯ãƒ©ã‚¹ã˜ã‚ƒãªãã¦åˆ¥ã®ã‚¯ãƒ©ã‚¹ã§éƒ¨å“åŒ–ã—ãŸã„
 		Vector2Int Goal::RandomPosition(managers::MakeDangeon* dangeon)
 		{
 			Vector2Int position = dangeon->getLastRoomBoxPosition();

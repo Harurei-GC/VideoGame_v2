@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "game/Game.h"
 #include "actors/Actor.h"
 #include <vector>
@@ -32,13 +32,13 @@ namespace components
 #define SCREEN_OUT_SPEED 360.0f
 #define CHARACHIP_EDGE 32.0f
 
-// ‘g—pƒtƒHƒ“ƒg”‚ÍGame.h‚É’è‹`‚³‚ê‚Ä‚¢‚Ü‚·
-#define FONT_BBBOcelot_Regular 0 // ƒtƒHƒ“ƒg”Ô†
+// ç·ä½¿ç”¨ãƒ•ã‚©ãƒ³ãƒˆæ•°ã¯Game.hã«å®šç¾©ã•ã‚Œã¦ã„ã¾ã™
+#define FONT_BBBOcelot_Regular 0 // ãƒ•ã‚©ãƒ³ãƒˆç•ªå·
 #define FONT_PixelMplus 1
 #define FONT_BBB_Simulator_Black 2
 
-#define COLOR 4 // ‘g—pƒtƒHƒ“ƒgƒJƒ‰[”
-#define BLACK 0// HACK:#define BLACK {0,0,0,255}‚Ì‚æ‚¤‚É’¼Úw’è‚µ‚½•û‚ª‚¢‚¢
+#define COLOR 4 // ç·ä½¿ç”¨ãƒ•ã‚©ãƒ³ãƒˆã‚«ãƒ©ãƒ¼æ•°
+#define BLACK 0// HACK:#define BLACK {0,0,0,255}ã®ã‚ˆã†ã«ç›´æ¥æŒ‡å®šã—ãŸæ–¹ãŒã„ã„
 #define BLUE 1
 #define RED 2
 #define YELLOW 3
@@ -52,20 +52,20 @@ namespace scenes
 		Scene(game::Game* game);
 		~Scene();
 		void RunLoop();
-		virtual void Start();	// ŠeƒV[ƒ“‚ÌRunLoop‚ªn‚Ü‚é’¼‘O‚É1‰ñÀs
+		virtual void Start();	// å„ã‚·ãƒ¼ãƒ³ã®RunLoopãŒå§‹ã¾ã‚‹ç›´å‰ã«1å›å®Ÿè¡Œ
 		virtual void ProcessInput();
 		virtual void UpdateGame();
 		virtual void GenerateOutput(){}
 
-		// @todo scene‚Ì”h¶ƒNƒ‰ƒX‚ÅAƒ|ƒCƒ“ƒ^”z—ñ‚ğ•Û‚µ‚Ä‚¢‚é‚à‚Ì‚ÍAƒfƒXƒgƒ‰ƒNƒ^‚ÅÁ‹‚ªo—ˆ‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğŠm”F‚·‚éB‰Á‚¦‚ÄAAdd,Remove‚ªì¬‚³‚ê‚Ä‚¨‚èA‘ÎÛƒNƒ‰ƒX‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^EƒfƒXƒgƒ‰ƒNƒ^‚ÅAdd,Remove‚ªŒÄ‚Ño‚³‚ê‚Ä‚¢‚é‚©Šm”F‚·‚éB
+		// @todo sceneã®æ´¾ç”Ÿã‚¯ãƒ©ã‚¹ã§ã€ãƒã‚¤ãƒ³ã‚¿é…åˆ—ã‚’ä¿æŒã—ã¦ã„ã‚‹ã‚‚ã®ã¯ã€ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã§æ¶ˆå»ãŒå‡ºæ¥ã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’ç¢ºèªã™ã‚‹ã€‚åŠ ãˆã¦ã€Add,RemoveãŒä½œæˆã•ã‚Œã¦ãŠã‚Šã€å¯¾è±¡ã‚¯ãƒ©ã‚¹ã®ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãƒ»ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã§Add,RemoveãŒå‘¼ã³å‡ºã•ã‚Œã¦ã„ã‚‹ã‹ç¢ºèªã™ã‚‹ã€‚
 		void AddActor(class actors::Actor* actor);
 		void RemoveActor(class actors::Actor* actor);
 		void AddSprite(class components::SpriteComponent* sprite);
 		void RemoveSprite(class components::SpriteComponent* sprite);
-		// VisitorƒNƒ‰ƒX‚ğƒCƒ“ƒXƒ^ƒ“ƒX‰»‚µ‚½‚Æ‚«‚É©“®‚ÅŒÄ‚Ño‚³‚ê‚é
+		// Visitorã‚¯ãƒ©ã‚¹ã‚’ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–ã—ãŸã¨ãã«è‡ªå‹•ã§å‘¼ã³å‡ºã•ã‚Œã‚‹
 		void AddVisitor(visitors::Visitor* visitor) ;
 		void RemoveVisitor(visitors::Visitor* visitor) ;
-		// @note BlockTree‚ÍBattleƒNƒ‰ƒX‚ÅÀ‘•
+		// @note BlockTreeã¯Battleã‚¯ãƒ©ã‚¹ã§å®Ÿè£…
 		virtual void AddBlockTree(class actors::background::BlockTree* block) {};
 		virtual void RemoveBlockTree(class actors::background::BlockTree* block) {};
 
@@ -75,17 +75,17 @@ namespace scenes
 		SDL_Texture* GetTexture(const std::string& filename);
 
 
-		// NOTE:ŒÄ‚Ño‚µ‘O‚ÉAtxtRect‚ÆpasteRect‚ğ‰Šú‰»‚µ‚Ä‚¨‚­•K—v‚ª‚ ‚é
+		// NOTE:å‘¼ã³å‡ºã—å‰ã«ã€txtRectã¨pasteRectã‚’åˆæœŸåŒ–ã—ã¦ãŠãå¿…è¦ãŒã‚ã‚‹
 		void RenderText(int font, int color, const char* text, int rw, int rh);
-		// buf‚Ìˆê•”•¶š—ñ‚ğ•\¦‚³‚¹‚é
+		// bufã®ä¸€éƒ¨æ–‡å­—åˆ—ã‚’è¡¨ç¤ºã•ã›ã‚‹
 		void DispSentenceFromFile(int font, int color, int rw, int rh);
 
 	protected:
 
-		// ƒI[ƒo[ƒ‰ƒCƒh‚µ‚½‚Ì‚¿”h¶ƒNƒ‰ƒX‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ÅŒÄ‚Ño‚·B
-		// ƒI[ƒo[ƒ‰ƒCƒh‚·‚é‚Æ‚«‚ÍA•K‚¸Šî’êƒNƒ‰ƒX‚Ì‰¼‘zŠÖ”‚ğˆê‚ÉŒÄ‚ÔB
-		// iScnGameStart::ReadTextFile‚ğQl‚Éj
-		// Scene‚²‚Æ‚É“Ç‚İ‚ŞƒeƒLƒXƒgƒtƒ@ƒCƒ‹‚ğ•Ï‚¦‚é
+		// ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ã—ãŸã®ã¡æ´¾ç”Ÿã‚¯ãƒ©ã‚¹ã®ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã§å‘¼ã³å‡ºã™ã€‚
+		// ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ã™ã‚‹ã¨ãã¯ã€å¿…ãšåŸºåº•ã‚¯ãƒ©ã‚¹ã®ä»®æƒ³é–¢æ•°ã‚’ä¸€ç·’ã«å‘¼ã¶ã€‚
+		// ï¼ˆScnGameStart::ReadTextFileã‚’å‚è€ƒã«ï¼‰
+		// Sceneã”ã¨ã«èª­ã¿è¾¼ã‚€ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã‚’å¤‰ãˆã‚‹
 		void ReadTextFile(const char* file);
 
 		game::Game* mGame;
@@ -97,7 +97,7 @@ namespace scenes
 		std::vector<class components::SpriteComponent*>mSprites;
 		std::vector<class visitors::Visitor*>mVisitors;
 
-		// •¶š—ñ•\¦‚Ég‚¤
+		// æ–‡å­—åˆ—è¡¨ç¤ºã«ä½¿ã†
 		int bufCount;
 		char buf[1024];
 		FILE* fp;

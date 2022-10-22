@@ -1,4 +1,4 @@
-#include "ScnGameOver.h"
+﻿#include "ScnGameOver.h"
 #include <iostream>
 
 namespace scenes

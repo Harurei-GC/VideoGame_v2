@@ -1,4 +1,4 @@
-#include "actors/characters/Player.h"
+ï»¿#include "actors/characters/Player.h"
 #include "components/SpriteComponent.h"
 #include "scenes/Scene.h"
 #include "components/InputComponent.h"
@@ -28,7 +28,7 @@ namespace actors
 			mRigidbody->SetPowerSpeed(Vector2(200.0f,200.0f));
 
 			mInput = new components::InputComponent(this);
-			// @note íœ—\’è
+			// @note å‰Šé™¤äºˆå®š
 			//mInput->SetPowerKey(SDL_SCANCODE_SPACE);
 			mInput->SetMaxForce(60.0f);
 		}

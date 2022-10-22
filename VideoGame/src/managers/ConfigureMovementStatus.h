@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <vector>
 #include "math/Math.h"
 
@@ -32,7 +32,7 @@ namespace managers
 		bool IsMeDamaged(Vector2 youSpeed, Vector2 meSpeed, Vector2 youPos, Vector2 mePos);
 		scenes::ScnBattle* cBattle;
 		ch::Player* player;
-		// NOTE:Enemy‚ªŠ®¬‚·‚é‚Ü‚ÅƒRƒƒ“ƒgƒAƒEƒg
+		// NOTE:EnemyãŒå®Œæˆã™ã‚‹ã¾ã§ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆ
 		// class Friend* fri;
 		ch::MBox* mbox;
 		std::map<int, ch::Enemy*>enemy;

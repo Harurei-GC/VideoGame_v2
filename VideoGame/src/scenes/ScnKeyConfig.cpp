@@ -1,4 +1,4 @@
-#include "scenes/ScnKeyConfig.h"
+ï»¿#include "scenes/ScnKeyConfig.h"
 #include "game/Game.h"
 #include <iostream>
 
@@ -56,15 +56,15 @@ namespace scenes
 			SwitchKeyUpdate();
 		}
 		else
-		{// ‚±‚ÌƒtƒŒ[ƒ€‚ÅƒGƒ“ƒ^[ƒL[‚ğ‰Ÿ‚³‚È‚©‚Á‚½ê‡
+		{// ã“ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã§ã‚¨ãƒ³ã‚¿ãƒ¼ã‚­ãƒ¼ã‚’æŠ¼ã•ãªã‹ã£ãŸå ´åˆ
 			wasPushedEtr = false;
 		}
 
-		if (mKeyUpdating)// ƒL[‚ÌƒAƒbƒvƒf[ƒg’†‚Ìˆ—i”r‘¼“Ij
+		if (mKeyUpdating)// ã‚­ãƒ¼ã®ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆä¸­ã®å‡¦ç†ï¼ˆæ’ä»–çš„ï¼‰
 		{
 			KeyUpdating(keyState);
 		}
-		else// ƒAƒbƒvƒf[ƒg‚µ‚Ä‚¢‚È‚¢‚Æ‚«
+		else// ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆã—ã¦ã„ãªã„ã¨ã
 		{
 			NotKeyUpdating(keyState);
 		}
@@ -72,16 +72,16 @@ namespace scenes
 
 	void ScnKeyConfig::GenerateOutput()
 	{
-		// @todo ƒfƒoƒbƒOƒ‚[ƒhiƒJ[ƒlƒ‹j‚Æ”äŠr‚µ‚Ä‹““®‚ªˆê‚©Šm”F
-		// @todo ‘I‘ğ’†‚Ì‚à‚Ì‚ÉF‚ğ•t‚¯‚é
+		// @todo ãƒ‡ãƒãƒƒã‚°ãƒ¢ãƒ¼ãƒ‰ï¼ˆã‚«ãƒ¼ãƒãƒ«ï¼‰ã¨æ¯”è¼ƒã—ã¦æŒ™å‹•ãŒä¸€ç·’ã‹ç¢ºèª
+		// @todo é¸æŠä¸­ã®ã‚‚ã®ã«è‰²ã‚’ä»˜ã‘ã‚‹
 		SDL_SetRenderDrawColor(mGame->gameRenderer, 220, 220, 220, 255);
 		SDL_RenderClear(mGame->gameRenderer);
 
-		DispSentenceFromFile(FONT_PixelMplus, BLACK, 100, 100);				// QƒL[‚Å‚â‚ß‚é
+		DispSentenceFromFile(FONT_PixelMplus, BLACK, 100, 100);				// Qã‚­ãƒ¼ã§ã‚„ã‚ã‚‹
 		RenderText(FONT_PixelMplus, BLACK, "", 100, 100 + texH);			//
 		DispSentenceFromFile(FONT_PixelMplus, BLACK, 100, 100 + texH * 2);	// Up
 		RenderText(FONT_BBBOcelot_Regular, BLUE,
-			SDL_GetKeyName(mKeyData->GetUpKey().Getter()), 350, 100 + texH * 2);// İ’è‚µ‚½ƒL[
+			SDL_GetKeyName(mKeyData->GetUpKey().Getter()), 350, 100 + texH * 2);// è¨­å®šã—ãŸã‚­ãƒ¼
 		DispSentenceFromFile(FONT_PixelMplus, BLACK, 100, 100 + texH * 3);	// Down
 		DispSentenceFromFile(FONT_PixelMplus, BLACK, 100, 100 + texH * 4);	// Right
 		DispSentenceFromFile(FONT_PixelMplus, BLACK, 100, 100 + texH * 5);	// Left
@@ -96,19 +96,19 @@ namespace scenes
 	/* Update Functions */
 
 	void ScnKeyConfig::SwitchKeyUpdate()
-	{// ƒGƒ“ƒ^[‚ÅAƒL[‚ÌƒAƒbƒvƒf[ƒgON|OFF
+	{// ã‚¨ãƒ³ã‚¿ãƒ¼ã§ã€ã‚­ãƒ¼ã®ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆON|OFF
 		if (!wasPushedEtr)
-		{// ‘O‰ñ‚ÌƒtƒŒ[ƒ€‚ÅƒGƒ“ƒ^[ƒL[‚ğ‰Ÿ‚µ‚Ä‚¢‚È‚¢
-		 // ‰Ÿ‚µn‚ß‚Ìê‡Aˆ—Às
-			wasPushedEtr = true;	// Ÿ‰ñˆÈ~‚ÌƒtƒŒ[ƒ€‚ÅA˜A‘±‚µ‚ÄEnterƒL[“ü—Í‚ª‚Å‚«‚È‚¢‚æ‚¤‚É‚·‚é
+		{// å‰å›ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã§ã‚¨ãƒ³ã‚¿ãƒ¼ã‚­ãƒ¼ã‚’æŠ¼ã—ã¦ã„ãªã„
+		 // ï¼æŠ¼ã—å§‹ã‚ã®å ´åˆã€å‡¦ç†å®Ÿè¡Œ
+			wasPushedEtr = true;	// æ¬¡å›ä»¥é™ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã§ã€é€£ç¶šã—ã¦Enterã‚­ãƒ¼å…¥åŠ›ãŒã§ããªã„ã‚ˆã†ã«ã™ã‚‹
 
 			mKeyUpdating = !mKeyUpdating;
 
 			std::cout << "Updating: " << mKeyUpdating << std::endl;
 
-			if (mKeyUpdating)// ƒL[‚ÌƒAƒbƒvƒf[ƒg‚ÉŒÀ‚èÀs
+			if (mKeyUpdating)// ã‚­ãƒ¼ã®ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆæ™‚ã«é™ã‚Šå®Ÿè¡Œ
 			{
-				// KeyData“à‚ÌƒRƒ}ƒ“ƒh‚ğ‘I‘ğ‚µ“o˜^
+				// KeyDataå†…ã®ã‚³ãƒãƒ³ãƒ‰ã‚’é¸æŠã—ç™»éŒ²
 				mKSelecting = RegistKType();
 			}
 		}
@@ -116,7 +116,7 @@ namespace scenes
 
 	SG_Scancode* ScnKeyConfig::RegistKType()
 	{
-		// Œ»İ‚ÌmKeyType‚É‘Î‰‚·‚éKeyData::mKey‚ÌGetter‚ğ•Ô‚·
+		// ç¾åœ¨ã®mKeyTypeã«å¯¾å¿œã™ã‚‹KeyData::mKeyã®Getterã‚’è¿”ã™
 		switch (mKTypeCursor)
 		{
 		case data::KeyType::UP:
@@ -136,13 +136,13 @@ namespace scenes
 
 	void ScnKeyConfig::KeyUpdating(const uint8_t* keyState)
 	{
-		for (int i = static_cast<int>(SDL_SCANCODE_A); i <= static_cast<int>(SDL_SCANCODE_UP); i++)// ƒƒCƒ“‚Åg‚¤‚Å‚ ‚ë‚¤ƒL[‚Ü‚ÅBÚ×‚ÍSDL_ScancodeQÆ
+		for (int i = static_cast<int>(SDL_SCANCODE_A); i <= static_cast<int>(SDL_SCANCODE_UP); i++)// ãƒ¡ã‚¤ãƒ³ã§ä½¿ã†ã§ã‚ã‚ã†ã‚­ãƒ¼ã¾ã§ã€‚è©³ç´°ã¯SDL_Scancodeå‚ç…§
 		{
 			SDL_Scancode code = static_cast<SDL_Scancode>(i);
 
-			if (keyState[code])// i”Ô–Ú‚ÌƒL[‚ª‰Ÿ‚³‚ê‚Ä‚¢‚ê‚Î
+			if (keyState[code])// iç•ªç›®ã®ã‚­ãƒ¼ãŒæŠ¼ã•ã‚Œã¦ã„ã‚Œã°
 			{
-				// —\–ñ‚³‚ê‚Ä‚¢‚éƒL[‚Ìê‡AXV‚Å‚«‚È‚¢
+				// äºˆç´„ã•ã‚Œã¦ã„ã‚‹ã‚­ãƒ¼ã®å ´åˆã€æ›´æ–°ã§ããªã„
 				if (code == SDL_SCANCODE_RETURN)
 				{
 					if (wasPushedEtr) { break; }
@@ -162,20 +162,21 @@ namespace scenes
 					break;
 				}
 
-				// ƒL[XV
-				IsKeyAlreadyUsed(code);					// ƒL[‚Ì”í‚è‚ª‚È‚¢‚©A‚ ‚éê‡‚ÍƒL[XV
-				mKSelecting->Setter(code);				// V‚µ‚¢ƒL[‚ğKeyData‚É“o˜^
-				wasSelectedCmd = mKSelecting->Getter();	// ‚±‚ÌƒtƒŒ[ƒ€‚Å‰Ÿ‚µ‚½ƒL[‚ğ‹L‰¯iŸƒtƒŒ[ƒ€ˆÈ~‚Ì˜A‘±“ü—Í–h~j
-				mKSelecting = nullptr;					// ƒ|ƒCƒ“ƒ^‰ğ•ú
-				mKeyUpdating = false;					// ƒAƒbƒvƒf[ƒg‰ğœ
+				// ã‚­ãƒ¼æ›´æ–°
+				IsKeyAlreadyUsed(code);					// ã‚­ãƒ¼ã®è¢«ã‚ŠãŒãªã„ã‹ã€ã‚ã‚‹å ´åˆã¯ã‚­ãƒ¼æ›´æ–°
+				mKSelecting->Setter(code);				// æ–°ã—ã„ã‚­ãƒ¼ã‚’KeyDataã«ç™»éŒ²
+				wasSelectedCmd = mKSelecting->Getter();	// ã“ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã§æŠ¼ã—ãŸã‚­ãƒ¼ã‚’è¨˜æ†¶ï¼ˆæ¬¡ãƒ•ãƒ¬ãƒ¼ãƒ ä»¥é™ã®é€£ç¶šå…¥åŠ›é˜²æ­¢ï¼‰
+				mKSelecting = nullptr;					// ãƒã‚¤ãƒ³ã‚¿è§£æ”¾
+				mKeyUpdating = false;					// ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆè§£é™¤
 #ifdef DEBUG_SCNKEYCONFIG_H_
-				// @todo SDL_GetKeyName‚Ì‹““®Šm”F@–{“–‚É•¶š—ñ‚ª•Ô‚Á‚Ä‚¢‚é‚Ì‚©H
+				// @todo SDL_GetKeyNameã®æŒ™å‹•ç¢ºèªã€€ASCIIãŒè¿”ã£ã¦ã„ã‚‹ãŒã€ã“ã®ãƒ—ãƒ­ã‚°ãƒ©ãƒ ãƒ•ã‚¡ã‚¤ãƒ«ã¯UTF-8ã€‚å¤‰æ›ã§ãã¦ã„ã‚‹ã®ã‹ã€‚
+				std::string sdl = SDL_GetKeyName(wasSelectedCmd);
 				std::cout << SDL_GetKeyName(wasSelectedCmd) << static_cast<int>(wasSelectedCmd) << " key was registered" << std::endl;
-				PrintRgsteredKey();						// ‚±‚±‚Å‘¼‚ÌƒL[‚ÌŒ»İ’l‚ğo—Í
+				PrintRgsteredKey();						// ã“ã“ã§ä»–ã®ã‚­ãƒ¼ã®ç¾åœ¨å€¤ã‚’å‡ºåŠ›
 #endif
 				break;
 			}
-			else // i”Ô–Ú‚ª‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢‚Æ‚«
+			else // iç•ªç›®ãŒæŠ¼ã•ã‚Œã¦ã„ãªã„ã¨ã
 			{
 				if (code == SDL_SCANCODE_RETURN) { wasPushedEtr = false; }
 				else if (code == SDL_SCANCODE_Q) { wasPushedQ = false; }
@@ -192,8 +193,8 @@ namespace scenes
 		SDL_Scancode LeftKey = mKeyData->GetLeftKey().Getter();
 		SDL_Scancode ResetKey = mKeyData->GetResetKey().Getter();
 
-		// ‚à‚µ“o˜^‚·‚éƒL[‚ªŠù‚É‘¼‚ÌƒRƒ}ƒ“ƒh‚Ég—p‚³‚ê‚Ä‚¢‚½‚ç
-		// ‘¼‚ÌƒRƒ}ƒ“ƒh‚ÌƒL[‚ÉselectingƒL[‚ğ“o˜^
+		// ã‚‚ã—ç™»éŒ²ã™ã‚‹ã‚­ãƒ¼ãŒæ—¢ã«ä»–ã®ã‚³ãƒãƒ³ãƒ‰ã«ä½¿ç”¨ã•ã‚Œã¦ã„ãŸã‚‰
+		// ä»–ã®ã‚³ãƒãƒ³ãƒ‰ã®ã‚­ãƒ¼ã«selectingã‚­ãƒ¼ã‚’ç™»éŒ²
 		if (code == UpKey) { 
 			mKeyData->GetPtrUpKey()->Setter(mKSelecting->Getter());
 		}
@@ -218,14 +219,14 @@ namespace scenes
 	void ScnKeyConfig::CannotUpdateKey(bool& wasPushed)
 	{
 		wasPushed = true;
-		// @todo ‚±‚±‚ÉuXV‚Å‚«‚Ü‚¹‚ñv‚Ìˆ—
-		// ˆø‚«‘±‚«ƒAƒbƒvƒf[ƒg’†‚Æ‚È‚é
+		// @todo ã“ã“ã«ã€Œæ›´æ–°ã§ãã¾ã›ã‚“ã€ã®å‡¦ç†
+		// å¼•ãç¶šãã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆä¸­ã¨ãªã‚‹
 		std::cout << "cannot update for that key" << std::endl;
 	}
 
 	void ScnKeyConfig::NotKeyUpdating(const uint8_t* keyState)
 	{
-		// ‘OƒtƒŒ[ƒ€‚Å‰Ÿ‚³‚ê‚½ƒL[‚ªA‚±‚ÌƒtƒŒ[ƒ€‚Å‰Ÿ‚³‚ê‚Ä‚¢‚È‚¯‚ê‚Î
+		// å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã§æŠ¼ã•ã‚ŒãŸã‚­ãƒ¼ãŒã€ã“ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã§æŠ¼ã•ã‚Œã¦ã„ãªã‘ã‚Œã°
 		if (!keyState[wasSelectedCmd])
 		{
 			wasSelectedCmd = SDL_SCANCODE_UNKNOWN;
@@ -237,9 +238,9 @@ namespace scenes
 		SDL_Scancode LeftKey = mKeyData->GetLeftKey().Getter();
 		SDL_Scancode ResetKey = mKeyData->GetResetKey().Getter();
 
-		// KeyData‚Å“o˜^‚³‚ê‚Ä‚¢‚éƒL[‚ª‰Ÿ‚³‚ê‚½‚çA
-		// ‚©‚Â‘OƒtƒŒ[ƒ€‚©‚ç˜A‘±‚Å‰Ÿ‚³‚ê‚Ä‚¢‚È‚¯‚ê‚ÎA
-		// KeyTypeSelectó‘Ô‚ÉˆÚs
+		// KeyDataã§ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹ã‚­ãƒ¼ãŒæŠ¼ã•ã‚ŒãŸã‚‰ã€
+		// ã‹ã¤å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã‹ã‚‰é€£ç¶šã§æŠ¼ã•ã‚Œã¦ã„ãªã‘ã‚Œã°ã€
+		// KeyTypeSelectçŠ¶æ…‹ã«ç§»è¡Œ
 		if (keyState[UpKey] && (UpKey != wasSelectedCmd))
 		{
 			RenewCursor(&UpKey, data::KeyType::UP, "Up");

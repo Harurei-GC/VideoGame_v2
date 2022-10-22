@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "actors/Actor.h"
 #include "managers/MakeDangeon.h"
 
@@ -35,7 +35,7 @@ namespace actors
 			math::Random* rand;
 		};
 
-		// Õ“Ë‚µ‚Ä‚¢‚ê‚Îtrue
+		// è¡çªã—ã¦ã„ã‚Œã°true
 		bool GoalIntersect(const actors::background::Goal& goal, actors::characters::MBox& box);
 	}
 }

@@ -1,4 +1,4 @@
-#include "actors/characters/Enemy.h"
+﻿#include "actors/characters/Enemy.h"
 #include "scenes/Scene.h"
 #include "components/SpriteComponent.h"
 #include "components/collider/CircleComponent.h"

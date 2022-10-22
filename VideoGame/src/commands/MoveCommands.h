@@ -1,9 +1,9 @@
-#pragma once
+ï»¿#pragma once
 #include "Command.h"
 #include "actors/Actor.h"
 #include "components/InputComponent.h"
 
-// ˆÚ“®‚ÉŠÖ‚·‚é—lX‚ÈƒNƒ‰ƒX‚ğ‹Lq‚µ‚½ƒwƒbƒ_ƒtƒ@ƒCƒ‹‚Å‚·B
+// ç§»å‹•ã«é–¢ã™ã‚‹æ§˜ã€…ãªã‚¯ãƒ©ã‚¹ã‚’è¨˜è¿°ã—ãŸãƒ˜ãƒƒãƒ€ãƒ•ã‚¡ã‚¤ãƒ«ã§ã™ã€‚
 
 namespace commands
 {

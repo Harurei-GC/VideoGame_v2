@@ -1,4 +1,4 @@
-#include "components/Component.h"
+ï»¿#include "components/Component.h"
 #include "actors/Actor.h"
 
 namespace components
@@ -8,7 +8,7 @@ namespace components
 		,mUpdateOrder(updateOrder)
 		,mScene(owner->GetScene())
 	{
-		// Actor‚Ì¬•ªƒxƒNƒgƒ‹‚É’Ç‰Á
+		// Actorã®æˆåˆ†ãƒ™ã‚¯ãƒˆãƒ«ã«è¿½åŠ 
 		mOwner->AddComponent(this);
 	}
 

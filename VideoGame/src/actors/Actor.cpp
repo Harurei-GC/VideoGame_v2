@@ -1,4 +1,4 @@
-#include "Actor.h"
+ï»¿#include "Actor.h"
 #include "components/Component.h"
 #include "scenes/Scene.h"
 #include "visitors/Visitor.h"
@@ -53,8 +53,8 @@ namespace actors
 
 	void Actor::AddComponent(components::Component* component)
 	{
-		// ƒ\[ƒg‚³‚ê‚½ƒxƒNƒgƒ‹‚Ì‘}“ü“_‚ð’T‚·
-		// (Ž©•ª‚æ‚è‚‚¢ŽŸ”‚ðŽ‚ÂÅ‰‚Ì—v‘f)
+		// ã‚½ãƒ¼ãƒˆã•ã‚ŒãŸãƒ™ã‚¯ãƒˆãƒ«ã®æŒ¿å…¥ç‚¹ã‚’æŽ¢ã™
+		// (è‡ªåˆ†ã‚ˆã‚Šé«˜ã„æ¬¡æ•°ã‚’æŒã¤æœ€åˆã®è¦ç´ )
 		int myOrder = component->GetUpdateOrder();
 		auto iter = mComponents.begin();
 		for (; iter != mComponents.end(); iter++)

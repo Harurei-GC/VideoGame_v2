@@ -1,4 +1,4 @@
-#include "scenes/ScnBattle.h"
+ï»¿#include "scenes/ScnBattle.h"
 #include "managers/ConfigureMovementStatus.h"
 #include "actors/background/BlockTree.h"
 #include "actors/Actor.h"
@@ -10,7 +10,7 @@
 #include "components/RigidbodyComponent.h"
 #include "components/collider/CircleComponent.h"
 
-#define TESTING_CONFIGUREMOVEMENTSTATUS_CPP_ // ˆê“I‚ÉfriendÁ‹
+#define TESTING_CONFIGUREMOVEMENTSTATUS_CPP_ // ä¸€æ™‚çš„ã«friendæ¶ˆå»
 
 namespace managers
 {
@@ -33,14 +33,14 @@ namespace managers
 	{
 		bool isEnemyDamaged[ENEMIES] = { 0 };
 
-		// NOTE:x²‘¤‚Æy²‘¤—¼•û‰ñ‚·
+		// NOTE:xè»¸å´ã¨yè»¸å´ä¸¡æ–¹å›ã™
 		for (int i = 0; i < 2; i++)
 		{
-			// ¡‚ÌŒJ‚è•Ô‚µ‚ªx²‚©y²‚©
+			// ä»Šã®ç¹°ã‚Šè¿”ã—ãŒxè»¸ã‹yè»¸ã‹
 			char a;
 			(i == 0) ? a = 'x' : a = 'y';
-			// player‹“_
-			// NOTE:Šù‚ÉRigidbody‚ÅŸƒtƒŒ[ƒ€‚ÌÀ•W‚ğŒvZÏ‚İ‚Å‚ ‚é‚©‚çAŠî–{“I‚É‚»‚ÌÀ•W‚Å‚ ‚éReplacePosition‚ğg‚¤B
+			// playerè¦–ç‚¹
+			// NOTE:æ—¢ã«Rigidbodyã§æ¬¡ãƒ•ãƒ¬ãƒ¼ãƒ ã®åº§æ¨™ã‚’è¨ˆç®—æ¸ˆã¿ã§ã‚ã‚‹ã‹ã‚‰ã€åŸºæœ¬çš„ã«ãã®åº§æ¨™ã§ã‚ã‚‹ReplacePositionã‚’ä½¿ã†ã€‚
 			if (Intersect(player->GetCircle()->GetRadius(), mbox->GetCircle()->GetRadius()
 				, player->GetRigidbody()->GetReplacePosition(), mbox->GetRigidbody()->GetReplacePosition()))
 			{
@@ -52,7 +52,7 @@ namespace managers
 			{
 				JudgeActorsCollision(deltaTime, fri, player,-1, a);
 			}
-			// friend‹“_
+			// friendè¦–ç‚¹
 			if (Intersect(fri->GetCircle()->GetRadius(), mbox->GetCircle()->GetRadius()
 				, fri->GetRigidbody()->GetReplacePosition(), mbox->GetRigidbody()->GetReplacePosition()))
 			{
@@ -64,7 +64,7 @@ namespace managers
 				JudgeActorsCollision(deltaTime, player, fri,-1, a);
 			}
 	#endif
-			// mbox‹“_
+			// mboxè¦–ç‚¹
 			if (Intersect(mbox->GetCircle()->GetRadius(), player->GetCircle()->GetRadius()
 				, mbox->GetRigidbody()->GetReplacePosition(), player->GetRigidbody()->GetReplacePosition()))
 			{
@@ -78,20 +78,20 @@ namespace managers
 			}
 	#endif
 
-			// enemy‚ÉŠÖ˜A‚·‚éˆ—
+			// enemyã«é–¢é€£ã™ã‚‹å‡¦ç†
 			for (int j = 0; j < ENEMIES; j++)
 			{
-				// ƒL[j‚ªw‚·—v‘f‚ªc‚Á‚Ä‚¢‚ê‚Î”»’è
+				// ã‚­ãƒ¼jãŒæŒ‡ã™è¦ç´ ãŒæ®‹ã£ã¦ã„ã‚Œã°åˆ¤å®š
 				if (enemy.find(j) != enemy.end())
 				{
-					// WARNING:y•ûŒü‚ÉÕ“Ë‚·‚é‚ÆAx²‚Ìê‡‚Æy²‚Ìê‡‚Ì2‰ñğŒ®‚ª‚­‚è‚©‚¦‚³‚ê‚é
+					// WARNING:yæ–¹å‘ã«è¡çªã™ã‚‹ã¨ã€xè»¸ã®å ´åˆã¨yè»¸ã®å ´åˆã®2å›æ¡ä»¶å¼ãŒãã‚Šã‹ãˆã•ã‚Œã‚‹
 					if (Intersect(enemy.at(j)->GetCircle()->GetRadius(), player->GetCircle()->GetRadius()
 						, enemy.at(j)->GetRigidbody()->GetReplacePosition(), player->GetRigidbody()->GetReplacePosition()))
 					{
 						isEnemyDamaged[j] = IsMeDamaged(player->GetRigidbody()->GetSpeed(),enemy.at(j)->GetRigidbody()->GetSpeed(),
 							player->GetRigidbody()->GetReplacePosition(), enemy.at(j)->GetRigidbody()->GetReplacePosition());
-						// WARNING:‚±‚ÌŠÖ”‚ÍPlayer‹“_Benemy‚Æplayer‚Ìˆø”‚ğ‹t‚É‚·‚é‚Æ‹““®‚ª‚¨‚©‚µ‚­‚È‚éB
-						// Player‹“_‚ÌğŒ•ªŠò‚É‚Á‚Ä‚¢‚±‚¤‚É‚àAenemy‚ğ¯•Ê‚·‚é‚±‚Æ‚ªo—ˆ‚È‚­‚È‚éB‚È‚Ì‚Å‚±‚±‚É’u‚¢‚Ä‚¨‚­B
+						// WARNING:ã“ã®é–¢æ•°ã¯Playerè¦–ç‚¹ã€‚enemyã¨playerã®å¼•æ•°ã‚’é€†ã«ã™ã‚‹ã¨æŒ™å‹•ãŒãŠã‹ã—ããªã‚‹ã€‚
+						// Playerè¦–ç‚¹ã®æ¡ä»¶åˆ†å²ã«æŒã£ã¦ã„ã“ã†ã«ã‚‚ã€enemyã‚’è­˜åˆ¥ã™ã‚‹ã“ã¨ãŒå‡ºæ¥ãªããªã‚‹ã€‚ãªã®ã§ã“ã“ã«ç½®ã„ã¦ãŠãã€‚
 						JudgeActorsCollision(deltaTime, enemy.at(j),player, j, a);
 					}
 	#ifndef TESTING_CONFIGUREMOVEMENTSTATUS_CPP_
@@ -106,8 +106,8 @@ namespace managers
 			}
 		}
 
-		// ƒ_ƒ[ƒW‚ğ—^‚¦‚é‚½‚ß‚Ìˆ—
-		// NOTE:‘¼‚Ìˆ—‚ÆØ‚è—£‚·‚±‚Æ‚ÅA1ƒtƒŒ[ƒ€“à‚Åƒ_ƒ[ƒW‚ª‘«‚µZ‚³‚ê‚é–‚ğ–h‚®
+		// ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’ä¸ãˆã‚‹ãŸã‚ã®å‡¦ç†
+		// NOTE:ä»–ã®å‡¦ç†ã¨åˆ‡ã‚Šé›¢ã™ã“ã¨ã§ã€1ãƒ•ãƒ¬ãƒ¼ãƒ å†…ã§ãƒ€ãƒ¡ãƒ¼ã‚¸ãŒè¶³ã—ç®—ã•ã‚Œã‚‹äº‹ã‚’é˜²ã
 		for (int i = 0; i < ENEMIES; i++)
 		{
 			if (isEnemyDamaged[i])
@@ -135,8 +135,8 @@ namespace managers
 		meSpeed = me->GetRigidbody()->GetSpeed();
 		youSpeed = you->GetRigidbody()->GetSpeed();
 	
-		// Õ“Ë”»’è
-		// me‚ÍReplacePositionAyou‚ÍŒ»İ‚ÌPosition
+		// è¡çªåˆ¤å®š
+		// meã¯ReplacePositionã€youã¯ç¾åœ¨ã®Position
 		if (Intersect(me->GetCircle()->GetRadius(),you->GetCircle()->GetRadius(),me->GetRigidbody()->GetReplacePosition(),you->GetPosition()))
 		{
 			switch (axis)
@@ -184,7 +184,7 @@ namespace managers
 		bSpeed = tmp;
 	}
 
-	// NOTE:ScnBattle.cpp‚ÅŒÄ‚Ño‚·
+	// NOTE:ScnBattle.cppã§å‘¼ã³å‡ºã™
 	void ConfigureMovementStatus::SetActorsPosition()
 	{
 		player->SetPosition(player->GetRigidbody()->GetReplacePosition());
@@ -201,36 +201,36 @@ namespace managers
 	bool ConfigureMovementStatus::IsMeDamaged(Vector2 youSpeed, Vector2 meSpeed, Vector2 youPos, Vector2 mePos)
 	{
 		if ((youSpeed.x == 0.0f)&&(youSpeed.y == 0.0f))
-		{// Õ“Ëæ‚Ì‘Šè‚Ì‘¬“x‚ª‚Oi“®‚¢‚Ä‚¢‚È‚¢j‚È‚ç‚ÎAme‚Éƒ_ƒ[ƒW‚Í“ü‚ç‚È‚¢
+		{// è¡çªå…ˆã®ç›¸æ‰‹ã®é€Ÿåº¦ãŒï¼ï¼ˆå‹•ã„ã¦ã„ãªã„ï¼‰ãªã‚‰ã°ã€meã«ãƒ€ãƒ¡ãƒ¼ã‚¸ã¯å…¥ã‚‰ãªã„
 			return false;
 		}
 		else if ((meSpeed.x == 0.0f) && (meSpeed.y == 0.0f) )
-		{// Õ“Ëme‚Ì‘¬“x‚ª‚Oi“®‚¢‚Ä‚¢‚È‚¢j‚È‚ç‚ÎAƒ_ƒ[ƒWó‚¯‚é
+		{// è¡çªæ™‚meã®é€Ÿåº¦ãŒï¼ï¼ˆå‹•ã„ã¦ã„ãªã„ï¼‰ãªã‚‰ã°ã€ãƒ€ãƒ¡ãƒ¼ã‚¸å—ã‘ã‚‹
 			return true;
 		}
 
-		// ‘¬“x‚Ì“àÏ‚ğŒvZ‚µA•„†‚ª³‚¾‚Á‚½ê‡ƒ_ƒ[ƒW”»’è‚ª¶‚¶‚é
+		// é€Ÿåº¦ã®å†…ç©ã‚’è¨ˆç®—ã—ã€ç¬¦å·ãŒæ­£ã ã£ãŸå ´åˆãƒ€ãƒ¡ãƒ¼ã‚¸åˆ¤å®šãŒç”Ÿã˜ã‚‹
 		if (Vector2::Dot(youSpeed, meSpeed) < 0)
-		{// •‰‚Ìê‡³–ÊÕ“Ëƒ_ƒ[ƒW‚Í‚È‚µ
+		{// è² ã®å ´åˆï¼æ­£é¢è¡çªï¼ãƒ€ãƒ¡ãƒ¼ã‚¸ã¯ãªã—
 			return false;
 		}
 		else
-		{// ³‚Ìê‡
-			// you‚Æme‚Ç‚¿‚ç‚ª‘O•û‚É‚¢‚é‚©”»’è‚µAme‚ª‘O•û‚É‚¢‚éê‡‚Éƒ_ƒ[ƒW“ü‚ê‚éB
-			// ‚»‚Ì‚½‚ß‚ÉAyouPos‚©‚çŒ©‚½mePos‚Ö‚Ì•ûŒüƒxƒNƒgƒ‹‚Ì•„†‚ÆAyouSpeed‚Ì•ûŒüƒxƒNƒgƒ‹‚Ì•„†‚ğ”äŠr‚·‚éB
-			// x²‚Æy²‚»‚ê‚¼‚ê•„†‚ª“¯‚¶‚È‚ç‚ÎAme‚Íyou‚æ‚è‚à‘O•û‚É‚¢‚é‚±‚Æ‚Æ‚È‚éB
+		{// æ­£ã®å ´åˆ
+			// youã¨meã©ã¡ã‚‰ãŒå‰æ–¹ã«ã„ã‚‹ã‹åˆ¤å®šã—ã€meãŒå‰æ–¹ã«ã„ã‚‹å ´åˆã«ãƒ€ãƒ¡ãƒ¼ã‚¸å…¥ã‚Œã‚‹ã€‚
+			// ãã®ãŸã‚ã«ã€youPosã‹ã‚‰è¦‹ãŸmePosã¸ã®æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«ã®ç¬¦å·ã¨ã€youSpeedã®æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«ã®ç¬¦å·ã‚’æ¯”è¼ƒã™ã‚‹ã€‚
+			// xè»¸ã¨yè»¸ãã‚Œãã‚Œç¬¦å·ãŒåŒã˜ãªã‚‰ã°ã€meã¯youã‚ˆã‚Šã‚‚å‰æ–¹ã«ã„ã‚‹ã“ã¨ã¨ãªã‚‹ã€‚
 			Vector2Int sign = Vector2Int{ int(mePos.x - youPos.x), int(mePos.y - youPos.y) };
-			// NOTE:0œZ–h~‚Ì‚½‚ßê‡•ª‚¯
+			// NOTE:0é™¤ç®—é˜²æ­¢ã®ãŸã‚å ´åˆåˆ†ã‘
 			sign = Vector2Int{ (sign.x == 0.0f)?0:(sign.x / std::abs(sign.x))
 				, (sign.y==0.0f)?0:(sign.y / std::abs(sign.y)) };
 			Vector2Int speed = Vector2Int{ (youSpeed.x == 0.0f) ? 0 : (int(youSpeed.x / std::abs(youSpeed.x))) 
 				,(youSpeed.y == 0.0f)?0: (int(youSpeed.y / std::abs(youSpeed.y))) };
 			if ((sign.x == speed.x) && (sign.y == speed.y))
-			{// you‚©‚çŒ©‚Äme‚ªyou‚Ìis•ûŒü‚É‚¢‚éê‡me‚Íƒ_ƒ[ƒWó‚¯‚é
+			{// youã‹ã‚‰è¦‹ã¦meãŒyouã®é€²è¡Œæ–¹å‘ã«ã„ã‚‹å ´åˆï¼meã¯ãƒ€ãƒ¡ãƒ¼ã‚¸å—ã‘ã‚‹
 				return true;
 			}
 			else
-			{// ƒ_ƒ[ƒW‚Í“ü‚ç‚È‚¢
+			{// ãƒ€ãƒ¡ãƒ¼ã‚¸ã¯å…¥ã‚‰ãªã„
 				return false;
 			}
 		}

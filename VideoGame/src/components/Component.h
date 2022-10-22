@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <cstdint>
 
 namespace actors
@@ -20,7 +20,7 @@ namespace components
 		int GetUpdateOrder() const { return mUpdateOrder; }
 	protected:
 		actors::Actor* mOwner;
-		// ’l‚ª¬‚³‚¢•û‚©‚çæ‚ÉXV‚³‚ê‚é
+		// å€¤ãŒå°ã•ã„æ–¹ã‹ã‚‰å…ˆã«æ›´æ–°ã•ã‚Œã‚‹
 		int mUpdateOrder;
 		scenes::Scene* mScene;
 	};

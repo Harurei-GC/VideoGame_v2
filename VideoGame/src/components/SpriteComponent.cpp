@@ -1,4 +1,4 @@
-#include "components/SpriteComponent.h"
+ï»¿#include "components/SpriteComponent.h"
 #include "actors/Actor.h"
 #include "scenes/Scene.h"
 
@@ -29,11 +29,11 @@ namespace components
 			SDL_Rect r;
 			r.w = static_cast<int>(mTexWidth * mOwner->GetScale());
 			r.h = static_cast<int>(mTexHeight * mOwner->GetScale());
-			// À•W‚Í¶ãŠî€
+			// åº§æ¨™ã¯å·¦ä¸ŠåŸºæº–
 			r.x = static_cast<int>(mOwner->GetPosition().x - r.w / 2);
 			r.y = static_cast<int>(mOwner->GetPosition().y - r.h / 2);
 
-			// •`‰æiŠp“x‚ğƒ‰ƒWƒAƒ“‚©‚ç“x‚ÖAŒv‰ñ‚è‚©‚ç”½Œv‰ñ‚è‚É•ÏŠ·‚·‚é•K—v‚ª‚ ‚è‚Ü‚·Bj
+			// æç”»ï¼ˆè§’åº¦ã‚’ãƒ©ã‚¸ã‚¢ãƒ³ã‹ã‚‰åº¦ã¸ã€æ™‚è¨ˆå›ã‚Šã‹ã‚‰åæ™‚è¨ˆå›ã‚Šã«å¤‰æ›ã™ã‚‹å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚ï¼‰
 			SDL_RenderCopyEx(renderer,
 				mTexture,
 				nullptr,

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <cmath>
 #include <memory.h>
@@ -103,7 +103,7 @@ namespace math
 	}
 }
 
-// TODO:‰‰Zq‚ÌƒI[ƒo[ƒ[ƒho—ˆ‚½‚çŠy
+// TODO:æ¼”ç®—å­ã®ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰å‡ºæ¥ãŸã‚‰æ¥½
 struct Vector2Int
 {
 	int x;
@@ -239,7 +239,7 @@ public:
 		return temp;
 	}
 
-	// y“àÏzDot product between two vectors (a dot b)
+	// ã€å†…ç©ã€‘Dot product between two vectors (a dot b)
 	static float Dot(const Vector2& a, const Vector2& b)
 	{
 		return (a.x * b.x + a.y * b.y);

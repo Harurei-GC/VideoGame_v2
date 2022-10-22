@@ -1,4 +1,4 @@
-#include "scenes/Scene.h"
+﻿#include "scenes/Scene.h"
 #include "actors/background/BackgroundActor.h"
 
 namespace actors

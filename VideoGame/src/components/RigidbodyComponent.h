@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "components/Component.h"
 #include "actors/Actor.h"
 #include "math/Math.h"
@@ -30,7 +30,7 @@ namespace components
 		Vector2 mForce;
 		Vector2 mPowerSpeed;
 		Vector2 replacePos;
-		bool isPowered; // InputComponent‚È‚Ç‚©‚ç•ÏX‚Å‚«‚é‚æ‚¤‚É‚·‚é
+		bool isPowered; // InputComponentãªã©ã‹ã‚‰å¤‰æ›´ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 		scenes::ScnBattle* battle;
 	};
 }

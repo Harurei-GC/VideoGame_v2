@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "components/Component.h"
 #include "math/Math.h"
 

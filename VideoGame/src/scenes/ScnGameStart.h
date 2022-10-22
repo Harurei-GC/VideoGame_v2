@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "scenes/Scene.h"
 
 namespace scenes

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "visitors/Visitor.h"
 #include "actors/characters/Enemy.h"
 

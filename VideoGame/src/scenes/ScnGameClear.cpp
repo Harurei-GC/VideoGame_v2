@@ -1,4 +1,4 @@
-#include "scenes/ScnGameClear.h"
+ï»¿#include "scenes/ScnGameClear.h"
 #include "game/Game.h"
 #include <iostream>
 
@@ -41,7 +41,7 @@ namespace scenes
 
 	void ScnGameClear::GenerateOutput()
 	{
-		// ƒXƒRƒA‚²‚Æ‚É“KØ‚È’l‚Ì‘ã“ü
+		// ã‚¹ã‚³ã‚¢ã”ã¨ã«é©åˆ‡ãªå€¤ã®ä»£å…¥
 		int scoreColor = BLACK;
 		const char* score = nullptr;
 		switch (mScore)
@@ -60,7 +60,7 @@ namespace scenes
 			break;
 		}
 
-		// ƒŒƒ“ƒ_ƒŠƒ“ƒO
+		// ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°
 		SDL_SetRenderDrawColor(mGame->gameRenderer, 220, 220, 220, 255);
 		SDL_RenderClear(mGame->gameRenderer);
 		RenderText(FONT_BBBOcelot_Regular, BLACK, "GAME CLEAR!!", static_cast<int>(WIDTH / 2 - 100), static_cast<int>(HEIGHT / 2));

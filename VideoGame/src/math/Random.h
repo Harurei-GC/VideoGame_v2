@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 namespace math
 {
@@ -6,7 +6,7 @@ namespace math
 	{
 	public:
 		Random();
-		// a~z‚Ü‚Å‚Ìƒ‰ƒ“ƒ_ƒ€‚È”š‚ğ•Ô‚·
+		// a~zã¾ã§ã®ãƒ©ãƒ³ãƒ€ãƒ ãªæ•°å­—ã‚’è¿”ã™
 		static int Sampling(int a, int z);
 	private:
 		int count;

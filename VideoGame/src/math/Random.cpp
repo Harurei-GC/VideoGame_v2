@@ -1,4 +1,4 @@
-#include <time.h>
+ï»¿#include <time.h>
 #include "Random.h"
 #include <iostream>
 #include <stdlib.h>
@@ -10,14 +10,14 @@ namespace math
 	{
 	}
 
-	// a~z‚Ü‚Å‚Ìƒ‰ƒ“ƒ_ƒ€‚È”š‚ğ•Ô‚·
-	// a>z‚Ìê‡Az~a‚Ü‚Å‚Ìƒ‰ƒ“ƒ_ƒ€‚È”š‚ª•Ô‚³‚ê‚é
+	// a~zã¾ã§ã®ãƒ©ãƒ³ãƒ€ãƒ ãªæ•°å­—ã‚’è¿”ã™
+	// a>zã®å ´åˆã€z~aã¾ã§ã®ãƒ©ãƒ³ãƒ€ãƒ ãªæ•°å­—ãŒè¿”ã•ã‚Œã‚‹
 	int Random::Sampling(int a, int z)
 	{
 		int r = rand();
 		if (a > z+1)
-		{	// NOTE:ƒ}ƒCƒiƒX—]èŒvZ‚ğ’m‚ç‚¹‚é‚½‚ß‚Ìˆ—
-			std::cout << "Random.cpp error: ‘æˆêˆø”‚ª‘æ“ñˆø”‚æ‚è‚à‘å‚«‚¢‚Å‚·B (a=" << a << ", z =" << z << " )" << std::endl;
+		{	// NOTE:ãƒã‚¤ãƒŠã‚¹ä½™å‰°è¨ˆç®—ã‚’çŸ¥ã‚‰ã›ã‚‹ãŸã‚ã®å‡¦ç†
+			std::cout << "Random.cpp error: ç¬¬ä¸€å¼•æ•°ãŒç¬¬äºŒå¼•æ•°ã‚ˆã‚Šã‚‚å¤§ãã„ã§ã™ã€‚ (a=" << a << ", z =" << z << " )" << std::endl;
 		}
 		if ((z - a + 1) == 0) { ++z; }
 		return (((int)clock())+r) % (z - a + 1) + a;

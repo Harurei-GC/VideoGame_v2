@@ -1,6 +1,6 @@
-// GameManager‚Ì‚æ‚¤‚È–ğŠ„
-// SceneƒNƒ‰ƒX‚ğì¬‚µŠÇ—‚·‚éiƒ|ƒCƒ“ƒ^‚Å‚Í‚È‚¢•’Ê‚ÌéŒ¾j
-// ƒQ[ƒ€‚Ì‹Lq‚Ís‚í‚È‚¢
+ï»¿// GameManagerã®ã‚ˆã†ãªå½¹å‰²
+// Sceneã‚¯ãƒ©ã‚¹ã‚’ä½œæˆã—ç®¡ç†ã™ã‚‹ï¼ˆãƒã‚¤ãƒ³ã‚¿ã§ã¯ãªã„æ™®é€šã®å®£è¨€ï¼‰
+// ã‚²ãƒ¼ãƒ ã®è¨˜è¿°ã¯è¡Œã‚ãªã„
 
 #include "game/Game.h"
 #include "SDL_image.h"
@@ -43,14 +43,14 @@ namespace game
 
 	bool Game::Initialize()
 	{
-		// SDLƒ‰ƒCƒuƒ‰ƒŠ‰Šú‰»
+		// SDLãƒ©ã‚¤ãƒ–ãƒ©ãƒªåˆæœŸåŒ–
 		if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
 		{
 			SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
 			return false;
 		}
 
-		// ƒEƒBƒ“ƒhƒEì¬(ƒ^ƒCƒgƒ‹)
+		// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ä½œæˆ(ã‚¿ã‚¤ãƒˆãƒ«)
 		mWindow = SDL_CreateWindow("Video Game", 100, 100, WIDTH, HEIGHT, 0);
 		if (!mWindow)
 		{
@@ -58,7 +58,7 @@ namespace game
 			return false;
 		}
 
-		// 2DƒŒƒ“ƒ_ƒŠƒ“ƒOƒRƒ“ƒeƒLƒXƒgì¬
+		// 2Dãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆä½œæˆ
 		gameRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 		if (!gameRenderer)
 		{
@@ -66,14 +66,14 @@ namespace game
 			return false;
 		}
 
-		// ‰æ‘œŒ`®“Ç‚İ‚ß‚é‚æ‚¤‚É‚·‚é
+		// ç”»åƒå½¢å¼èª­ã¿è¾¼ã‚ã‚‹ã‚ˆã†ã«ã™ã‚‹
 		if (IMG_Init(IMG_INIT_PNG) == 0)
 		{
 			SDL_Log("Unable to initialize SDL_image: %s", SDL_GetError());
 			return false;
 		}
 
-		// TTFƒ‰ƒCƒuƒ‰ƒŠ‰Šú‰»
+		// TTFãƒ©ã‚¤ãƒ–ãƒ©ãƒªåˆæœŸåŒ–
 		if (TTF_Init() == -1)
 		{
 			SDL_Log("Unable to initialize SDL_ttf: %s", TTF_GetError());
@@ -88,7 +88,7 @@ namespace game
 	}
 
 
-	// ŠeƒV[ƒ“‚É•K—v‚È‚à‚Ì‚ğ‚Á‚Ä‚¢‚­
+	// å„ã‚·ãƒ¼ãƒ³ã«å¿…è¦ãªã‚‚ã®ã‚’æŒã£ã¦ã„ã
 	void Game::LoadData()
 	{
 		mFont[FONT_BBBOcelot_Regular] = TTF_OpenFont("font/BBBOcelot-Regular.otf", 24);
@@ -106,10 +106,10 @@ namespace game
 		{
 			std::cout << "Failed to get font for timer" << std::endl;
 		}
-		// ƒL[ƒRƒ“ƒtƒBƒO‚Ìƒf[ƒ^‚ğ•Û‚·‚éƒNƒ‰ƒX
+		// ã‚­ãƒ¼ã‚³ãƒ³ãƒ•ã‚£ã‚°ã®ãƒ‡ãƒ¼ã‚¿ã‚’ä¿æŒã™ã‚‹ã‚¯ãƒ©ã‚¹
 		mKeyData = new data::KeyData();
 
-		// TODO:Scene‚Ì’Ç‰Á
+		// TODO:Sceneã®è¿½åŠ 
 		gameStart = new scenes::ScnGameStart(this);
 		battle = new scenes::ScnBattle(this);
 		gameClear = new scenes::ScnGameClear(this);
@@ -121,8 +121,8 @@ namespace game
 
 	void Game::RunLoop()
 	{
-		// ŠeƒV[ƒ“‚Ö‚Ì‘JˆÚ
-		// ƒXƒ^[ƒg
+		// å„ã‚·ãƒ¼ãƒ³ã¸ã®é·ç§»
+		// ã‚¹ã‚¿ãƒ¼ãƒˆ
 	GOTO_START:
 		gameStart->SetIsRunning(true);
 		while (gameStart->GetIsRunning())
@@ -142,7 +142,7 @@ namespace game
 		}
 
 	GOTO_BATTLE:
-		// ƒoƒgƒ‹
+		// ãƒãƒˆãƒ«
 		while (battle->GetIsRunning())
 		{
 			battle->Start();
@@ -157,7 +157,7 @@ namespace game
 		}
 
 	GOTO_CLEAR:
-		// ƒQ[ƒ€ƒNƒŠƒA
+		// ã‚²ãƒ¼ãƒ ã‚¯ãƒªã‚¢
 		if (mIsCleared)
 		{
 			gameClear->SetIsRunning(true);
@@ -186,7 +186,7 @@ namespace game
 		}
 
 	GOTO_OVER:
-		// ƒQ[ƒ€¸”s
+		// ã‚²ãƒ¼ãƒ å¤±æ•—
 		if (mIsOver)
 		{
 			gameOver->SetIsRunning(true);
@@ -245,7 +245,7 @@ namespace game
 		IMG_Quit();
 		SDL_DestroyRenderer(gameRenderer);
 		SDL_DestroyWindow(mWindow);
-		for (int i = 0; i < FONT; i++) // i‚ÍmFont‚Ì—v‘f”
+		for (int i = 0; i < FONT; i++) // iã¯mFontã®è¦ç´ æ•°
 		{
 			TTF_CloseFont(mFont[i]);
 		}

@@ -1,16 +1,16 @@
-#pragma once
+﻿#pragma once
 #include <stdint.h>
 #include "game/Game.h"
 #include "SG_Scancode.h"
 
 namespace data
 {
-	// �L�[�R���t�B�O�̌��ʂ�ێ�����N���X
-	// Game�N���X�ł̂݃C���X�^���X����
+	// キーコンフィグの結果を保持するクラス
+	// Gameクラスでのみインスタンス生成
 
 
 	enum class KeyType
-	{// �L�[�R���t�B�O�ŕύX�ł��鑀��
+	{// キーコンフィグで変更できる操作
 		UP,
 		DOWN,
 		RIGHT,

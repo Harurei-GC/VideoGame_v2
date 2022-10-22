@@ -1,4 +1,4 @@
-#include "managers/MakeDangeon.h"
+ï»¿#include "managers/MakeDangeon.h"
 #include "math/Random.h"
 #include "math/Math.h"
 #include <vector>
@@ -14,7 +14,7 @@ namespace managers
 		,allCorridor{ Vector2Int{-1,-1} }
 	{
 
-		// ”ÍˆÍŠOQÆ–h~‚Ì‚½‚ß—v‘f1‚Â‘½‚ß‚Éì¬
+		// ç¯„å›²å¤–å‚ç…§é˜²æ­¢ã®ãŸã‚è¦ç´ 1ã¤å¤šã‚ã«ä½œæˆ
 		for (int i = 0; i <= HORIZONTAL; i++)
 		{
 			for (int j = 0; j <= VERTICAL; j++)
@@ -29,22 +29,22 @@ namespace managers
 
 	void MakeDangeon::MakeMaps()
 	{
-		// areaSize‚ÆroomSize[][]‚ÆroomPosition[][]‚ğŒˆ’è
-		// iGame.cppjroomSize‚ÆroomPosition‚ğg—p‚µ‚Ä‹ó”’‚Æ‚È‚é‹óŠÔ‚ğ•`‰æ
+		// areaSizeã¨roomSize[][]ã¨roomPosition[][]ã‚’æ±ºå®š
+		// ï¼ˆGame.cppï¼‰roomSizeã¨roomPositionã‚’ä½¿ç”¨ã—ã¦ç©ºç™½ã¨ãªã‚‹ç©ºé–“ã‚’æç”»
 		areaNumX = math::Random::Sampling(1, 3);
 		areaNumY = math::Random::Sampling(2, 4);
 		areaCountSize.x = W_BOXES / areaNumX;
 		areaCountSize.y = H_BOXES / areaNumY;
-		// roomPosition‚ª•Ï‰»‚µ‚¤‚é”ÍˆÍ
+		// roomPositionãŒå¤‰åŒ–ã—ã†ã‚‹ç¯„å›²
 		Vector2Int range;
-		// roomPosition‚ğŒˆ’è‚·‚é‚½‚ß‚Ì—”¶¬
+		// roomPositionã‚’æ±ºå®šã™ã‚‹ãŸã‚ã®ä¹±æ•°ç”Ÿæˆ
 		Vector2Int r;
 		for (int i = 0; i < areaNumX; i++)
 		{
 			for (int j = 0; j < areaNumY; j++)
 			{
 				if ((i == 0)&&(j == 0))
-				{// ƒvƒŒƒCƒ„[“oêƒGƒŠƒA‚Ì‚İŒÅ’è‚ÅA‚»‚±‚ÉÅ‘å’l‚Ì•”‰®‚ğ¶¬
+				{// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç™»å ´ã‚¨ãƒªã‚¢ã®ã¿å›ºå®šã§ã€ãã“ã«æœ€å¤§å€¤ã®éƒ¨å±‹ã‚’ç”Ÿæˆ
 					roomBoxes[i][j] = { areaCountSize.x - 2, areaCountSize.y - 2 };
 
 					roomBoxPosition[i][j] = { 1 + areaCountSize.x - 2 - roomBoxes[i][j].x, 1 + areaCountSize.y - 2 - roomBoxes[i][j].y };
@@ -64,7 +64,7 @@ namespace managers
 
 	bool MakeDangeon::IsInRooms(int x, int y) 
 	{
-		// HACK:‚à‚Á‚Æ‚«‚ê‚¢‚É‘‚«‚½‚¢
+		// HACK:ã‚‚ã£ã¨ãã‚Œã„ã«æ›¸ããŸã„
 		for (int i = 0; i < areaNumX; i++)
 		{
 			for (int j = 0; j < areaNumY; j++)
@@ -83,8 +83,8 @@ namespace managers
 
 	bool MakeDangeon::IsInCorridor(int x, int y)
 	{
-		// TODO:ˆê•”‚Ì’Ê˜H‚Ís‚«~‚Ü‚è‚É‚µ‚½‚¢
-		// Å‰‚Ì•”‰®ˆÈŠO‚Åƒ‰ƒ“ƒ_ƒ€‚É
+		// TODO:ä¸€éƒ¨ã®é€šè·¯ã¯è¡Œãæ­¢ã¾ã‚Šã«ã—ãŸã„
+		// æœ€åˆã®éƒ¨å±‹ä»¥å¤–ã§ãƒ©ãƒ³ãƒ€ãƒ ã«
 		int rx = math::Random::Sampling(1, areaNumX-1);
 		int ry = math::Random::Sampling(1, areaNumY-1);
 
@@ -94,11 +94,11 @@ namespace managers
 			{
 
 
-				// Œ»İw‚µ‚Ä‚¢‚é•”‰®
+				// ç¾åœ¨æŒ‡ã—ã¦ã„ã‚‹éƒ¨å±‹
 				Vector2Int position = roomBoxPosition[hor][ver];
-				// “ü—ÍÀ•W‚ªxy‚Ç‚¿‚ç‚É‚à”í‚Á‚Ä‚¢‚È‚¯‚ê‚Î
+				// å…¥åŠ›åº§æ¨™ãŒxyã©ã¡ã‚‰ã«ã‚‚è¢«ã£ã¦ã„ãªã‘ã‚Œã°
 
-				// x•ûŒü‚Ì˜A—’Ê˜H
+				// xæ–¹å‘ã®é€£çµ¡é€šè·¯
 				if (y == roomBoxPosition[hor][ver + 1].y || y == roomBoxPosition[hor][ver+1].y+1)
 				{
 					for (int i = 1; i < (roomBoxPosition[hor][ver + 1].x - roomBoxPosition[hor][ver].x); i++)
@@ -109,7 +109,7 @@ namespace managers
 						}
 					}
 				}
-				// y•ûŒü‚Ì˜A—’Ê˜H
+				// yæ–¹å‘ã®é€£çµ¡é€šè·¯
 				if (x == roomBoxPosition[hor + 1][ver].x || x == roomBoxPosition[hor+1][ver].x + 1)
 				{
 					for (int i = 1; i < (roomBoxPosition[hor + 1][ver].y - roomBoxPosition[hor][ver].y); i++)
@@ -120,7 +120,7 @@ namespace managers
 						}
 					}
 				}
-					// y•ûŒü‚Ì’Ê˜H‚È‚Ì‚©Šm”F
+					// yæ–¹å‘ã®é€šè·¯ãªã®ã‹ç¢ºèª
 				if (x == position.x || x == position.x+1)
 				{
 					for (int i = 0; i <= (roomBoxPosition[hor][ver+1].y - roomBoxPosition[hor][ver].y); i++)
@@ -131,7 +131,7 @@ namespace managers
 						}
 					}
 				}
-					// x•ûŒü‚Ì’Ê˜H‚È‚Ì‚©Šm”F
+					// xæ–¹å‘ã®é€šè·¯ãªã®ã‹ç¢ºèª
 				if (y == position.y || y == position.y+1)
 				{
 					for (int i = 0; i <= (roomBoxPosition[hor + 1][ver].x - roomBoxPosition[hor][ver].x); i++)

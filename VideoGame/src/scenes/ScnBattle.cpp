@@ -1,4 +1,4 @@
-#include "scenes/ScnBattle.h"
+ï»¿#include "scenes/ScnBattle.h"
 #include "actors/characters/Player.h"
 #include "actors/characters/Friend.h"
 #include "actors/characters/MBox.h"
@@ -13,7 +13,7 @@
 #include "scenes/ScnGameClear.h"
 #include "data/KeyData.h"
 
-#define DEBUG_TESTING_VISIT_SCNBATTLE_CPP_ // Visitor‚ª³‚µ‚­“®‚­‚©‚Ç‚¤‚©
+#define DEBUG_TESTING_VISIT_SCNBATTLE_CPP_ // VisitorãŒæ­£ã—ãå‹•ãã‹ã©ã†ã‹
 #ifdef DEBUG_TESTING_VISIT_SCNBATTLE_CPP_
 #include "visitors/VisitorGetPositions.h"
 #endif
@@ -26,45 +26,45 @@ namespace scenes
 		,timeLimit(60.0f)
 		,mScore(Score::C)
 	{
-		// @hack ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ª”ì‘å‰»‚µ‚Ä‚¢‚éB
+		// @hack ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãŒè‚¥å¤§åŒ–ã—ã¦ã„ã‚‹ã€‚
 		configMoveStatus = new managers::ConfigureMovementStatus(this);
 
 		mPlayer = new ch::Player(this);
 		mPlayer->SetPosition(Vector2(CHARACHIP_EDGE * 3.0f, CHARACHIP_EDGE * 2.0f));
 
-		// NOTE:Enemy‚ªŠ®¬‚·‚é‚Ü‚ÅƒCƒ“ƒXƒ^ƒ“ƒXì¬‚µ‚È‚¢
-		// ConfigureMovementStatus.cpp‚âBattle.h‚Å‚àƒRƒƒ“ƒgƒAƒEƒg‚µ‚Ä‚¢‚é
+		// NOTE:EnemyãŒå®Œæˆã™ã‚‹ã¾ã§ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ä½œæˆã—ãªã„
+		// ConfigureMovementStatus.cppã‚„Battle.hã§ã‚‚ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã—ã¦ã„ã‚‹
 		//mFriend = new Friend(this);
 		//mFriend->SetPosition(Vector2(CHARACHIP_EDGE * 2.0f, CHARACHIP_EDGE * 2.0f));
 
 		mMBox = new ch::MBox(this);
 		mMBox->SetPosition(Vector2(CHARACHIP_EDGE * 3.0f, CHARACHIP_EDGE * 3.0f));
 
-		// NOTE:‚Ê‚é‚Û–h~‚Ì‚½‚ß‚±‚±‚ÅƒL[‚ª-1‚ÌEnemy‚ğ’Ç‰Á
+		// NOTE:ã¬ã‚‹ã½é˜²æ­¢ã®ãŸã‚ã“ã“ã§ã‚­ãƒ¼ãŒ-1ã®Enemyã‚’è¿½åŠ 
 		mEnemy.insert(std::make_pair(-1, new ch::Enemy(this, Vector2(-100.0f, -100.0f))));
 
 		for (int i = 0; i < ENEMIES; i++)
 		{
-			// •”‰®”Ô†ƒ‰ƒ“ƒ_ƒ€‘I‘ğ
+			// éƒ¨å±‹ç•ªå·ãƒ©ãƒ³ãƒ€ãƒ é¸æŠ
 			int rx = math::Random::Sampling(0, dangeon.GetAreaNumX()-1);
 			int ry = math::Random::Sampling(0, dangeon.GetAreaNumY()-1);
 			if (rx == 0 && dangeon.GetAreaNumX() != 1) { rx = 1; }
 			else if (ry == 0) { ry = 1; }
-			// •”‰®¶ãÀ•Wæ“¾
+			// éƒ¨å±‹å·¦ä¸Šåº§æ¨™å–å¾—
 			Vector2Int position = dangeon.GetRoomBoxPosition(rx, ry);
-			// •”‰®‚Ì”ÍˆÍ“à‚ÅÀ•WŒˆ’è
+			// éƒ¨å±‹ã®ç¯„å›²å†…ã§åº§æ¨™æ±ºå®š
 			position.x += math::Random::Sampling(1, dangeon.GetRoomBoxes(rx, ry).x - 1);
 			position.y += math::Random::Sampling(1, dangeon.GetRoomBoxes(rx, ry).y - 1);
-			// enemy‚Ì¶¬
+			// enemyã®ç”Ÿæˆ
 			mEnemy.insert(std::make_pair(i,new ch::Enemy(this, Vector2(CHARACHIP_EDGE * (position.x), CHARACHIP_EDGE * (position.y)))));
-			// TODO:ƒS[ƒ‹‚Æ”í‚Á‚Ä‚¢‚½‚ç‰ñ”ğ‚·‚éˆ—‚à‚Ù‚µ‚¢
+			// TODO:ã‚´ãƒ¼ãƒ«ã¨è¢«ã£ã¦ã„ãŸã‚‰å›é¿ã™ã‚‹å‡¦ç†ã‚‚ã»ã—ã„
 		}
 
 		for (int i = 0; i < W_BOXES; i++)
 		{
 			for (int j = 0; j < H_BOXES; j++)
 			{
-				// À•W(i,j)‚ª’nŒ`‚É”í‚Á‚Ä‚¢‚È‚¯‚ê‚Î
+				// åº§æ¨™(i,j)ãŒåœ°å½¢ã«è¢«ã£ã¦ã„ãªã‘ã‚Œã°
 				if (!(dangeon.IsInRooms(i, j)) && !(dangeon.IsInCorridor(i, j)))
 				{
 					boxPosition.push_back(Vector2(CHARACHIP_EDGE * (float)i, CHARACHIP_EDGE * (float)j));
@@ -117,15 +117,15 @@ namespace scenes
 	{
 		Scene::ProcessInput();
 
-		// keyState:ƒL[ƒ{[ƒh“ü—Í‚Ìó‘Ô‚ğ•Ô‚·
+		// keyState:ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰å…¥åŠ›ã®çŠ¶æ…‹ã‚’è¿”ã™
 		const uint8_t* keyState = SDL_GetKeyboardState(NULL);
 		if (keyState[SDL_SCANCODE_ESCAPE])
 		{
-			// EscƒL[‰Ÿ‚·‚ÆƒQ[ƒ€‚â‚ß‚é
+			// Escã‚­ãƒ¼æŠ¼ã™ã¨ã‚²ãƒ¼ãƒ ã‚„ã‚ã‚‹
 			mIsRunning = false;
 		}
 
-		// RƒL[‰Ÿ‚·‚ÆƒLƒƒƒ‰ƒNƒ^[‚ÌˆÊ’uƒŠƒZƒbƒg
+		// Rã‚­ãƒ¼æŠ¼ã™ã¨ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®ä½ç½®ãƒªã‚»ãƒƒãƒˆ
 		if (keyState[mGame->GetKeyData()->GetResetKey().Getter()])
 		{
 			mPlayer->SetPosition(Vector2(CHARACHIP_EDGE * 3.0f, CHARACHIP_EDGE * 2.0f));
@@ -148,41 +148,41 @@ namespace scenes
 	{
 		Scene::UpdateGame();
 
-		// §ŒÀŠÔ‚ğ’´‚¦‚½‚È‚ç
+		// åˆ¶é™æ™‚é–“ã‚’è¶…ãˆãŸãªã‚‰
 		if (IsTimeOut(deltaTime))
 		{
 			mIsRunning = false;
 			mGame->SetGameOver(true);
 		}
 
-		// ‚±‚±‚ÉAActor‚ª‘¼‚ÌActor‚ÆÚG‚µ‚Ä‚¢‚È‚¢‚±‚Æ‚ğŠm”F‚·‚é‹@”\‚ğ“ü‚ê‚ÄA
-		// ÚG‚µ‚Ä‚¢‚ê‚ÎRigidbody‚ğUpdate‚µ‚È‚¢‚æ‚¤‚É‚·‚é
+		// ã“ã“ã«ã€ActorãŒä»–ã®Actorã¨æ¥è§¦ã—ã¦ã„ãªã„ã“ã¨ã‚’ç¢ºèªã™ã‚‹æ©Ÿèƒ½ã‚’å…¥ã‚Œã¦ã€
+		// æ¥è§¦ã—ã¦ã„ã‚Œã°Rigidbodyã‚’Updateã—ãªã„ã‚ˆã†ã«ã™ã‚‹
 		mUpdatingActors = true;
 		for (auto actor : mActors)
 		{
 			actor->Update(deltaTime);
 			for (auto visitor : mVisitors)
 			{
-				// @hack XV‚Ìƒ^ƒCƒ~ƒ“ƒO—vŒŸ“¢
-				// ƒrƒWƒ^[XV
+				// @hack æ›´æ–°ã®ã‚¿ã‚¤ãƒŸãƒ³ã‚°è¦æ¤œè¨
+				// ãƒ“ã‚¸ã‚¿ãƒ¼æ›´æ–°
 				actor->AcceptVisitor(visitor);
 			}
 		}
 		mUpdatingActors = false;
 
 		configMoveStatus->Update(deltaTime);
-		// @todo ‚±‚êconfigMoveStatus‚ÌUpdate“à‚Åˆ—‚³‚¹‚é
+		// @todo ã“ã‚ŒconfigMoveStatusã®Updateå†…ã§å‡¦ç†ã•ã›ã‚‹
 		configMoveStatus->SetActorsPosition(); 
 
 
-		// •Û—¯’†‚ÌActor‚ğmActors‚ÖˆÚ“®
+		// ä¿ç•™ä¸­ã®Actorã‚’mActorsã¸ç§»å‹•
 		for (auto pending : mPendingActors)
 		{
 			mActors.emplace_back(pending);
 		}
 		mPendingActors.clear();
 
-		// Deadó‘Ô‚ÌEnemy‚ğdelete
+		// DeadçŠ¶æ…‹ã®Enemyã‚’delete
 		for (int i = 0; i < ENEMIES; i++)
 		{
 			if(mEnemy.find(i)==mEnemy.end()) 
@@ -202,7 +202,7 @@ namespace scenes
 			delete mPlayer;
 		}
 
-		// ƒS[ƒ‹‚µ‚½‚È‚ç‚Î
+		// ã‚´ãƒ¼ãƒ«ã—ãŸãªã‚‰ã°
 		if (GoalIntersect(*mGoal, *mMBox))
 		{
 			mIsRunning = false;
@@ -213,7 +213,7 @@ namespace scenes
 
 	void ScnBattle::GenerateOutput()
 	{	
-		// •`‰æ‘€ì‚Åg‚¤F‚ğİ’è‚·‚é
+		// æç”»æ“ä½œã§ä½¿ã†è‰²ã‚’è¨­å®šã™ã‚‹
 		SDL_SetRenderDrawColor(mGame->gameRenderer, 220, 220, 220, 255);
 		SDL_RenderClear(mGame->gameRenderer);
 
@@ -223,12 +223,12 @@ namespace scenes
 		}
 
 
-		// c‚èŠÔ•\¦
+		// æ®‹ã‚Šæ™‚é–“è¡¨ç¤º
 		RenderText(FONT_BBBOcelot_Regular, BLUE
 			, std::to_string(static_cast<int>(timeLimit) + 1).c_str()
 			, static_cast<int>(WIDTH - 100), 50);
 
-		// Œ»İ‚ÌƒXƒRƒA‚Ğ‚å‚¤‚¶
+		// ç¾åœ¨ã®ã‚¹ã‚³ã‚¢ã²ã‚‡ã†ã˜
 		switch (mEnemy.size() - 1)
 		{
 		case 0:
@@ -249,11 +249,11 @@ namespace scenes
 			break;
 		}
 
-		// ‰æ–Ê‚É•`‰æ
+		// ç”»é¢ã«æç”»
 		SDL_RenderPresent(mGame->gameRenderer);
 	}
 
-	// §ŒÀŠÔ‚ğ’´‚¦‚½‚Æ‚«‚Ìˆ—
+	// åˆ¶é™æ™‚é–“ã‚’è¶…ãˆãŸã¨ãã®å‡¦ç†
 	bool ScnBattle::IsTimeOut(float deltaTime)
 	{
 		timeLimit -= deltaTime;

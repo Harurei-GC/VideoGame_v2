@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "scenes/Scene.h"
 #include "data/KeyData.h"
 
@@ -19,13 +19,13 @@ namespace scenes
 		void GenerateOutput()override;
 	private:
 
-		data::KeyData* mKeyData;	// ƒL[”z’u‚ğ‹L‰¯‚·‚éƒNƒ‰ƒX
-		data::KeyType mKTypeCursor;	// Œ»İƒJ[ƒ\ƒ‹‚ğ‡‚í‚¹‚Ä‚¢‚éƒRƒ}ƒ“ƒh
-		SG_Scancode* mKSelecting;	// Œ»İXV’†‚ÌƒL[
-		SDL_Scancode wasSelectedCmd;// ‘OƒtƒŒ[ƒ€‚Å‘I‘ğ‚³‚ê‚½ƒRƒ}ƒ“ƒh
-		bool mKeyUpdating;	// ƒL[ƒ{ƒ^ƒ“‚ÌXV’†‚©
-		float keyLockTime;	// ƒL[“ü—Í‚ğó‚¯•t‚¯‚È‚¢ŠÔ
-		bool wasPushedEtr;	// ’¼‘O‚ÌƒtƒŒ[ƒ€‚ÅEnterƒL[‚ª‰Ÿ‚³‚ê‚Ä‚¢‚½‚©
+		data::KeyData* mKeyData;	// ã‚­ãƒ¼é…ç½®ã‚’è¨˜æ†¶ã™ã‚‹ã‚¯ãƒ©ã‚¹
+		data::KeyType mKTypeCursor;	// ç¾åœ¨ã‚«ãƒ¼ã‚½ãƒ«ã‚’åˆã‚ã›ã¦ã„ã‚‹ã‚³ãƒãƒ³ãƒ‰
+		SG_Scancode* mKSelecting;	// ç¾åœ¨æ›´æ–°ä¸­ã®ã‚­ãƒ¼
+		SDL_Scancode wasSelectedCmd;// å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã§é¸æŠã•ã‚ŒãŸã‚³ãƒãƒ³ãƒ‰
+		bool mKeyUpdating;	// ã‚­ãƒ¼ãƒœã‚¿ãƒ³ã®æ›´æ–°ä¸­ã‹
+		float keyLockTime;	// ã‚­ãƒ¼å…¥åŠ›ã‚’å—ã‘ä»˜ã‘ãªã„æ™‚é–“
+		bool wasPushedEtr;	// ç›´å‰ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã§Enterã‚­ãƒ¼ãŒæŠ¼ã•ã‚Œã¦ã„ãŸã‹
 		bool wasPushedQ;
 		bool wasPushedEsc;
 
@@ -40,7 +40,7 @@ namespace scenes
 		/* End of Update Functions */
 
 #ifdef DEBUG_SCNKEYCONFIG_H_
-		void PrintRgsteredKey();	// ƒJ[ƒlƒ‹ã‚ÅŒ»İ‚ÌƒL[İ’è‚ğ•\¦
+		void PrintRgsteredKey();	// ã‚«ãƒ¼ãƒãƒ«ä¸Šã§ç¾åœ¨ã®ã‚­ãƒ¼è¨­å®šã‚’è¡¨ç¤º
 #endif
 	};
 }

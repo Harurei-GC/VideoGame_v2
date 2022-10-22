@@ -1,4 +1,4 @@
-#include "scenes/Scene.h"
+ï»¿#include "scenes/Scene.h"
 #include "visitors/Visitor.h"
 #include "components/SpriteComponent.h"
 #include <iostream>
@@ -51,8 +51,8 @@ namespace scenes
 		}
 		else
 		{
-			// ƒeƒLƒXƒgƒtƒ@ƒCƒ‹“Ç‚İ‚İ
-			// @hack ‚È‚º‚©ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚É•\¦‚³‚ê‚é
+			// ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
+			// @hack ãªãœã‹ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã«è¡¨ç¤ºã•ã‚Œã‚‹
 			int i = 0;
 			while ((buf[i] = fgetc(fp)) != EOF)
 			{
@@ -83,7 +83,7 @@ namespace scenes
 
 	void Scene::ProcessInput()
 	{
-		// ƒCƒxƒ“ƒgî•ñevent
+		// ã‚¤ãƒ™ãƒ³ãƒˆæƒ…å ±event
 		SDL_Event event;
 		while (SDL_PollEvent(&event))
 		{
@@ -97,7 +97,7 @@ namespace scenes
 		}
 	}
 
-	// deltaTime‚ÌŒvZ
+	// deltaTimeã®è¨ˆç®—
 	void Scene::UpdateGame()
 	{
 		while (!SDL_TICKS_PASSED(SDL_GetTicks(), mGame->mTicksCount + 16));
@@ -229,12 +229,12 @@ namespace scenes
 			bufCount++;
 		}
 		int i = 0;
-		while (buf[bufCount] != '\n')				// ‰üs•¶š‚É“–‚½‚é‚Ü‚Å
+		while (buf[bufCount] != '\n')				// æ”¹è¡Œæ–‡å­—ã«å½“ãŸã‚‹ã¾ã§
 		{
-			if (bufCount > sizeof(buf)) { break; }	// “Y‚¦š‚Ìw‚·æ‚ª•¶š”z—ñ‚ğƒI[ƒo[‚µ‚½‚çI—¹
+			if (bufCount > sizeof(buf)) { break; }	// æ·»ãˆå­—ã®æŒ‡ã™å…ˆãŒæ–‡å­—é…åˆ—ã‚’ã‚ªãƒ¼ãƒãƒ¼ã—ãŸã‚‰çµ‚äº†
 			r[i] = buf[bufCount];
 			i++;
-			bufCount++; //@attention •K‚¸ƒŒƒ“ƒ_ƒŠƒ“ƒOŒã‚ÉƒŠƒZƒbƒg‚·‚é
+			bufCount++; //@attention å¿…ãšãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°å¾Œã«ãƒªã‚»ãƒƒãƒˆã™ã‚‹
 		}
 		RenderText(font, color, r, rw, rh);
 	}

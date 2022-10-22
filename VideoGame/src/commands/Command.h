@@ -1,10 +1,10 @@
-#pragma once
+ï»¿#pragma once
 
 namespace actors { class Actor; }
 
 namespace commands
 {
-	// ƒRƒ}ƒ“ƒhƒpƒ^[ƒ“‚ğÀ‘•‚·‚é‚½‚ß‚ÌŠî–{ƒNƒ‰ƒX
+	// ã‚³ãƒãƒ³ãƒ‰ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚’å®Ÿè£…ã™ã‚‹ãŸã‚ã®åŸºæœ¬ã‚¯ãƒ©ã‚¹
 	class Command
 	{
 	public:

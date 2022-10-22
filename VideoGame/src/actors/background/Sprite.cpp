@@ -1,4 +1,4 @@
-#include "actors/background/Sprite.h"
+ï»¿#include "actors/background/Sprite.h"
 #include "components/SpriteComponent.h"
 #include "scenes/Scene.h"
 
@@ -10,7 +10,7 @@ namespace actors
 			:Actor(scene)
 		{
 			sprite = new components::SpriteComponent(this,110);
-			// TODO:”¼“§–¾‚É‚·‚é
+			// TODO:åŠé€æ˜Žã«ã™ã‚‹
 			sprite->SetRenderColorAlpha(100);
 			sprite->SetTexture(scene->GetTexture("assets/TimerBackground.png"));
 		}

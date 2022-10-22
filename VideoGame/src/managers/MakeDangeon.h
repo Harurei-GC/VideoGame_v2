@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 #include <vector>
 #include "math/Math.h"
 
-#define HORIZONTAL 3 // x•ûŒü
-#define VERTICAL 4 // y•ûŒü
-#define W_BOXES 32 // ‰¡•ûŒü‚Ìƒ}ƒX–Ú‚Ì”
-#define H_BOXES 24 // c•ûŒü‚Ìƒ}ƒX–Ú‚Ì”
+#define HORIZONTAL 3 // xæ–¹å‘
+#define VERTICAL 4 // yæ–¹å‘
+#define W_BOXES 32 // æ¨ªæ–¹å‘ã®ãƒã‚¹ç›®ã®æ•°
+#define H_BOXES 24 // ç¸¦æ–¹å‘ã®ãƒã‚¹ç›®ã®æ•°
 
 namespace managers
 {
@@ -13,11 +13,11 @@ namespace managers
 	{
 	public:
 		MakeDangeon();
-		// ˆø”‚ÌÀ•W‚ª•”‰®‚Ì’†‚É‚ ‚é‚©
+		// å¼•æ•°ã®åº§æ¨™ãŒéƒ¨å±‹ã®ä¸­ã«ã‚ã‚‹ã‹
 		bool IsInRooms(int x, int y);
-		// ˆø”‚ÌÀ•W‚ª’Ê˜H‚Æ”í‚Á‚Ä‚¢‚é‚©
+		// å¼•æ•°ã®åº§æ¨™ãŒé€šè·¯ã¨è¢«ã£ã¦ã„ã‚‹ã‹
 		bool IsInCorridor(int x, int y);
-		// ÅŒã”ö‚Ì•”‰®‚Ìpositionæ“¾
+		// æœ€å¾Œå°¾ã®éƒ¨å±‹ã®positionå–å¾—
 		Vector2Int getLastRoomBoxPosition()
 		{
 			return roomBoxPosition[areaNumX - 1][areaNumY - 1];
@@ -34,20 +34,20 @@ namespace managers
 	private:
 		void MakeMaps();
 	
-		// c•ûŒü‚à‚µ‚­‚Í‰¡•ûŒü‚ÌƒGƒŠƒA‚Ì”
+		// ç¸¦æ–¹å‘ã‚‚ã—ãã¯æ¨ªæ–¹å‘ã®ã‚¨ãƒªã‚¢ã®æ•°
 		int areaNumX;
 		int areaNumY;
-		// ƒGƒŠƒAF•”‰®‚ª¶¬‚³‚ê‚é‰Â”\«‚Ì‚ ‚é‹óŠÔ‚Ì‹æØ‚è
-		// ŠeƒGƒŠƒA‚Ìƒ}ƒX”
+		// ã‚¨ãƒªã‚¢ï¼šéƒ¨å±‹ãŒç”Ÿæˆã•ã‚Œã‚‹å¯èƒ½æ€§ã®ã‚ã‚‹ç©ºé–“ã®åŒºåˆ‡ã‚Š
+		// å„ã‚¨ãƒªã‚¢ã®ãƒã‚¹æ•°
 		Vector2Int areaCountSize;
-		// Še•”‰®‚Ìƒ}ƒX”
-		// —v‘f+1
+		// å„éƒ¨å±‹ã®ãƒã‚¹æ•°
+		// è¦ç´ +1
 		Vector2Int roomBoxes[HORIZONTAL+1][VERTICAL+1];
-		// Še•”‰®‚Ì¶ã’¸“_‚Ìƒ}ƒXˆÊ’u
-		// —v‘f+1
+		// å„éƒ¨å±‹ã®å·¦ä¸Šé ‚ç‚¹ã®ãƒã‚¹ä½ç½®
+		// è¦ç´ +1
 		Vector2Int roomBoxPosition[HORIZONTAL+1][VERTICAL+1];
-		// ’Ê˜HÀ•W•Ï”
-		// Å‰‚É(-1,-1)‚Ìƒ_ƒ~[‚ªŠi”[‚³‚ê‚Ä‚¢‚é‚½‚ß’ˆÓ
+		// é€šè·¯åº§æ¨™å¤‰æ•°
+		// æœ€åˆã«(-1,-1)ã®ãƒ€ãƒŸãƒ¼ãŒæ ¼ç´ã•ã‚Œã¦ã„ã‚‹ãŸã‚æ³¨æ„
 		std::vector<Vector2Int> allCorridor;
 
 	};

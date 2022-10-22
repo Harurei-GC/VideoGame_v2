@@ -1,8 +1,8 @@
-#pragma once
+ï»¿#pragma once
 #include "SDL.h"
 
 
-// ˆê‚Â‚Ì’l‚ğ•Û‚µ‚È‚ª‚çsetter‚Ægetter‚ğ’ñ‹Ÿ‚·‚éƒNƒ‰ƒX
+// ä¸€ã¤ã®å€¤ã‚’ä¿æŒã—ãªãŒã‚‰setterã¨getterã‚’æä¾›ã™ã‚‹ã‚¯ãƒ©ã‚¹
 
 class SG_Scancode
 {

@@ -1,6 +1,6 @@
-#include "visitors/VisitorGetPositions.h"
+ï»¿#include "visitors/VisitorGetPositions.h"
 
-#ifdef DEBUG_VISITORGETPOSITION_CPP_ // ƒfƒoƒbƒO‚Ì‚İƒCƒ“ƒNƒ‹[ƒh
+#ifdef DEBUG_VISITORGETPOSITION_CPP_ // ãƒ‡ãƒãƒƒã‚°æ™‚ã®ã¿ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
 #include <iostream>
 #endif
 

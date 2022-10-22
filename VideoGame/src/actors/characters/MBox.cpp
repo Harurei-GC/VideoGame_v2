@@ -1,4 +1,4 @@
-// @todo –¼‘O‚ğMBox‚ÉƒŠƒl[ƒ€‚µ‚½‚¢
+ï»¿// @todo åå‰ã‚’MBoxã«ãƒªãƒãƒ¼ãƒ ã—ãŸã„
 
 #include "actors/characters/MBox.h"
 #include "components/SpriteComponent.h"

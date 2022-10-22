@@ -1,4 +1,4 @@
-#include "RigidbodyComponent.h"
+ï»¿#include "RigidbodyComponent.h"
 #include "actors/Actor.h"
 #include "components/collider/CircleComponent.h"
 #include "scenes/ScnBattle.h"
@@ -33,12 +33,12 @@ namespace components
 		if (mForce.x == 0.0f) { sign.x = 0.0f; }
 		(mForce.y < 0.0f) ? (sign.y = -1.0f) : (sign.y = 1.0f);
 		if (mForce.y == 0.0f) { sign.y = 0.0f; }
-		// ‰Á‘¬“xE‘¬“xŒvŽZ
+		// åŠ é€Ÿåº¦ãƒ»é€Ÿåº¦è¨ˆç®—
 		mAcceleration = Vector2(sign.x * mForce.x * mForce.x / mass, sign.y * mForce.y * mForce.y / mass);
 		mSpeed += mAcceleration * deltaTime;
 
-		// ƒXƒs[ƒhƒAƒbƒvƒ{ƒ^ƒ“‰Ÿ‚³‚ê‚Ä‚¢‚é‚©‚Â‰æ–Ê’[‚É‚¢‚È‚¯‚ê‚Î‰Á‘¬
-		// ‰Á‘¬—Ê‚ÍŒ»Ý‚Ì‘¬“x{’è”
+		// ã‚¹ãƒ”ãƒ¼ãƒ‰ã‚¢ãƒƒãƒ—ãƒœã‚¿ãƒ³æŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹ã¤ç”»é¢ç«¯ã«ã„ãªã‘ã‚Œã°åŠ é€Ÿ
+		// åŠ é€Ÿé‡ã¯ç¾åœ¨ã®é€Ÿåº¦ï¼‹å®šæ•°
 		if (isPowered && (replacePos.x > 20.0f && replacePos.x + 20.0f < WIDTH))
 		{
 			mSpeed.x += sign.x * mPowerSpeed.x;
@@ -48,31 +48,31 @@ namespace components
 			mSpeed.y += sign.y * mPowerSpeed.y;
 		}
 
-		// ‰Á‘¬“x‚ª0‚Ì‚Æ‚«‚©‚ÂƒXƒs[ƒh‚ª–€ŽC—ÍˆÈã‚Å‚ ‚ê‚Î–€ŽC—Í‚ªì“®
+		// åŠ é€Ÿåº¦ãŒ0ã®ã¨ãã‹ã¤ã‚¹ãƒ”ãƒ¼ãƒ‰ãŒæ‘©æ“¦åŠ›ä»¥ä¸Šã§ã‚ã‚Œã°æ‘©æ“¦åŠ›ãŒä½œå‹•
 		if ((mAcceleration.x == 0) && (fabsf(mSpeed.x) > friction))
 		{
 			if (mSpeed.x > 0) { mSpeed.x -= friction; }
 			else if (mSpeed.x < 0) { mSpeed.x += friction; }
 		}
-		// ƒXƒs[ƒh‚ª–€ŽC—Í‚æ‚è¬‚³‚¯‚ê‚ÎƒXƒs[ƒh‚ð0‚É‚·‚é
+		// ã‚¹ãƒ”ãƒ¼ãƒ‰ãŒæ‘©æ“¦åŠ›ã‚ˆã‚Šå°ã•ã‘ã‚Œã°ã‚¹ãƒ”ãƒ¼ãƒ‰ã‚’0ã«ã™ã‚‹
 		else if ((mAcceleration.x == 0) && (fabsf(mSpeed.x) <= friction))
 		{
 			mSpeed.x = 0;
 		}
-		// ‰Á‘¬“x‚ª‚O‚Ì‚Æ‚«‚©‚ÂƒXƒs[ƒh‚ª–€ŽC—ÍˆÈã‚Å‚ ‚ê‚Î–€ŽC—Í‚ªì“®
+		// åŠ é€Ÿåº¦ãŒï¼ã®ã¨ãã‹ã¤ã‚¹ãƒ”ãƒ¼ãƒ‰ãŒæ‘©æ“¦åŠ›ä»¥ä¸Šã§ã‚ã‚Œã°æ‘©æ“¦åŠ›ãŒä½œå‹•
 		if ((mAcceleration.y == 0) && (fabsf(mSpeed.y) > friction))
 		{
 			if (mSpeed.y > 0) { mSpeed.y -= friction; }
 			else if (mSpeed.y < 0) { mSpeed.y += friction; }
 		}
-		// ƒXƒs[ƒh‚ª–€ŽC—Í‚æ‚è¬‚³‚¯‚ê‚ÎƒXƒs[ƒh‚ð0‚É‚·‚é
+		// ã‚¹ãƒ”ãƒ¼ãƒ‰ãŒæ‘©æ“¦åŠ›ã‚ˆã‚Šå°ã•ã‘ã‚Œã°ã‚¹ãƒ”ãƒ¼ãƒ‰ã‚’0ã«ã™ã‚‹
 		else if ((mAcceleration.y == 0) && (fabsf(mSpeed.y) <= friction))
 		{
 			mSpeed.y = 0;
 		}
 
 
-		// ãŒÀ‘¬“xÝ’è
+		// ä¸Šé™é€Ÿåº¦è¨­å®š
 		if (mOwner->GetRole() == actors::Actor::Role::Player)
 		{
 			if (mSpeed.x > 350.0f)
@@ -98,7 +98,7 @@ namespace components
 
 		}
 
-		// Œ»Ý‚ÌˆÊ’u‚ðXV
+		// ç¾åœ¨ã®ä½ç½®ã‚’æ›´æ–°
 		replacePos.x += mSpeed.x * deltaTime;
 		replacePos.y += mSpeed.y * deltaTime;
 		JudgeCollisionWithBlkTree(deltaTime);
@@ -116,7 +116,7 @@ namespace components
 					(replacePos.y - mOwner->GetCircle()->GetRadius() <= objPos.at(i).y + CHARACHIP_EDGE / 2))
 				{
 					replacePos -= mSpeed * deltaTime;
-					// •Ç‚É“–‚½‚Á‚½‚Æ‚«‚É‚·‚®‚É•Ç‚©‚ç—£‚ê‚ç‚ê‚é‚æ‚¤‚ÉƒXƒs[ƒh‚Æ—Í‚ðƒŠƒZƒbƒg
+					// å£ã«å½“ãŸã£ãŸã¨ãã«ã™ãã«å£ã‹ã‚‰é›¢ã‚Œã‚‰ã‚Œã‚‹ã‚ˆã†ã«ã‚¹ãƒ”ãƒ¼ãƒ‰ã¨åŠ›ã‚’ãƒªã‚»ãƒƒãƒˆ
 					mForce = Vector2{ 0.0f,0.0f };
 					mSpeed = Vector2{ 0.0f,0.0f };
 				}

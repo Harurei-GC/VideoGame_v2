@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "actors/Actor.h"
 
 namespace scenes { class Scene; }

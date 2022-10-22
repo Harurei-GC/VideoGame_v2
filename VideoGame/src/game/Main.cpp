@@ -1,9 +1,9 @@
-#include "game/Game.h"
+ï»¿#include "game/Game.h"
 
 int main(int argc, char** argv)
 {
 	game::Game game;
-	// ƒQ[ƒ€‚Ì‹N“®‚É¬Œ÷‚µ‚½‚©
+	// ã‚²ãƒ¼ãƒ ã®èµ·å‹•ã«æˆåŠŸã—ãŸã‹
 	bool success = game.Initialize();
 	if (success) 
 	{

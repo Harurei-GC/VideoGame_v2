@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "components/Component.h"
 #include "SDL.h"
 
@@ -7,7 +7,7 @@ namespace components
 	class SpriteComponent :public Component
 	{
 	public:
-		// drawOrder‚ª’á‚¢‚Ù‚ÇŒã•û‚ÉˆÊ’u‚·‚é
+		// drawOrderãŒä½ã„ã»ã©å¾Œæ–¹ã«ä½ç½®ã™ã‚‹
 		SpriteComponent(actors::Actor* owner, int drawOrder = 100);
 		~SpriteComponent();
 

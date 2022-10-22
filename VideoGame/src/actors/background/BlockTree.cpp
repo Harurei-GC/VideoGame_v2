@@ -1,4 +1,4 @@
-// @todo –¼‘O‚ğBlock‚ÉƒŠƒl[ƒ€‚µ‚½‚¢
+ï»¿// @todo åå‰ã‚’Blockã«ãƒªãƒãƒ¼ãƒ ã—ãŸã„
 
 #include "actors/background/BlockTree.h"
 #include "scenes/Scene.h"

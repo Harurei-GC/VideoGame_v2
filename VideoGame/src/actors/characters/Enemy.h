@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "actors/characters/CharacterActor.h"
 
 namespace scenes { class Scene; }
@@ -12,7 +12,7 @@ namespace actors
 {
 	namespace characters
 	{
-		// TODO:‚à‚µ‚©‚µ‚½‚ç‚±‚ê‚©‚ç“G‚Ìí—Ş‚ª‘‚¦‚½‚Æ‚«‚ÉEnemy‚Ì”h¶ƒNƒ‰ƒX‚ªo‚Ä‚­‚é‚©‚à
+		// TODO:ã‚‚ã—ã‹ã—ãŸã‚‰ã“ã‚Œã‹ã‚‰æ•µã®ç¨®é¡ãŒå¢—ãˆãŸã¨ãã«Enemyã®æ´¾ç”Ÿã‚¯ãƒ©ã‚¹ãŒå‡ºã¦ãã‚‹ã‹ã‚‚
 		class Enemy :public CharacterActor
 		{
 		public:
