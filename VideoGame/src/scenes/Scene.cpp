@@ -15,7 +15,7 @@ namespace scenes
 		mColor[BLACK] = { 0,0,0,255 };
 		mColor[BLUE] = { 30, 30, 240, 255 };
 		mColor[RED] = { 240, 50, 50, 255 };
-		mColor[YELLOW] = { 200, 170,10 };
+		mColor[YELLOW] = { 255, 217,84 };
 
 		game->AddScene(this);
 	}

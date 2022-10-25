@@ -11,7 +11,7 @@ namespace actors
 		{
 			sprite = new components::SpriteComponent(this,110);
 			// TODO:半透明にする
-			sprite->SetRenderColorAlpha(100);
+			sprite->SetRenderColorAlpha(170);
 			sprite->SetTexture(scene->GetTexture("assets/TimerBackground.png"));
 		}
 

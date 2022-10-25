@@ -91,16 +91,17 @@ namespace scenes
 		game::Game* mGame;
 		bool mIsRunning;
 		bool mUpdatingActors;
-		int texW, texH;
 		std::vector<actors::Actor*> mActors;
 		std::vector<actors::Actor*> mPendingActors;
 		std::vector<class components::SpriteComponent*>mSprites;
 		std::vector<class visitors::Visitor*>mVisitors;
 
+
 		// 文字列表示に使う
-		int bufCount;
 		char buf[1024];
 		FILE* fp;
+		int texW, texH;
+		int bufCount;
 
 		float deltaTime;
 	private:

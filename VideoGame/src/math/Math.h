@@ -103,6 +103,13 @@ namespace math
 	}
 }
 
+// x軸とy軸
+enum class Dim2
+{
+	x,
+	y
+};
+
 // TODO:演算子のオーバーロード出来たら楽
 struct Vector2Int
 {

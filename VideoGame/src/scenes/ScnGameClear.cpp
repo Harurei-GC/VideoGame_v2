@@ -63,11 +63,11 @@ namespace scenes
 		// レンダリング
 		SDL_SetRenderDrawColor(mGame->gameRenderer, 220, 220, 220, 255);
 		SDL_RenderClear(mGame->gameRenderer);
-		RenderText(FONT_BBBOcelot_Regular, BLACK, "GAME CLEAR!!", static_cast<int>(WIDTH / 2 - 100), static_cast<int>(HEIGHT / 2));
-		RenderText(FONT_BBBOcelot_Regular, BLACK, "SCORE: ", static_cast<int>(WIDTH / 2 - 100), static_cast<int>(HEIGHT / 2 + 50));
-		RenderText(FONT_BBB_Simulator_Black, scoreColor, score, static_cast<int>(WIDTH / 2 + 50), static_cast<int>(HEIGHT / 2 + 35));
-		DispSentenceFromFile(FONT_PixelMplus, BLACK, static_cast<int>(WIDTH / 2 - 100), static_cast<int>(HEIGHT / 2 + 100));
-		DispSentenceFromFile(FONT_PixelMplus, BLACK, static_cast<int>(WIDTH / 2 - 100), static_cast<int>(HEIGHT / 2 + 135));
+		RenderText(FONT_BBBOcelot_Regular, BLACK, "GAME CLEAR!!", static_cast<int>(WIDTH / 2 - 140), static_cast<int>(HEIGHT / 2 - 50));
+		RenderText(FONT_BBBOcelot_Regular, BLACK, "SCORE: ", static_cast<int>(WIDTH / 2 - 140), static_cast<int>(HEIGHT / 2));
+		RenderText(FONT_BBB_Simulator_Black, scoreColor, score, static_cast<int>(WIDTH / 2 + 10), static_cast<int>(HEIGHT / 2 -15));
+		DispSentenceFromFile(FONT_PixelMplus, BLACK, static_cast<int>(WIDTH / 2 - 140), static_cast<int>(HEIGHT / 2 + 50));
+		DispSentenceFromFile(FONT_PixelMplus, BLACK, static_cast<int>(WIDTH / 2 - 140), static_cast<int>(HEIGHT / 2 + 85));
 		SDL_RenderPresent(mGame->gameRenderer);
 		bufCount = 0;
 	}

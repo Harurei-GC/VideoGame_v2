@@ -10,19 +10,21 @@
 #include "components/RigidbodyComponent.h"
 #include "components/collider/CircleComponent.h"
 
-#define TESTING_CONFIGUREMOVEMENTSTATUS_CPP_ // 一時的にfriend消去
+#define DEBUG_CONFIGUREMOVEMENTSTATUS_CPP_ // 一時的にfriend消去
 
 namespace managers
 {
 	ConfigureMovementStatus::ConfigureMovementStatus(scenes::ScnBattle* battle)
 		:cBattle(battle)
+		,player(nullptr)
+		,mbox(nullptr)
 	{
 	}
 
 	void ConfigureMovementStatus::Start()
 	{
 		player = cBattle->GetPlayer();
-	#ifndef TESTING_CONFIGUREMOVEMENTSTATUS_CPP_
+	#ifndef DEBUG_CONFIGUREMOVEMENTSTATUS_CPP_
 		fri = cBattle->GetFriend();
 	#endif
 		mbox = cBattle->GetMBox();
@@ -33,48 +35,46 @@ namespace managers
 	{
 		bool isEnemyDamaged[ENEMIES] = { 0 };
 
-		// NOTE:x軸側とy軸側両方回す
+		Dim2 dim;
 		for (int i = 0; i < 2; i++)
 		{
-			// 今の繰り返しがx軸かy軸か
-			char a;
-			(i == 0) ? a = 'x' : a = 'y';
+			(i == 0) ? dim = Dim2::x : dim = Dim2::y;
 			// player視点
 			// NOTE:既にRigidbodyで次フレームの座標を計算済みであるから、基本的にその座標であるReplacePositionを使う。
 			if (Intersect(player->GetCircle()->GetRadius(), mbox->GetCircle()->GetRadius()
 				, player->GetRigidbody()->GetReplacePosition(), mbox->GetRigidbody()->GetReplacePosition()))
 			{
-				JudgeActorsCollision(deltaTime, mbox, player,-1, a);
+				JudgeActorsCollision(deltaTime, mbox, player,-1, dim);
 			}
-	#ifndef TESTING_CONFIGUREMOVEMENTSTATUS_CPP_
+	#ifndef DEBUG_CONFIGUREMOVEMENTSTATUS_CPP_
 			if (Intersect(player->GetCircle()->GetRadius(), fri->GetCircle()->GetRadius()
 				, player->GetRigidbody()->GetReplacePosition(), fri->GetRigidbody()->GetReplacePosition()))
 			{
-				JudgeActorsCollision(deltaTime, fri, player,-1, a);
+				JudgeActorsCollision(deltaTime, fri, player,-1, dim);
 			}
 			// friend視点
 			if (Intersect(fri->GetCircle()->GetRadius(), mbox->GetCircle()->GetRadius()
 				, fri->GetRigidbody()->GetReplacePosition(), mbox->GetRigidbody()->GetReplacePosition()))
 			{
-				JudgeActorsCollision(deltaTime, mbox, fri,-1, a);
+				JudgeActorsCollision(deltaTime, mbox, fri,-1, dim);
 			}
 			if (Intersect(fri->GetCircle()->GetRadius(), player->GetCircle()->GetRadius()
 				, fri->GetRigidbody()->GetReplacePosition(), player->GetRigidbody()->GetReplacePosition()))
 			{
-				JudgeActorsCollision(deltaTime, player, fri,-1, a);
+				JudgeActorsCollision(deltaTime, player, fri,-1, dim);
 			}
 	#endif
 			// mbox視点
 			if (Intersect(mbox->GetCircle()->GetRadius(), player->GetCircle()->GetRadius()
 				, mbox->GetRigidbody()->GetReplacePosition(), player->GetRigidbody()->GetReplacePosition()))
 			{
-				JudgeActorsCollision(deltaTime, player, mbox,-1, a);
+				JudgeActorsCollision(deltaTime, player, mbox,-1, dim);
 			}
-	#ifndef TESTING_CONFIGUREMOVEMENTSTATUS_CPP_
+	#ifndef DEBUG_CONFIGUREMOVEMENTSTATUS_CPP_
 			if (Intersect(mbox->GetCircle()->GetRadius(), fri->GetCircle()->GetRadius()
 				, mbox->GetRigidbody()->GetReplacePosition(), fri->GetRigidbody()->GetReplacePosition()))
 			{
-				JudgeActorsCollision(deltaTime, fri, mbox,-1, a);
+				JudgeActorsCollision(deltaTime, fri, mbox,-1, dim);
 			}
 	#endif
 
@@ -92,14 +92,14 @@ namespace managers
 							player->GetRigidbody()->GetReplacePosition(), enemy.at(j)->GetRigidbody()->GetReplacePosition());
 						// WARNING:この関数はPlayer視点。enemyとplayerの引数を逆にすると挙動がおかしくなる。
 						// Player視点の条件分岐に持っていこうにも、enemyを識別することが出来なくなる。なのでここに置いておく。
-						JudgeActorsCollision(deltaTime, enemy.at(j),player, j, a);
+						JudgeActorsCollision(deltaTime, enemy.at(j),player, j, dim);
 					}
-	#ifndef TESTING_CONFIGUREMOVEMENTSTATUS_CPP_
+	#ifndef DEBUG_CONFIGUREMOVEMENTSTATUS_CPP_
 					if (Intersect(enemy.at(j)->GetCircle()->GetRadius(), fri->GetCircle()->GetRadius()
 						, enemy.at(j)->GetRigidbody()->GetReplacePosition(), fri->GetRigidbody()->GetReplacePosition()))
 					{
 						isEnemyDamaged[j] = IsMeDamaged();
-						JudgeActorsCollision(deltaTime, enemy.at(j), fri, j, a);
+						JudgeActorsCollision(deltaTime, enemy.at(j), fri, j, dim);
 					}
 	#endif
 				}
@@ -126,7 +126,7 @@ namespace managers
 		return distSq <= radiiSq;
 	}
 
-	void ConfigureMovementStatus::JudgeActorsCollision(float deltaTime,actors::Actor* you, actors::Actor* me,int ID, char axis)
+	void ConfigureMovementStatus::JudgeActorsCollision(float deltaTime,actors::Actor* you, actors::Actor* me,int ID, Dim2 axis)
 	{
 		Vector2 position;
 		Vector2 meSpeed;
@@ -141,11 +141,11 @@ namespace managers
 		{
 			switch (axis)
 			{
-			case 'x':
+			case Dim2::x:
 				position.x -= meSpeed.x * deltaTime;
 				SwapSpeed(meSpeed.x, youSpeed.x);
 				break;
-			case 'y':
+			case Dim2::y:
 				position.y -= meSpeed.y * deltaTime;
 				SwapSpeed(meSpeed.y, youSpeed.y);
 				break;
@@ -162,7 +162,7 @@ namespace managers
 			case actors::Actor::Role::Player:
 				player->GetRigidbody()->SetSpeed(youSpeed);
 				break;
-	#ifndef TESTING_CONFIGUREMOVEMENTSTATUS_CPP_
+	#ifndef DEBUG_CONFIGUREMOVEMENTSTATUS_CPP_
 			case actors::Actor::Role::Friend:
 				fri->GetRigidbody()->SetSpeed(youSpeed);
 				break;
@@ -188,7 +188,7 @@ namespace managers
 	void ConfigureMovementStatus::SetActorsPosition()
 	{
 		player->SetPosition(player->GetRigidbody()->GetReplacePosition());
-	#ifndef TESTING_CONFIGUREMOVEMENTSTATUS_CPP_
+	#ifndef DEBUG_CONFIGUREMOVEMENTSTATUS_CPP_
 		fri->SetPosition(fri->GetRigidbody()->GetReplacePosition());
 	#endif
 		mbox->SetPosition(mbox->GetRigidbody()->GetReplacePosition());
@@ -200,6 +200,11 @@ namespace managers
 
 	bool ConfigureMovementStatus::IsMeDamaged(Vector2 youSpeed, Vector2 meSpeed, Vector2 youPos, Vector2 mePos)
 	{
+		// Me側のダメージを計算する。
+		// Meの後方からYouが衝突してきた場合にダメージを与える。
+		// MeやYouはcharactersのいずれかである。
+		//
+
 		if ((youSpeed.x == 0.0f)&&(youSpeed.y == 0.0f))
 		{// 衝突先の相手の速度が０（動いていない）ならば、meにダメージは入らない
 			return false;

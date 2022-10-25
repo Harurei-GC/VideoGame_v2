@@ -226,26 +226,26 @@ namespace scenes
 		// 残り時間表示
 		RenderText(FONT_BBBOcelot_Regular, BLUE
 			, std::to_string(static_cast<int>(timeLimit) + 1).c_str()
-			, static_cast<int>(WIDTH - 100), 50);
+			, static_cast<int>(WIDTH - 100), 40);
 
 		// 現在のスコアひょうじ
 		switch (mEnemy.size() - 1)
 		{
 		case 0:
 			mScore = Score::A;
-			RenderText(FONT_BBBOcelot_Regular, RED, "A", (WIDTH - 90), 80);
+			RenderText(FONT_BBBOcelot_Regular, RED, "A", (WIDTH - 90), 66);
 			break;
 		case 1:
 			mScore = Score::B;
-			RenderText(FONT_BBBOcelot_Regular, BLUE, "B", (WIDTH-90),80);
+			RenderText(FONT_BBBOcelot_Regular, BLUE, "B", (WIDTH-90),66);
 			break;
 		case 2:
 			mScore = Score::C;
-			RenderText(FONT_BBBOcelot_Regular, YELLOW, "C", (WIDTH-90), 80);
+			RenderText(FONT_BBBOcelot_Regular, YELLOW, "C", (WIDTH-90), 66);
 			break;
 		default:
 			mScore = Score::C;
-			RenderText(FONT_BBBOcelot_Regular, YELLOW, "C", (WIDTH-90), 80);
+			RenderText(FONT_BBBOcelot_Regular, YELLOW, "C", (WIDTH-90), 66);
 			break;
 		}
 

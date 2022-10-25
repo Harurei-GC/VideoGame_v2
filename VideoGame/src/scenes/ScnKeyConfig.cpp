@@ -12,6 +12,7 @@ namespace scenes
 		,wasPushedEtr(false)
 		,wasPushedQ(false)
 		,wasPushedEsc(false)
+		,cannotUpdateKey(false)
 		,mKSelecting(nullptr)
 		,wasSelectedCmd(SDL_SCANCODE_UNKNOWN)
 	{
@@ -72,20 +73,41 @@ namespace scenes
 
 	void ScnKeyConfig::GenerateOutput()
 	{
+		int tex = 50;
+		int row = 0;
 		// @todo デバッグモード（カーネル）と比較して挙動が一緒か確認
 		// @todo 選択中のものに色を付ける
 		SDL_SetRenderDrawColor(mGame->gameRenderer, 220, 220, 220, 255);
 		SDL_RenderClear(mGame->gameRenderer);
 
-		DispSentenceFromFile(FONT_PixelMplus, BLACK, 100, 100);				// Qキーでやめる
-		RenderText(FONT_PixelMplus, BLACK, "", 100, 100 + texH);			//
-		DispSentenceFromFile(FONT_PixelMplus, BLACK, 100, 100 + texH * 2);	// Up
-		RenderText(FONT_BBBOcelot_Regular, BLUE,
-			SDL_GetKeyName(mKeyData->GetUpKey().Getter()), 350, 100 + texH * 2);// 設定したキー
-		DispSentenceFromFile(FONT_PixelMplus, BLACK, 100, 100 + texH * 3);	// Down
-		DispSentenceFromFile(FONT_PixelMplus, BLACK, 100, 100 + texH * 4);	// Right
-		DispSentenceFromFile(FONT_PixelMplus, BLACK, 100, 100 + texH * 5);	// Left
-		DispSentenceFromFile(FONT_PixelMplus, BLACK, 100, 100 + texH * 6);	// Reset
+		DispSentenceFromFile(FONT_PixelMplus, BLACK, 100, 100 + tex * row++);	// 対応するキー
+		DispSentenceFromFile(FONT_PixelMplus, BLACK, 100, 100 + tex * row++);	// 選択中に
+		DispSentenceFromFile(FONT_PixelMplus, BLACK, 100, 100 + tex * row++);	// Qキーで完了
+		RenderText(FONT_PixelMplus, BLACK, "", 100, 100 + tex * row++);			//
+		DispSentenceFromFile(FONT_PixelMplus, BLACK, 100, 100 + tex * row);	// Up
+		RenderText(FONT_BBBOcelot_Regular, keyCC.UP,
+			SDL_GetScancodeName(mKeyData->GetUpKey().Getter()), 350, 100 + tex * row++);
+		DispSentenceFromFile(FONT_PixelMplus, BLACK, 100, 100 + tex * row);	// Down
+		RenderText(FONT_BBBOcelot_Regular, keyCC.DOWN,
+			SDL_GetScancodeName(mKeyData->GetDownKey().Getter()), 350, 100 + tex * row++);
+		DispSentenceFromFile(FONT_PixelMplus, BLACK, 100, 100 + tex * row);	// Right
+		RenderText(FONT_BBBOcelot_Regular, keyCC.RIGHT,
+			SDL_GetScancodeName(mKeyData->GetRightKey().Getter()), 350, 100 + tex * row++);
+		DispSentenceFromFile(FONT_PixelMplus, BLACK, 100, 100 + tex * row);	// Left
+		RenderText(FONT_BBBOcelot_Regular, keyCC.LEFT,
+			SDL_GetScancodeName(mKeyData->GetLeftKey().Getter()), 350, 100 + tex * row++);
+		DispSentenceFromFile(FONT_PixelMplus, BLACK, 100, 100 + tex * row);	// Reset
+		RenderText(FONT_BBBOcelot_Regular, keyCC.RESET,
+			SDL_GetScancodeName(mKeyData->GetResetKey().Getter()), 350, 100 + tex * row++);
+
+		if (mKeyUpdating)
+		{
+			RenderText(FONT_PixelMplus, BLACK, "使いたいキーを押してください", 100, 100 + tex * row++);
+			if (cannotUpdateKey)
+			{
+				RenderText(FONT_PixelMplus, RED, "このキーは使えません", 100, 100 + tex * row++);
+			}
+		}
 
 		SDL_RenderPresent(mGame->gameRenderer);
 		bufCount = 0;
@@ -110,8 +132,20 @@ namespace scenes
 			{
 				// KeyData内のコマンドを選択し登録
 				mKSelecting = RegistKType();
+				// 「このキーは使えません」表示の解除
+				cannotUpdateKey = false;				
 			}
 		}
+	}
+
+
+	void ScnKeyConfig::ResetKeyCursorColor(KeyCursorColor* kcc)
+	{
+		kcc->UP = BLUE;
+		kcc->DOWN = BLUE;
+		kcc->RIGHT = BLUE;
+		kcc->LEFT = BLUE;
+		kcc->RESET = BLUE;
 	}
 
 	SG_Scancode* ScnKeyConfig::RegistKType()
@@ -170,8 +204,7 @@ namespace scenes
 				mKeyUpdating = false;					// アップデート解除
 #ifdef DEBUG_SCNKEYCONFIG_H_
 				// @todo SDL_GetKeyNameの挙動確認　ASCIIが返っているが、このプログラムファイルはUTF-8。変換できているのか。
-				std::string sdl = SDL_GetKeyName(wasSelectedCmd);
-				std::cout << SDL_GetKeyName(wasSelectedCmd) << static_cast<int>(wasSelectedCmd) << " key was registered" << std::endl;
+				std::cout << SDL_GetScancodeName(wasSelectedCmd) << " key was registered" << std::endl;
 				PrintRgsteredKey();						// ここで他のキーの現在値を出力
 #endif
 				break;
@@ -219,7 +252,7 @@ namespace scenes
 	void ScnKeyConfig::CannotUpdateKey(bool& wasPushed)
 	{
 		wasPushed = true;
-		// @todo ここに「更新できません」の処理
+		cannotUpdateKey = true;
 		// 引き続きアップデート中となる
 		std::cout << "cannot update for that key" << std::endl;
 	}
@@ -244,22 +277,32 @@ namespace scenes
 		if (keyState[UpKey] && (UpKey != wasSelectedCmd))
 		{
 			RenewCursor(&UpKey, data::KeyType::UP, "Up");
+			ResetKeyCursorColor(&keyCC);
+			keyCC.UP = RED;
 		}
 		else if (keyState[DownKey] && (DownKey != wasSelectedCmd))
 		{
 			RenewCursor(&DownKey, data::KeyType::DOWN, "Down");
+			ResetKeyCursorColor(&keyCC);
+			keyCC.DOWN = RED;
 		}
 		else if (keyState[RightKey] && (RightKey != wasSelectedCmd))
 		{
 			RenewCursor(&RightKey, data::KeyType::RIGHT, "Right");
+			ResetKeyCursorColor(&keyCC);
+			keyCC.RIGHT = RED;
 		}
 		else if (keyState[LeftKey] && (LeftKey != wasSelectedCmd))
 		{
 			RenewCursor(&LeftKey, data::KeyType::LEFT, "Left");
+			ResetKeyCursorColor(&keyCC);
+			keyCC.LEFT = RED;
 		}
 		else if (keyState[ResetKey] && (ResetKey != wasSelectedCmd))
 		{
 			RenewCursor(&ResetKey, data::KeyType::RESET, "Reset");
+			ResetKeyCursorColor(&keyCC);
+			keyCC.RESET = RED;
 		}
 	}
 
@@ -273,6 +316,11 @@ namespace scenes
 
 	/* End of Update Functinos */
 
+
+	/* Generate Update Funtions */
+
+
+	/* End of Generate Update Functions */
 
 #ifdef DEBUG_SCNKEYCONFIG_H_
 	void ScnKeyConfig::PrintRgsteredKey()

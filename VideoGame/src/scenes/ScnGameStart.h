@@ -12,5 +12,6 @@ namespace scenes
 		void GenerateOutput()override;
 
 	private:
+		data::KeyData* mKeyData;
 	};
 }
