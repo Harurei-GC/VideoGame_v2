@@ -26,6 +26,10 @@ namespace components
 {
 	class SpriteComponent;
 }
+namespace objects
+{
+	class ActorObjects;
+}
 
 #define WIDTH 1024.0f
 #define HEIGHT 768.0f
@@ -79,6 +83,8 @@ namespace scenes
 		void RenderText(int font, int color, const char* text, int rw, int rh);
 		// bufの一部文字列を表示させる
 		void DispSentenceFromFile(int font, int color, int rw, int rh);
+
+		virtual objects::ActorObjects* GetActorObjects() { return nullptr; }
 
 	protected:
 

@@ -94,6 +94,9 @@ namespace scenes
 		timerBackground = new bg::Sprite(this);
 		timerBackground->SetPosition(Vector2((WIDTH - 80), 60));
 
+		actorObjects.enemy = &mEnemy;
+		actorObjects.mbox = mMBox;
+		actorObjects.player = mPlayer;
 
 #ifdef DEBUG_TESTING_VISIT_SCNBATTLE_CPP_
 		vstGetPos = new visitors::VisitorGetPositions(this);

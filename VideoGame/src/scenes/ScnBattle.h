@@ -4,6 +4,7 @@
 #include <map>
 #include "visitors/VisitorGetPositions.h"
 #include "scenes/ScnGameClear.h"
+#include "objects/ActorObjects.h"
 
 namespace visitors
 {
@@ -56,6 +57,8 @@ namespace scenes
 		void RemoveBlockTree(bg::BlockTree* block)override;
 		std::vector<bg::BlockTree*> GetBlkTree() { return mBlkTree; }
 		std::vector<class Vector2> GetBoxPosition()const { return boxPosition; }
+
+		objects::ActorObjects* GetActorObjects()override { return &actorObjects; }
 		std::map<int,ch::Enemy*> GetEnemiesMap() const { return mEnemy; }
 		ch::Player* GetPlayer() { return mPlayer; }
 		//class Friend* GetFriend() { return mFriend; }
@@ -80,9 +83,12 @@ namespace scenes
 	private:
 		bool IsTimeOut(float deltaTime);
 
-		ch::Player* mPlayer;
+		objects::ActorObjects actorObjects;
+		std::map<int, ch::Enemy*> mEnemy;
 		//ch::Friend* mFriend;
 		ch::MBox* mMBox;
+		ch::Player* mPlayer;
+
 		bg::Goal* mGoal;
 		bg::Sprite* timerBackground;
 		managers::MakeDangeon dangeon;
@@ -92,7 +98,6 @@ namespace scenes
 		Score mScore;
 
 		std::vector<class Vector2> boxPosition;
-		std::map<int, ch::Enemy*> mEnemy;
 		std::vector<bg::BlockTree*> mBlkTree;
 	};
 }
