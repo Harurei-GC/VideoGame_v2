@@ -8,6 +8,7 @@ https://pipoya.net/sozai/
 
 # 開発環境
 Windows10 Home　64bit
+
 Visual Studio 2022
 ### 使用ライブラリ
 SDL2.0
