@@ -188,8 +188,10 @@ xcopy "$(SolutionDir)external\SDL\lib\x64\*.dll" "$(OutDir)" /i /s /y</Command>
     <ClInclude Include="src\data\SG_Scancode.h" />
     <ClInclude Include="src\managers\ConfigureMovementStatus.h" />
     <ClInclude Include="src\data\KeyData.h" />
-    <ClInclude Include="src\objects\ActorObjects.h" />
-    <ClInclude Include="src\objects\Objects.h" />
+    <ClInclude Include="src\message\ActorMessage.h" />
+    <ClInclude Include="src\message\ManagerMessage.h" />
+    <ClInclude Include="src\message\Message.h" />
+    <ClInclude Include="src\message\RigidbodyMessage.h" />
     <ClInclude Include="src\scenes\ScnBattle.h" />
     <ClInclude Include="src\scenes\ScnGameClear.h" />
     <ClInclude Include="src\scenes\ScnGameOver.h" />
@@ -231,7 +233,8 @@ xcopy "$(SolutionDir)external\SDL\lib\x64\*.dll" "$(OutDir)" /i /s /y</Command>
     <ClCompile Include="src\actors\characters\Friend.cpp" />
     <ClCompile Include="src\game\Game.cpp" />
     <ClCompile Include="src\data\KeyData.cpp" />
-    <ClCompile Include="src\objects\ActorObjects.cpp" />
+    <ClCompile Include="src\message\ActorMessage.cpp" />
+    <ClCompile Include="src\message\ManagerMessage.cpp" />
     <ClCompile Include="src\scenes\ScnBattle.cpp" />
     <ClCompile Include="src\scenes\ScnGameClear.cpp" />
     <ClCompile Include="src\scenes\ScnGameOver.cpp" />

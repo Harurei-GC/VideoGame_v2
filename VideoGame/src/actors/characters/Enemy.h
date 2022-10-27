@@ -22,8 +22,8 @@ namespace actors
 			Vector2 GetInitialPosition() const { return mInitialPosition; }
 			col::CircleComponent* GetCircle() override { return mCircle; }
 			components::RigidbodyComponent* GetRigidbody() override { return mRigidbody; }
-			void TakeDamage(int damage)override { mHP -= damage; }
 			void AcceptVisitor(visitors::Visitor* visitor)override;
+
 		private:
 			col::CircleComponent* mCircle;
 			components::RigidbodyComponent* mRigidbody;

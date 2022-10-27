@@ -17,7 +17,7 @@ namespace actors
 			,mInitialPosition(pos)
 		{
 			SetRole(Role::Enemy);
-			SetMass(10.0f);
+			SetMass(3.0f);
 			SetFriction(10.0f);
 			SetPosition(mInitialPosition);
 

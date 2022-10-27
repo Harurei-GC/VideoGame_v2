@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "components/Component.h"
+#include "components/RigidbodyComponent.h"
 
 namespace actors
 {
@@ -8,12 +9,18 @@ namespace actors
 		class Player;
 	}
 }
-namespace objects { class ActorObjects; }
+namespace message { 
+	class ActorMessage;
+	class ManagerMessage;
+	class RigidbodyMessage;
+}
+namespace managers { class MakeDangeon; }
 
 namespace ch = actors::characters;
 
 namespace components
 {
+
 	enum class EnemyState
 	{
 		Stroll,	// 徘徊
@@ -37,7 +44,9 @@ namespace components
 		void UpdateRest();		// 休憩中の処理
 		EnemyState mEState;
 
-		objects::ActorObjects* mActorObjects;	// Battleから必要なActor::Characterを取得するためのポインタ集合のクラス
+		components::RigidbodyComponent* mRigidbody;
+		message::ActorMessage* mActorMessage;	// Battleから必要なActor::Characterを取得するためのポインタ集合のクラス
+		managers::MakeDangeon* makeDangeon;	
 		ch::Player* player;
 	};
 }

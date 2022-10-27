@@ -25,6 +25,8 @@ namespace components
 
 	void RigidbodyComponent::Update(float deltaTime)
 	{
+		// 移動処理
+		// 衝突判定はmanagers::ConfigureMovementStatusで行う
 		replacePos = mOwner->GetPosition();
 		float mass = mOwner->GetMass();
 		float friction = mOwner->GetFriction();

@@ -3,7 +3,9 @@
 #include "math/Math.h"
 #include <vector>
 #include <iostream>
+#include "scenes/Scene.h"
 
+#define CHARACHIP_EDGE_INT static_cast<int>(CHARACHIP_EDGE)
 
 namespace managers
 {
@@ -64,13 +66,14 @@ namespace managers
 
 	bool MakeDangeon::IsInRooms(int x, int y) 
 	{
-		// HACK:もっときれいに書きたい
 		for (int i = 0; i < areaNumX; i++)
 		{
 			for (int j = 0; j < areaNumY; j++)
 			{
+				// もし引数のｘ座標が部屋のｘ座標の範囲内にあれば
 				if ((roomBoxPosition[i][j].x <= x) && (x < roomBoxPosition[i][j].x + roomBoxes[i][j].x))
 				{
+					// もし引数のｙ座標が部屋のｙ座標の範囲内にあれば
 					if ((roomBoxPosition[i][j].y <= y) && (y < roomBoxPosition[i][j].y + roomBoxes[i][j].y))
 					{
 						return true;
@@ -79,6 +82,27 @@ namespace managers
 			}
 		}
 		return false;
+	}
+
+	Vector2Int MakeDangeon::WhereInRoom(int x, int y)
+	{
+		for (int i = 0; i < areaNumX; i++)
+		{
+			for (int j = 0; j < areaNumY; j++)
+			{
+				// もし引数のｘ座標が部屋のｘ座標の範囲内にあれば
+				if ((roomBoxPosition[i][j].x <= x/CHARACHIP_EDGE_INT) && (x/CHARACHIP_EDGE_INT < roomBoxPosition[i][j].x + roomBoxes[i][j].x))
+				{
+					// もし引数のｙ座標が部屋のｙ座標の範囲内にあれば
+					if ((roomBoxPosition[i][j].y <= y/CHARACHIP_EDGE_INT) && (y/CHARACHIP_EDGE_INT < roomBoxPosition[i][j].y + roomBoxes[i][j].y))
+					{
+						return Vector2Int{ i,j };
+					}
+				}
+			}
+		}
+		// 部屋にいない場合、-1を返す
+		return Vector2Int{ -1,-1 };
 	}
 
 	bool MakeDangeon::IsInCorridor(int x, int y)

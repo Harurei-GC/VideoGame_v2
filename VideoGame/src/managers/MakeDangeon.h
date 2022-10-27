@@ -15,6 +15,8 @@ namespace managers
 		MakeDangeon();
 		// 引数の座標が部屋の中にあるか
 		bool IsInRooms(int x, int y);
+		// 引数の座標がどの部屋にいるか
+		Vector2Int WhereInRoom(int x, int y);
 		// 引数の座標が通路と被っているか
 		bool IsInCorridor(int x, int y);
 		// 最後尾の部屋のposition取得

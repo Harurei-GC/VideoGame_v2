@@ -26,9 +26,10 @@ namespace components
 {
 	class SpriteComponent;
 }
-namespace objects
+namespace message
 {
-	class ActorObjects;
+	class ActorMessage;
+	class ManagerMessage;
 }
 
 #define WIDTH 1024.0f
@@ -84,7 +85,8 @@ namespace scenes
 		// bufの一部文字列を表示させる
 		void DispSentenceFromFile(int font, int color, int rw, int rh);
 
-		virtual objects::ActorObjects* GetActorObjects() { return nullptr; }
+		virtual message::ActorMessage* GetActorMessage() { return nullptr; }
+		virtual message::ManagerMessage* GetManagerMessage() { return nullptr; }
 
 	protected:
 

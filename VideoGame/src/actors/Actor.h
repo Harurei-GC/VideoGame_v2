@@ -75,8 +75,8 @@ namespace actors
 		float GetRotation() const { return mRotation; }
 		void SetRotation(float rotation) { mRotation = rotation; }
 		int GetHP() const { return mHP; }
+		void TakeDamage(int damage) { mHP -= damage; }
 
-		virtual void TakeDamage(int damage) {}
 		virtual col::CircleComponent* GetCircle() { return nullptr; }
 		virtual components::RigidbodyComponent* GetRigidbody() { return nullptr; }
 		virtual components::InputComponent* GetInput() { return nullptr; }

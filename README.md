@@ -6,7 +6,6 @@ VideoGame_v2は、学習を目的とした個人開発のオープンソース�
 なお、使用画像の一部は、ぴぽや倉庫様よりお借りしています。
 https://pipoya.net/sozai/
 
-
 # 開発環境
 Windows10 Home　64bit
 

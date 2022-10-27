@@ -23,7 +23,7 @@ namespace scenes
 {
 	ScnBattle::ScnBattle(game::Game* game)
 		:scenes::Scene(game)
-		,timeLimit(60.0f)
+		,timeLimit(120.0f)
 		,mScore(Score::C)
 	{
 		// @hack コンストラクタが肥大化している。
@@ -94,9 +94,11 @@ namespace scenes
 		timerBackground = new bg::Sprite(this);
 		timerBackground->SetPosition(Vector2((WIDTH - 80), 60));
 
-		actorObjects.enemy = &mEnemy;
-		actorObjects.mbox = mMBox;
-		actorObjects.player = mPlayer;
+		actorMessage.enemy = &mEnemy;
+		actorMessage.mbox = mMBox;
+		actorMessage.player = mPlayer;
+
+		managerMessage.makeDangeon = &dangeon;
 
 #ifdef DEBUG_TESTING_VISIT_SCNBATTLE_CPP_
 		vstGetPos = new visitors::VisitorGetPositions(this);
@@ -200,9 +202,11 @@ namespace scenes
 			}
 		}
 
+		// PlayerがDead状態になったならばゲーム終了
 		if (mPlayer->GetState() == actors::Actor::State::Dead)
 		{
-			delete mPlayer;
+			mIsRunning = false;
+			mGame->SetGameOver(true);
 		}
 
 		// ゴールしたならば

@@ -50,5 +50,4 @@ namespace components
 		else{ force += mMaxForce; }
 	}
 
-
 }

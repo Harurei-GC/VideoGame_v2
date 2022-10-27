@@ -1,5 +1,5 @@
 #pragma once
-#include "objects/Objects.h"
+#include "message/Message.h"
 #include <vector>
 #include <map>
 
@@ -17,13 +17,13 @@ namespace actors
 
 namespace ch = actors::characters;
 
-namespace objects
+namespace message
 {
-	class ActorObjects:public Objects
+	class ActorMessage:public Message
 	{
 	public:
-		ActorObjects();
-		~ActorObjects();
+		ActorMessage();
+		~ActorMessage();
 
 		std::map<int, ch::Enemy*>* enemy;
 		ch::Friend* fri;
