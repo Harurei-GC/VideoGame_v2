@@ -28,7 +28,7 @@ namespace actors
 			mRigidbody->SetPowerSpeed(Vector2(200.0f,200.0f));
 
 			mInput = new components::InputComponent(this);
-			mInput->SetMaxForce(60.0f);
+			mInput->SetMaxForce(58.0f);
 			// @note 削除予定
 			//mInput->SetPowerKey(SDL_SCANCODE_SPACE);
 		}

@@ -126,8 +126,6 @@ namespace scenes
 
 			mKeyUpdating = !mKeyUpdating;
 
-			std::cout << "Updating: " << mKeyUpdating << std::endl;
-
 			if (mKeyUpdating)// キーのアップデート時に限り実行
 			{
 				// KeyData内のコマンドを選択し登録
@@ -254,7 +252,6 @@ namespace scenes
 		wasPushed = true;
 		cannotUpdateKey = true;
 		// 引き続きアップデート中となる
-		std::cout << "cannot update for that key" << std::endl;
 	}
 
 	void ScnKeyConfig::NotKeyUpdating(const uint8_t* keyState)
@@ -308,7 +305,6 @@ namespace scenes
 
 	void ScnKeyConfig::RenewCursor(SDL_Scancode* key, data::KeyType type, std::string cmdName)
 	{
-		std::cout << cmdName << "Key is now selected" << std::endl;
 		mKTypeCursor = type;
 		wasSelectedCmd = *key;
 
